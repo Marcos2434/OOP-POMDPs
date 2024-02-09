@@ -1,0 +1,66 @@
+mdp
+
+formula target = s = 2;
+
+formula initialised = 
+x00 >= 0 & 
+x01 >= 0 & 
+x10 >= 0 & 
+x11 >= 0 & 
+y00 >= 0 & 
+y01 >= 0 & 
+y10 >= 0 & 
+y11 >= 0 & 
+y30 >= 0 & 
+y31 >= 0 & 
+y40 >= 0 & 
+y41 >= 0;
+
+module line
+		s : [0..4];
+		started : bool;
+		y00 : [-1..1] init -1;
+		y01 : [-1..1] init -1;
+		y10 : [-1..1] init -1;
+		y11 : [-1..1] init -1;
+		y30 : [-1..1] init -1;
+		y31 : [-1..1] init -1;
+		y40 : [-1..1] init -1;
+		y41 : [-1..1] init -1;
+		x00 : [-1..1] init -1;
+		x01 : [-1..1] init -1;
+		x10 : [-1..1] init -1;
+		x11 : [-1..1] init -1;
+		
+		// CHOICE OF OBSERVATIONS
+		[y00] (!initialised & y00=-1 &y01=-1) ->(y00'=1) & (y01'=0);
+		[y01] (!initialised & y00=-1 &y01=-1) ->(y00'=0) & (y01'=1);
+		[y10] (!initialised & y10=-1 &y11=-1) ->(y10'=1) & (y11'=0);
+		[y11] (!initialised & y10=-1 &y11=-1) ->(y10'=0) & (y11'=1);
+		[y30] (!initialised & y30=-1 &y31=-1) ->(y30'=1) & (y31'=0);
+		[y31] (!initialised & y30=-1 &y31=-1) ->(y30'=0) & (y31'=1);
+		[y40] (!initialised & y40=-1 &y41=-1) ->(y40'=1) & (y41'=0);
+		[y41] (!initialised & y40=-1 &y41=-1) ->(y40'=0) & (y41'=1);
+		
+		// CHOICE OF STRATEGY
+		[x00] (!initialised & x00=-1 &x01=-1) ->(x00'=1) & (x01'=0);
+		[x01] (!initialised & x00=-1 &x01=-1) ->(x00'=0) &(x01'=1);
+		[x10] (!initialised & x10=-1 &x11=-1) ->(x10'=1) & (x11'=0);
+		[x11] (!initialised & x10=-1 &x11=-1) ->(x10'=0) &(x11'=1);
+		
+		[] !started & initialised -> 1/4: (started' = true) & (s' = 0)
+			+ 1/4 : (started'=true) & (s'=1)
+			+ 1/4 : (started'=true) & (s'=3)
+			+ 1/4 : (started'=true) & (s'=4);
+
+
+		[move] s=0 & started -> y00*x00+y01*x10: (s'=0) +y00*x01+y01*x11: (s'=1);
+		[move] s=1 & started  -> y10*x00+y11*x10: (s'=0) + y10*x01+y11*x11: (s'=2);
+		[move] s=2 & started  -> (s' = s); 
+		[move] s=3 & started  -> y30*x00+y31*x10: (s'=2) + y30*x01+y31*x11: (s'=4);
+		[move] s=4 & started  -> y40*x00+y41*x10: (s'=3) + y40*x01+y41*x11: (s'=4);
+endmodule
+
+rewards
+		[move] !target : 1;
+endrewards
