@@ -1,0 +1,91 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+
+        <script src="{% static 'app/js/index.js' %}"></script>
+        <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+
+        <link rel="stylesheet" type="text/css" href="{% static 'app/js/styles.css' %}">
+    </head>
+    <body>
+        <nav>
+            <div class="logo">
+              {% comment %} <img src="assets/Logo64x64.png" alt="logo" /> {% endcomment %}
+              <h1>OOP Visualizer</h1>
+            </div>
+            <ul>
+              <li>
+                <a href="{% url "index" %}">Home</a>
+              </li>
+              {% comment %} <li>
+                <a href="#">Services</a>
+              </li>
+              <li>
+                <a href="#">Blog</a>
+              </li>
+              <li>
+                <a href="#">Contact Us</a>
+              </li> {% endcomment %}
+            </ul>
+            <div class="hamburger">
+              <span class="line"></span>
+              <span class="line"></span>
+              <span class="line"></span>
+            </div>
+          </nav>
+          <div class="menubar">
+            <ul>
+                <li>
+                    <a href="{% url "index" %}">Home</a>
+                </li>
+              {% comment %} <li>
+                <a href="#">Services</a>
+              </li>
+              <li>
+                <a href="#">Blog</a>
+              </li>
+              <li>
+                <a href="#">Contact Us</a>
+              </li> {% endcomment %}
+            </ul>
+          </div>
+          
+          {% comment %} <hr /> {% endcomment %}
+          <br>
+
+          
+          <div id="main-wrapper">
+              <div class="left">
+                  <h1>Welcome to the OOP Visualizer</h1>
+                  <p>Enter your OOP code below to visualize it</p>
+                  <textarea id="code"></textarea>
+                    <button id="submit">Visualize</button>
+            </div>
+            <div class="middle">
+                <div id="network-container">
+                    <div id="network"></div>
+                </div>
+            </div>
+            <div class="right">
+                <h1>Instructions</h1>
+                <p>Enter your OOP code in the text area on the left and click the visualize button to see the visual representation of your code</p>
+                <h1>Features</h1>
+                <p>Visualize your OOP code</p>
+                <p>Download the visual representation of your code</p>
+                <p>Share the visual representation of your code</p>
+            </div>
+        </div>
+
+
+        
+
+    </body>
+</html>

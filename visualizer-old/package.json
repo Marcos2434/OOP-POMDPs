@@ -1,0 +1,27 @@
+{
+  "name": "visualizer",
+  "version": "1.0.0",
+  "description": "A visualizer for the Optimal Observability Problem (OOP)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Marcos2434/OOP-POMDPs.git"
+  },
+  "keywords": [
+    "visualizer",
+    "OOP",
+    "POMDP"
+  ],
+  "author": "Marcos Bauch Mira",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Marcos2434/OOP-POMDPs/issues"
+  },
+  "homepage": "https://github.com/Marcos2434/OOP-POMDPs#readme",
+  "dependencies": {
+    "vis-network": "^9.1.9"
+  }
+}
