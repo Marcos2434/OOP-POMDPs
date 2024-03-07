@@ -106,6 +106,7 @@ body {
 }
 #main-wrapper .middle {
   border: none !important;
+  width: 100%;
 }
 
 #network-container {
@@ -179,7 +180,7 @@ nav ul li a {
 }
 
 nav ul li a:hover {
-  background-color: #f5f5f5;
+  background-color: rgb(221, 92, 0);
 }
 
 .hamburger {
