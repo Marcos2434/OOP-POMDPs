@@ -67,23 +67,19 @@
                   <h1>Welcome to the OOP Visualizer</h1>
                   <p>Enter your OOP code below to visualize it, sección 2.2!!!!</p>
 
-                  <form id="oop_form" action="{% url "create-model" %}" method="post">
-                    {% csrf_token %}
-                      <form method="post">
-                        {% csrf_token %}
+                  <form id="oop_form" action="{% url "create-model" %}" method="post">                      
+                      {% csrf_token %}
 
-                        {% for field in OOP_Form %}
-                          <div class="form-field">
-                            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-                            {{ field }}
-                          </div>
-                        {% endfor %}
-                        
-                        <div class="center"> 
-                          <input type="submit" value="Submit Model">
+                      {% for field in OOP_Form %}
+                        <div class="form-field">
+                          <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                          {{ field }}
                         </div>
-                    </form>
-                  
+                      {% endfor %}
+                      
+                      <div class="center"> 
+                        <input type="submit" value="Submit Model">
+                      </div>
                   </form>
 
             </div>
