@@ -13,6 +13,16 @@ Then run,
 ./start.sh
 ```
 
+
+Changes to OOP
+
+- file creation directory
+- commented out the command line creation
+
+
+
+
+
 # OOP (Optimal Observability Problem)
 
 This work provides a method that given a POMDP how should one change the POMDP's observation capabilities within a fixed budget such that its (minimal) expected reward remains below a given threshold.

@@ -124,7 +124,7 @@ $border: 1px solid white;
         border-radius: $border-radius;
 
         &:not(.middle) {
-            padding: 10px;
+            padding: 10px 15px;
         }
     }
     .middle {
@@ -297,4 +297,86 @@ nav ul li a:hover {
     }
 }
   
+// remove number increase in input html+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+
+#oop_form {
+    color: white;
+    // padding: 10px;
+}
+
+input:focus,
+textarea:focus,
+select:focus,
+button:focus {
+    outline: none;
+}
+
+* { box-sizing: border-box; }
+
+.form-field {
+    display: grid;
+    grid-template-columns: 115px 1fr;
+    align-items: end;
+    margin: 10px 0;
+    text-align: left;
+    
+    > label {
+
+    }
+    
+    > input[type="number"], > select {
+        height: 100%;
+        padding: 5px 10px;
+        border-radius: $border-radius;
+        border: none;
+        background-color: $color-2;
+        color: white;
+        &:focus {
+            box-shadow: none;
+        }
+    }
+
+    > input[type="checkbox"] {
+        width: 36px;
+        height: 100%;
+        margin: 0;
+    }
+}
+
+.center {
+    display: grid;
+    justify-content: center;
+}
+
+input[type="submit"] {
+    padding: 7px 15px;
+    font-size: 1rem;
+    border-radius: $border-radius;
+    border: none;
+    background-color: $color-2;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    border: 2px solid $color-2;
+    margin: 20px 0;
+    &:hover {
+        background-color: $color-1;
+        border: 2px solid $color-2;
+        transform: scale(1.10);
+    }
+    &:active {
+        transform: scale(1);
+    }
+}
