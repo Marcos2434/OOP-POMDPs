@@ -11,7 +11,7 @@ OOP_MODEL_CHOICES = (
 class OOP_Form(forms.Form):
     model = forms.ChoiceField(choices=OOP_MODEL_CHOICES)
     size = forms.IntegerField(min_value=1, max_value=1000, step_size=1)
-    target = forms.IntegerField(min_value=1, max_value=1000, step_size=1) # (goal)
+    target = forms.IntegerField(min_value=0, max_value=1000, step_size=1) # (goal)
     budget = forms.IntegerField(min_value=1, max_value=1000, step_size=1)
     threshold = forms.DecimalField(min_value=1, max_value=1000, step_size=.5)
     deterministic = forms.BooleanField()
