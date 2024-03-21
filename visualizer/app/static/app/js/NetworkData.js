@@ -183,6 +183,9 @@ class NetworkData {
     createDirectedModel = () => {
         // recreate grid model with directed edges
         // remove all nodes and edges
+
+        
+
         this.nodes.clear()
         this.edges.clear()
         switch (this.model) {
@@ -220,35 +223,39 @@ class NetworkData {
                         let id = i * columns + j
                         this.nodes.add({ id: id, label: id.toString() })
                         
-                        if (this.stratInfo.nodes[id] != null) {
-                            const strategy = this.satelliteNodeData[i].observable
-                            for (const [action, prob] of Object.entries(this.stratInfo[strategy].actionProbabilities)) {
-                                if (i > 0) {
-                                    if (action == "up") {
-                                        if (prob > 0) {
-                                            this.edges.add({ from: id, to: id - columns, arrows: "to", label: prob.toString() })
-                                        } else { this.edges.add({ from: id, to: id - columns, arrows: "to"}) }  
-                                    } 
-                                }
-                                if (i < rows - 1) {
-                                    if (action == "down") {
-                                        if (prob > 0) {
-                                            this.edges.add({ from: id, to: id + columns, arrows: "to", label: prob.toString() })
-                                        } else { this.edges.add({ from: id, to: id + columns, arrows: "to"}) }
+                        if (this.satelliteNodeData[id]) {
+                            const strategy = this.satelliteNodeData[id].observable
+                            if (this.stratInfo[strategy]) {
+                                console.log(id, strategy, Object.entries(this.stratInfo[strategy].actionProbabilities))
+                                for (const [action, prob] of Object.entries(this.stratInfo[strategy].actionProbabilities)) {
+                                    if (i > 0) {
+                                        if (action == "up") {
+                                            if (prob > 0) {
+                                                this.edges.add({ from: id, to: id - columns, arrows: "to", label: prob.toString() })
+                                            } else { this.edges.add({ from: id, to: id - columns, arrows: "to"}) }  
+                                        } 
                                     }
-                                }
-                                if (j > 0) {
-                                    if (action == "left") {
-                                        if (prob > 0) {
-                                            this.edges.add({ from: id, to: id - 1, arrows: "to", label: prob.toString() })
-                                        } else { this.edges.add({ from: id, to: id - 1, arrows: "to"}) }
+                                    if (i < rows - 1) {
+                                        if (action == "down") {
+                                            if (prob > 0) {
+                                                this.edges.add({ from: id, to: id + columns, arrows: "to", label: prob.toString() })
+                                            } else { this.edges.add({ from: id, to: id + columns, arrows: "to"}) }
+                                        }
                                     }
-                                }
-                                if (j < columns - 1) {
-                                    if (action == "right") {
-                                        if (prob > 0) {
-                                            this.edges.add({ from: id, to: id + 1, arrows: "to", label: prob.toString() })
-                                        } else { this.edges.add({ from: id, to: id + 1, arrows: "to"}) }
+                                    if (j > 0) {
+                                        if (action == "left") {
+                                            if (prob > 0) {
+                                                this.edges.add({ from: id, to: id - 1, arrows: "to", label: prob.toString() })
+                                            } else { this.edges.add({ from: id, to: id - 1, arrows: "to"}) }
+                                        }
+                                    }
+                                    if (j < columns - 1) {
+                                        if (action == "right") {
+                                            // console.log(id, action, prob)
+                                            if (prob > 0) {
+                                                this.edges.add({ from: id, to: id + 1, arrows: "to", label: prob.toString() })
+                                            } else { this.edges.add({ from: id, to: id + 1, arrows: "to"}) }
+                                        }
                                     }
                                 }
                             }
@@ -279,7 +286,6 @@ class NetworkData {
             if (this.satelliteNodeData[node.id]) {
                 const strategy = this.satelliteNodeData[node.id].observable
                 if (this.stratInfo[strategy] != null) {
-                    console.log(this.stratInfo[strategy])
                     node.color = {
                         border: this.stratInfo[strategy].color,
                         background: config.node_bg,
@@ -349,6 +355,7 @@ class NetworkData {
                             observable: o,
                         }
                     }
+                    // console.log(s, o, this.satelliteNodeData[s])
                     
                     // Check if the observable has already been mapped to a colour
                     if (!this.stratInfo[o].color) this.stratInfo[o].color = availableColors.pop()
