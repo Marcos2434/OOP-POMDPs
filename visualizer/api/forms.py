@@ -17,7 +17,7 @@ class OOP_Form(forms.Form):
     target = forms.IntegerField(min_value=0, max_value=1000, step_size=1) # (goal)
     budget = forms.IntegerField(min_value=1, max_value=1000, step_size=1)
     threshold = forms.DecimalField(min_value=1, max_value=1000, step_size=.05)
-    deterministic = forms.BooleanField()
+    deterministic = forms.BooleanField(required=False)
     
     rows = forms.IntegerField(min_value=1, max_value=1000, step_size=1)
     columns = forms.IntegerField(min_value=1, max_value=1000, step_size=1, validators=[validate_odd])
