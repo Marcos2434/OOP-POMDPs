@@ -35,8 +35,8 @@ pi2 == 0,
 pi3 == (ys31*xo1l+ ys32*xo2l)*(1 + pi2) + (ys31*xo1r+ ys32*xo2r)*(1 + pi4),
 pi4 == (ys41*xo1l+ ys42*xo2l)*(1 + pi3) + (ys41*xo1r+ ys42*xo2r)*(1 + pi4),
 # We are dropped uniformly in the line
-# We want to check if the minimal expected cost is below some threshold <= 1.5
-(pi0+pi1+pi3+pi4) * Q(1,4) <= 1.5,
+# We want to check if the minimal expected cost is below some threshold <= 5
+(pi0+pi1+pi3+pi4) * Q(1,4) <= 5,
 # Randomised strategies (proper probability distributions)
 xo1l>= 0,
 xo1l<= 1,
@@ -48,6 +48,11 @@ xo2r>= 0,
 xo2r<= 1,
 xo1l + xo1r == 1,
 xo2l + xo2r == 1,
+# Deterministic Strategies activated
+Or(xo1l == 0, xo1l == 1),
+Or(xo1r == 0, xo1r == 1),
+Or(xo2l == 0, xo2l == 1),
+Or(xo2r == 0, xo2r == 1),
 # ysNM is a function that should map every state N to some observable class M
 Or(ys01== 0 , ys01== 1),
 Or(ys02== 0 , ys02== 1),

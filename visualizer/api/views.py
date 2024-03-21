@@ -35,13 +35,14 @@ def apiIndex(request):
 def createModel(request):
     form = OOP_Form(request.data)
     if form.is_valid():
+        print("deterministic?", bool(request.data['deterministic']))
         if request.data['model'] == "Line":
             create_line_constrained(
                 target=int(request.data['target']),
                 size=int(request.data['size']),
                 budget=int(request.data['budget']),
                 threshold="<= " + request.data['threshold'],
-                det=request.data['deterministic'],
+                det=bool(request.data['deterministic']),
             )
         elif request.data['model'] == "Grid":
             create_grid_constrained(
@@ -49,7 +50,7 @@ def createModel(request):
                 size=int(request.data['size']),
                 budget=int(request.data['budget']),
                 threshold="<= " + request.data['threshold'],
-                det=request.data['deterministic'],
+                det=bool(request.data['deterministic']),
             )
         elif request.data['model'] == "Maze":
             create_maze_constrained(
@@ -58,7 +59,7 @@ def createModel(request):
                 sizex = request.data['rows'], 
                 sizey = request.data['columns'], 
                 threshold = request.data['threshold'], 
-                det = request.data['deterministic']
+                det = bool(request.data['deterministic'])
             )
 
        
