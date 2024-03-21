@@ -20,4 +20,5 @@ fi
 pip3 install -r "$REQUIREMENTS_FILE"
 
 echo "Starting Django server..."
-python3 "$PROJECT_PATH/manage.py" runserver 0.0.0.0:8000    
+cd $PROJECT_PATH
+python3 manage.py runserver 0.0.0.0:8000    
