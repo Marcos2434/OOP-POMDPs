@@ -1,49 +1,9 @@
-configs = {
-    white: {
-        canvas_bg: "rgb(255, 255, 255)",
-        node_bg: "rgb(255, 255, 255)",
-        node_border: "rgb(0, 0, 0)",
-        node_highlight_bg: "rgb(255, 255, 255)",
-        node_highlight_border: "rgb(0, 0, 0)",
-        node_font_color: "rgb(0, 0, 0)",
-        edge_color: "rgb(0, 0, 0)",
-        nodeBorderSize: 2,
-    },
-    transparent: {
-        canvas_bg: "rgb(47, 46, 51)",
-        node_bg: "rgb(47, 46, 51)",
-        node_border: "rgb(255, 255, 255)",
-        node_highlight_bg: "rgb(47, 46, 51)",
-        node_highlight_border: "rgb(255, 255, 255)",
-        node_font_color: "rgb(255, 255, 255)",
-        edge_color: "rgb(255, 255, 255)",
-        nodeBorderSize: 2,
-    },
-}
-
-config = configs.transparent;
-
-class NetworkData {
-    constructor(network, nodes, edges, target) {
-        this.network = network
-        this.nodes = nodes
-        this.edges = edges
-        this.target = target
-    }
-}
-
 document.addEventListener("DOMContentLoaded", () => {
     const mobileNav = document.querySelector(".hamburger");
     mobileNav.addEventListener("click", () => toggleNav());
 
     modelFormHandler()
-    handleNetwrokContainerColor()
 })
-
-const handleNetwrokContainerColor = () => {
-    const network_canvas = document.querySelector("#network");
-    network_canvas.style.backgroundColor = config.canvas_bg;
-}
 
 const aspectRatio = () => {
     const network_canvas = document.querySelector("#network");
@@ -59,19 +19,13 @@ const handleNetwork = ({model, target, size = 1, rows = 1, columns = 1}) => {
 
     switch (model) {
         case "Line":
-            
             // create the line model
             for (let i = 0; i < size; i++) {
                 nodes.add({ id: i, label: i.toString() });
                 if (i > 0) {
-                    // if (i == target+1) {
-                    //     edges.add({ from: i - 1, to: i, color: config.edge_color })
-                    //     continue
-                    // }
                     edges.add({ from: i - 1, to: i });
                 }
             }
-
             break;
         case "Grid":
             // create the grid model
@@ -104,23 +58,6 @@ const handleNetwork = ({model, target, size = 1, rows = 1, columns = 1}) => {
             }
             break;
     }
-    // // create an array with nodes
-    // const nodes = new vis.DataSet([
-    //     { id: 1, label: "1"},
-    //     { id: 2, label: "2"},
-    //     { id: 3, label: "3"},
-    //     { id: 4, label: "4"},
-    //     { id: 5, label: "5"},
-    // ]);
-
-    // // create an array with edges
-    // const edges = new vis.DataSet([
-    //     { from: 1, to: 3 },
-    //     { from: 1, to: 2 },
-    //     { from: 2, to: 4 },
-    //     { from: 2, to: 5 },
-    //     { from: 3, to: 3 },
-    // ]);
 
     // create a network
     const container = document.getElementById("network")
@@ -198,7 +135,6 @@ const handleNetwork = ({model, target, size = 1, rows = 1, columns = 1}) => {
     }
 
     // handle download button
-
     network.on("afterDrawing", ctx => {
         let dataURL = ctx.canvas.toDataURL();
         document.getElementById('downloadButton').onclick = () => {
@@ -209,135 +145,178 @@ const handleNetwork = ({model, target, size = 1, rows = 1, columns = 1}) => {
         };
     });
 
-    return new NetworkData(network, nodes, edges, target)
+    return new NetworkData(network, nodes, edges, target, model, size)
 }
 
-const handleNetworkSolution = ({networkData, solution}) => {
-    const nodes = networkData.nodes
+// const handleNetworkSolution = ({networkData, solution}) => {
+//     const nodes = networkData.nodes
+//     const edges = networkData.edges
 
-    colors = [
-        "blue", "magenta", "lime", "olive", "purple", 
-        "yellow", "pink", "orange", "red", "cyan", 
-    ]
-    availableColors = colors
-    observableColors = {}
+//     colors = [
+//         "blue", "magenta", "lime", "olive", "purple", 
+//         "yellow", "pink", "orange", "red", "cyan", 
+//     ]
+//     availableColors = colors
+//     observableColors = {}
 
-    // Give each observable a colour and update the nodes
-    for (const [key, value] of Object.entries(solution)) {
-        if (key.substring(0, 2) == 'ys') {
+//     // Give each observable a colour and update the nodes
+//     for (const [key, value] of Object.entries(solution)) {
+//         if (key.substring(0, 2) == 'ys') {
 
-            // In state s, observable o is found, 1 yes, 0 no
-            if (value == 1) {
-                const s = parseInt(key[2]) // s for state
-                const o = parseInt(key[3]) // o for observable
+//             // In state s, observable o is found, 1 yes, 0 no
+//             if (value == 1) {
+//                 const s = parseInt(key[2]) // s for state
+//                 const o = parseInt(key[3]) // o for observable
                 
-                // Check if the observable has already been mapped to a colour
-                if (!observableColors[o]) observableColors[o] = availableColors.pop()
+//                 // Check if the observable has already been mapped to a colour
+//                 if (!observableColors[o]) observableColors[o] = availableColors.pop()
 
-                for (node of nodes.get()) {
-                    if (node.id == s) {
-                        node.color = {
-                            border: observableColors[o],
-                            background: config.node_bg,
-                            highlight: {
-                                border: observableColors[o],
-                                background: config.node_highlight_bg,
-                            }
-                        }
-                        nodes.update(node)
-                    }
-                } 
-            }
-        }
+//                 for (node of nodes.get()) {
+//                     if (node.id == s) {
+//                         node.color = {
+//                             border: observableColors[o],
+//                             background: config.node_bg,
+//                             highlight: {
+//                                 border: observableColors[o],
+//                                 background: config.node_highlight_bg,
+//                             }
+//                         }
+//                         nodes.update(node)
+//                     }
+//                 } 
+//             }
+//         }
 
-    }
+//     }
 
-    const tableBodyRef = document.querySelector("#strat-table").querySelector("tbody")
+//     const tableBodyRef = document.querySelector("#strat-table").querySelector("tbody")
 
-    tableInfo = {}
-    // Once each observable has been mapped to a colour, update the strategy table
-    for (const [key, value] of Object.entries(solution)) {
-        if (key.substring(0, 2) == 'xo') {
-            const o = parseInt(key[2]) // o for observable
-            const a = key[3] // a for action
+//     tableInfo = {}
+//     // Once each observable has been mapped to a colour, update the strategy table
+//     for (const [key, value] of Object.entries(solution)) {
+//         if (key.substring(0, 2) == 'xo') {
+//             const o = parseInt(key[2]) // o for observable
+//             const a = key[3] // a for action
 
-            if (!tableInfo[o]) {
-                tableInfo[o] = {
-                    id: o,
-                    color: observableColors[o],
-                    actionProbabilities: {
-                        right: 0,
-                        left: 0,
-                        up: 0,
-                        down: 0,
-                    }
-                }
-            }
-            switch (a) {
-                case 'l':
-                    tableInfo[o].actionProbabilities.left = value
-                    break
-                case 'r':
-                    tableInfo[o].actionProbabilities.right = value
-                    break
-                case 'u':
-                    tableInfo[o].actionProbabilities.up = value
-                    break
-                case 'd':
-                    tableInfo[o].actionProbabilities.down = value
-                    break
-            }
-        }
-    }
+//             if (!tableInfo[o]) {
+//                 tableInfo[o] = {
+//                     id: o,
+//                     color: observableColors[o],
+//                     actionProbabilities: {
+//                         right: 0,
+//                         left: 0,
+//                         up: 0,
+//                         down: 0,
+//                     }
+//                 }
+//             }
+//             switch (a) {
+//                 case 'l':
+//                     tableInfo[o].actionProbabilities.left = value
+//                     break
+//                 case 'r':
+//                     tableInfo[o].actionProbabilities.right = value
+//                     break
+//                 case 'u':
+//                     tableInfo[o].actionProbabilities.up = value
+//                     break
+//                 case 'd':
+//                     tableInfo[o].actionProbabilities.down = value
+//                     break
+//             }
+//         }
+//     }
     
-    // Clear table
-    tableBodyRef.innerHTML = ""
-    for (const [_, info] of Object.entries(tableInfo)) {
-        const row = tableBodyRef.insertRow(-1)
-        const cell1 = row.insertCell(0)
-        const cell2 = row.insertCell(1)
-        const cell3 = row.insertCell(2)
-        const cell4 = row.insertCell(3)
-        const cell5 = row.insertCell(4)
+//     // Clear table
+//     tableBodyRef.innerHTML = ""
+//     for (const [_, info] of Object.entries(tableInfo)) {
+//         const row = tableBodyRef.insertRow(-1)
+//         const cell1 = row.insertCell(0)
+//         const cell2 = row.insertCell(1)
+//         const cell3 = row.insertCell(2)
+//         const cell4 = row.insertCell(3)
+//         const cell5 = row.insertCell(4)
 
-        cell1.innerHTML = "hi!"
-        cell1.innerHTML = "Strategy " + info.id + ": " + info.color
+//         cell1.innerHTML = "hi!"
+//         cell1.innerHTML = "Strategy " + info.id + ": " + info.color
         
-        for (const [action, prob] of Object.entries(info.actionProbabilities)) {
-            switch (action) {
-                case 'left':
-                    cell3.innerHTML = prob
-                    break
-                case 'right':
-                    cell2.innerHTML = prob
-                    break
-                case 'up':
-                    cell4.innerHTML = prob
-                    break
-                case 'down':
-                    cell5.innerHTML = prob
-                    break
-            }
-        }
-    }
+//         for (const [action, prob] of Object.entries(info.actionProbabilities)) {
+//             switch (action) {
+//                 case 'left':
+//                     cell3.innerHTML = prob
+//                     break
+//                 case 'right':
+//                     cell2.innerHTML = prob
+//                     break
+//                 case 'up':
+//                     cell4.innerHTML = prob
+//                     break
+//                 case 'down':
+//                     cell5.innerHTML = prob
+//                     break
+//             }
+//         }
 
-    // // set the edge of the node next to the target node to the next node's color
-    // for (node of nodes.get()) {
-    //     if (node.id == networkData.target+1) {
-    //         networkData.edges.update({ from: node.id - 1, to: node.id, color: node.color.border })
-    //         break
-    //     }
-    // }
+//         // recreate grid model with directed edges
+//         // remove all nodes and edges
+//         networkData.nodes.clear()
+//         networkData.edges.clear()
+//         switch (networkData.model) {
+//             case "Grid":
+            
+//                 // crete directed grid model size x size
+//                 rows = networkData.size
+//                 columns = networkData.size
+//                 for (let i = 0; i < rows; i++) {
+//                     for (let j = 0; j < columns; j++) {
+//                         let id = i * columns + j;
+//                         nodes.add({ id: id, label: id.toString() })
+//                         for (const [action, prob] of Object.entries(info.actionProbabilities)) {
+//                             if (i > 0) {
+//                                 if (action == "up") {
+//                                     if (prob > 0) {
+//                                         edges.add({ from: id - columns, to: id, arrows: "to", label: prob.toString() })
+//                                     } else { edges.add({ from: id - columns, to: id, arrows: "to"}) }  
+//                                 } 
+//                             }
+//                             if (i < rows - 1) {
+//                                 if (action == "down") {
+//                                     if (prob > 0) {
+//                                         edges.add({ from: id, to: id - columns, arrows: "to", label: prob.toString() })
+//                                     } else { edges.add({ from: id, to: id - columns, arrows: "to"}) }
+//                                 }
+//                             }
+//                             if (j > 0) {
+//                                 if (action == "left") {
+//                                     if (prob > 0) {
+//                                         edges.add({ from: id, to: id - 1, arrows: "to", label: prob.toString() })
+//                                     } else { edges.add({ from: id, to: id - 1, arrows: "to"}) }
+//                                 }
+//                             }
+//                             if (j < columns - 1) {
+//                                 if (action == "right") {
+//                                     if (prob > 0) {
+//                                         edges.add({ from: id, to: id - 1, arrows: "to", label: prob.toString() })
+//                                     } else { edges.add({ from: id, to: id - 1, arrows: "to"}) }
+//                                 }
+//                             }
+//                         }
+//                     }
+//                 }
+//                 break
 
-    return networkData
-}
+//         }
+//     }
+
+//     return networkData
+// }
 
 const toggleNav = () => {
     const navbar = document.querySelector(".menubar");
     const mobileNav = document.querySelector(".hamburger");
     navbar.classList.toggle("active");
     mobileNav.classList.toggle("hamburger-active");
-};
+}
 
 const serializeForm = form => {
     // Serialize form data into JSON object
@@ -352,7 +331,8 @@ const serializeForm = form => {
 const modelFormHandler = () => {
     form = document.querySelector('#oop_form')
     let form_data = serializeForm(form)
-    let networkData = handleNetwork({model: form_data.model, size : parseInt(form_data.size), target: parseInt(form_data.target)})
+    let networkData = new NetworkData({model: form_data.model, size: parseInt(form_data.size), target: parseInt(form_data.target)})
+    // let networkData = handleNetwork({model: form_data.model, size : parseInt(form_data.size), target: parseInt(form_data.target)})
 
     form.addEventListener('submit', async event => {
         event.preventDefault()
@@ -388,9 +368,10 @@ const modelFormHandler = () => {
                 alert("Unknown error")
                 return
             }
-
-            networkData = handleNetwork({model: form_data.model, size : parseInt(form_data.size), target: parseInt(form_data.target)})
-            networkData = handleNetworkSolution({networkData, solution: data.solution})
+            console.log(data.solution)
+            console.log(form_data)
+            networkData.updateNetwork({model: form_data.model, size : parseInt(form_data.size), target: parseInt(form_data.target)})
+            networkData.drawSolution(data.solution)
         } else {
             console.error(response)
             alert("Error: " + response.status + "\n" + response.statusText)
@@ -400,13 +381,16 @@ const modelFormHandler = () => {
     
     form.addEventListener('change', event => {
         form_data = serializeForm(form)
-        networkData = handleNetwork({model: form_data.model, size : parseInt(form_data.size), target: parseInt(form_data.target)})
+            networkData.updateNetwork({model: form_data.model, size : parseInt(form_data.size), target: parseInt(form_data.target)})
+            // networkData = handleNetwork({model: form_data.model, size : parseInt(form_data.size), target: parseInt(form_data.target)})
     })
 
     document.querySelector("#theme-select").addEventListener("change", e => {
         config = configs[e.target.value];
-        networkData = handleNetwork({model: form_data.model, size : parseInt(form_data.size), target: parseInt(form_data.target)})
-        handleNetwrokContainerColor();
+        networkData.updateNetwork({model: form_data.model, size : parseInt(form_data.size), target: parseInt(form_data.target)})
+        networkData.setBgColor()
+        // networkData = handleNetwork({model: form_data.model, size : parseInt(form_data.size), target: parseInt(form_data.target)})
+        // handleNetwrokContainerColor();
     })
 }
 

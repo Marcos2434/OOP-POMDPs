@@ -25,6 +25,7 @@ class OOP_Form(forms.Form):
     def __init__(self, *args, **kwargs):
         initial_values = kwargs.pop('initial', {})
         super().__init__(*args, **kwargs)
+        self.initial['model'] = initial_values.get('model', 'Line')
         self.initial['size'] = initial_values.get('size', 5)
         self.initial['target'] = initial_values.get('target', 2)
         self.initial['budget'] = initial_values.get('budget', 2)
@@ -32,3 +33,12 @@ class OOP_Form(forms.Form):
         self.initial['deterministic'] = initial_values.get('deterministic', 1)
         self.initial['rows'] = initial_values.get('row', 5)
         self.initial['columns'] = initial_values.get('column', 5)
+        
+        # self.initial['model'] = initial_values.get('model', 'Grid')
+        # self.initial['size'] = initial_values.get('size', 2)
+        # self.initial['target'] = initial_values.get('target', 3)
+        # self.initial['budget'] = initial_values.get('budget', 2)
+        # self.initial['threshold'] = initial_values.get('threshold', 1.5)
+        # self.initial['deterministic'] = initial_values.get('deterministic', 1)
+        # self.initial['rows'] = initial_values.get('row', 5)
+        # self.initial['columns'] = initial_values.get('column', 5)

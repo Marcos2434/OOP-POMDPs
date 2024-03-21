@@ -10,6 +10,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="">
 
+        <script src="{% static 'app/js/NetworkData.js' %}"></script>
         <script src="{% static 'app/js/index.js' %}"></script>
         <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
 
@@ -89,13 +90,6 @@
                       </div>
                   </form>
 
-                <h1>Instructions</h1>
-                <p>Enter your OOP code in the text area on the left and click the visualize button to see the visual representation of your code</p>
-                <h1>Features</h1>
-                <p>Visualize your OOP code</p>
-                <p>Download the visual representation of your code</p>
-                <p>Share the visual representation of your code</p>
-
                 <select id="theme-select" class="btn">
                   <option default>Choose a theme</option>
                   <option value="transparent">Transparent</option>
@@ -138,6 +132,8 @@
                           <th>Color (strategy) / Action</th>
                           <th>Right</th>
                           <th>Left</th>
+                          <th>Up</th>
+                          <th>Down</th>
                       </tr>
                   </thead>
                   <tbody>
