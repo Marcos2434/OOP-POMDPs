@@ -15,6 +15,8 @@ from .serializers import Z3Serializer
 
 # OOP
 from OOP.createLine import create_line_constrained
+from OOP.createGrid import create_grid_constrained
+from OOP.createMaze import create_maze_constrained
 
 import importlib.util
 
@@ -41,19 +43,49 @@ def createModel(request):
                 threshold="<= " + request.data['threshold'],
                 det=request.data['deterministic'],
             )
+        elif request.data['model'] == "Grid":
+            create_grid_constrained(
+                target=int(request.data['target']),
+                size=int(request.data['size']),
+                budget=int(request.data['budget']),
+                threshold="<= " + request.data['threshold'],
+                det=request.data['deterministic'],
+            )
+        elif request.data['model'] == "Maze":
+            create_maze_constrained(
+                budget = request.data['budget'], 
+                target = request.data['target'], 
+                sizex = request.data['rows'], 
+                sizey = request.data['columns'], 
+                threshold = request.data['threshold'], 
+                det = request.data['deterministic']
+            )
 
-        # filename = 'OOP/' + request.data['model'] + request.data['size'] + '_ran_z3.py'
        
         # Specify path to generated file
         if bool(request.data['deterministic']):
-            module_path = 'OOP/' + request.data['model'].lower() + '_' + request.data['size'] + '_det_z3.py'
+            module_path = 'OOP/generated_models/' + request.data['model'].lower() + '_' + (request.data['size'] if not request.data['model'] == 'Grid' else request.data['size'] + 'x' + request.data['size'])+ '_det_z3.py'
         else:
-            module_path = 'OOP/' + request.data['model'].lower() + '_' + request.data['size'] + '_ran_z3.py'
+            module_path = 'OOP/generated_models/' + request.data['model'].lower() + '_' + (request.data['size'] if not request.data['model'] == 'Grid' else request.data['size'] + 'x' + request.data['size']) + request.data['size'] + '_ran_z3.py'
         
         # import module
         spec = importlib.util.spec_from_file_location("generated_module", module_path)
         module = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(module)
+    
+        sol = module.sol()
+        if sol == "No Solution":
+            return Response({
+                'solution' : 'No solution'
+            },
+            status=status.HTTP_200_OK)
+        elif sol == None:
+            return Response({
+                'solution' : 'Unknown'
+            }, status=status.HTTP_200_OK)
+        
+        # from time import sleep
+        # sleep(3)
         
         content = {
             'budget' : request.data['budget'],
@@ -61,7 +93,7 @@ def createModel(request):
             'size' : request.data['size'],
             'threshold' : request.data['threshold'],
             'deterministic' : request.data['deterministic'],
-            'solution': Z3Serializer(module.sol())
+            'solution': Z3Serializer(sol)
         }
         
         return Response(content,

@@ -52,7 +52,7 @@ const aspectRatio = () => {
     window.addEventListener("resize", () => network_canvas.style.height = styles.width);
 }
 
-const handleNetwork = ({model, size, target}) => {
+const handleNetwork = ({model, target, size = 1, rows = 1, columns = 1}) => {
 
     const nodes = new vis.DataSet();
     const edges = new vis.DataSet();
@@ -72,6 +72,36 @@ const handleNetwork = ({model, size, target}) => {
                 }
             }
 
+            break;
+        case "Grid":
+            // create the grid model
+            for (let i = 0; i < size; i++) {
+                for (let j = 0; j < size; j++) {
+                    let id = i * size + j;
+                    nodes.add({ id: id, label: id.toString() });
+                    if (i > 0) {
+                        edges.add({ from: id - size, to: id });
+                    }
+                    if (j > 0) {
+                        edges.add({ from: id - 1, to: id });
+                    }
+                }
+            }
+            break;
+        case "Maze":
+            // create the maze model
+            for (let i = 0; i < size; i++) {
+                for (let j = 0; j < size; j++) {
+                    let id = i * size + j;
+                    nodes.add({ id: id, label: id.toString() });
+                    if (i > 0) {
+                        edges.add({ from: id - size, to: id });
+                    }
+                    if (j > 0) {
+                        edges.add({ from: id - 1, to: id });
+                    }
+                }
+            }
             break;
     }
     // // create an array with nodes
@@ -167,6 +197,18 @@ const handleNetwork = ({model, size, target}) => {
         nodes.update(node)
     }
 
+    // handle download button
+
+    network.on("afterDrawing", ctx => {
+        let dataURL = ctx.canvas.toDataURL();
+        document.getElementById('downloadButton').onclick = () => {
+          let link = document.createElement('a');
+          link.download = 'network.png';
+          link.href = dataURL;
+          link.click();
+        };
+    });
+
     return new NetworkData(network, nodes, edges, target)
 }
 
@@ -174,19 +216,20 @@ const handleNetworkSolution = ({networkData, solution}) => {
     const nodes = networkData.nodes
 
     colors = [
-        "red", "blue", "yellow", "orange", "purple", "pink"
+        "blue", "magenta", "lime", "olive", "purple", 
+        "yellow", "pink", "orange", "red", "cyan", 
     ]
     availableColors = colors
     observableColors = {}
 
+    // Give each observable a colour and update the nodes
     for (const [key, value] of Object.entries(solution)) {
-        if (key.substring(0, 2) == 'xo') {
-        } else if (key.substring(0, 2) == 'ys') {
+        if (key.substring(0, 2) == 'ys') {
 
             // In state s, observable o is found, 1 yes, 0 no
             if (value == 1) {
-                const s = parseInt(key[2])
-                const o = parseInt(key[3])
+                const s = parseInt(key[2]) // s for state
+                const o = parseInt(key[3]) // o for observable
                 
                 // Check if the observable has already been mapped to a colour
                 if (!observableColors[o]) observableColors[o] = availableColors.pop()
@@ -201,13 +244,81 @@ const handleNetworkSolution = ({networkData, solution}) => {
                                 background: config.node_highlight_bg,
                             }
                         }
-
                         nodes.update(node)
                     }
                 } 
             }
         }
 
+    }
+
+    const tableBodyRef = document.querySelector("#strat-table").querySelector("tbody")
+
+    tableInfo = {}
+    // Once each observable has been mapped to a colour, update the strategy table
+    for (const [key, value] of Object.entries(solution)) {
+        if (key.substring(0, 2) == 'xo') {
+            const o = parseInt(key[2]) // o for observable
+            const a = key[3] // a for action
+
+            if (!tableInfo[o]) {
+                tableInfo[o] = {
+                    id: o,
+                    color: observableColors[o],
+                    actionProbabilities: {
+                        right: 0,
+                        left: 0,
+                        up: 0,
+                        down: 0,
+                    }
+                }
+            }
+            switch (a) {
+                case 'l':
+                    tableInfo[o].actionProbabilities.left = value
+                    break
+                case 'r':
+                    tableInfo[o].actionProbabilities.right = value
+                    break
+                case 'u':
+                    tableInfo[o].actionProbabilities.up = value
+                    break
+                case 'd':
+                    tableInfo[o].actionProbabilities.down = value
+                    break
+            }
+        }
+    }
+    
+    // Clear table
+    tableBodyRef.innerHTML = ""
+    for (const [_, info] of Object.entries(tableInfo)) {
+        const row = tableBodyRef.insertRow(-1)
+        const cell1 = row.insertCell(0)
+        const cell2 = row.insertCell(1)
+        const cell3 = row.insertCell(2)
+        const cell4 = row.insertCell(3)
+        const cell5 = row.insertCell(4)
+
+        cell1.innerHTML = "hi!"
+        cell1.innerHTML = "Strategy " + info.id + ": " + info.color
+        
+        for (const [action, prob] of Object.entries(info.actionProbabilities)) {
+            switch (action) {
+                case 'left':
+                    cell3.innerHTML = prob
+                    break
+                case 'right':
+                    cell2.innerHTML = prob
+                    break
+                case 'up':
+                    cell4.innerHTML = prob
+                    break
+                case 'down':
+                    cell5.innerHTML = prob
+                    break
+            }
+        }
     }
 
     // // set the edge of the node next to the target node to the next node's color
@@ -245,6 +356,15 @@ const modelFormHandler = () => {
 
     form.addEventListener('submit', async event => {
         event.preventDefault()
+        
+        const loader = document.querySelector("#loader")
+        loader.classList.remove("disappear")
+
+        const counter = document.querySelector("#counter")
+        counter.innerHTML = 0
+        const increaseCounter = () => counter.innerHTML = parseInt(counter.innerHTML) + 1
+        const counterInterval = setInterval(increaseCounter, 1000)
+
         response = await fetch('api/createModel', {
             method: 'POST',
             body: JSON.stringify(serializeForm(form)),
@@ -255,10 +375,25 @@ const modelFormHandler = () => {
             },
         })
 
+        clearInterval(counterInterval)
+        loader.classList.add("disappear")
+
         if (response.status === 200) {
             const data = await response.json()
+
+            if (data.solution == "No solution") {
+                alert("No solution found for the given model")
+                return
+            } else if (data.solution == "Unknown") {
+                alert("Unknown error")
+                return
+            }
+
             networkData = handleNetwork({model: form_data.model, size : parseInt(form_data.size), target: parseInt(form_data.target)})
             networkData = handleNetworkSolution({networkData, solution: data.solution})
+        } else {
+            console.error(response)
+            alert("Error: " + response.status + "\n" + response.statusText)
         }
     })
 

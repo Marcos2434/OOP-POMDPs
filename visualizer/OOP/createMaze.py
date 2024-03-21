@@ -11,9 +11,9 @@ from itertools import chain, combinations
 def create_maze_constrained(budget, target, sizex, sizey, threshold, det):
 
 	if det == 0:
-		file = open('maze_' + str(sizex) + 'x' + str(sizey)  +'_ran_z3.py', 'w')
+		file = open('OOP/generated_models/maze_' + str(sizex) + 'x' + str(sizey)  +'_ran_z3.py', 'w')
 	else:
-		file = open('maze_' + str(sizex) + 'x' + str(sizey) +'_det_z3.py', 'w')
+		file = open('OOP/generated_models/maze_' + str(sizex) + 'x' + str(sizey) +'_det_z3.py', 'w')
 
 
 	file.write('from z3 import *\n\n')
@@ -241,14 +241,17 @@ def create_maze_constrained(budget, target, sizex, sizey, threshold, det):
 	file.write('print(\'No solution!!!\')\n')
 	file.write('else:\n\t')
 	file.write('print(\'Unknown\')')
+ 	# Added
+	file.write('\nsol = lambda : solver.model() if solver.check() == sat else "No Solution" if solver.check() == unsat else None')
+	file.close()
 
 
-sizex = int(sys.argv[1])
-sizey = int(sys.argv[2])
-target = int(sys.argv[3])
-budget = int(sys.argv[4])
-threshold = sys.argv[5]
-det = int(sys.argv[6])
+# sizex = int(sys.argv[1])
+# sizey = int(sys.argv[2])
+# target = int(sys.argv[3])
+# budget = int(sys.argv[4])
+# threshold = sys.argv[5]
+# det = int(sys.argv[6])
 
-create_maze_constrained(budget, target, sizex, sizey, threshold, det)
+# create_maze_constrained(budget, target, sizex, sizey, threshold, det)
 

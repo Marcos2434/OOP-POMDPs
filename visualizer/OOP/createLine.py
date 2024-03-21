@@ -11,9 +11,9 @@ from itertools import chain, combinations
 def create_line_constrained(budget, target, size, threshold, det):
 
 	if det == 0:
-		file = open('OOP/line_' + str(size) +'_ran_z3.py', 'w')
+		file = open('OOP/generated_models/line_' + str(size) +'_ran_z3.py', 'w')
 	else:
-		file = open('OOP/line_' + str(size) +'_det_z3.py', 'w')
+		file = open('OOP/generated_models/line_' + str(size) +'_det_z3.py', 'w')
 
 	file.write('from z3 import *\n\n')
 

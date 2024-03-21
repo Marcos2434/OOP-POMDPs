@@ -380,3 +380,150 @@ input[type="submit"] {
         transform: scale(1);
     }
 }
+
+.nice-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    th, td {
+        padding: 10px;
+        border: 1px solid white;
+        text-align: center;
+    }
+    th {
+        background-color: rgb(0, 0, 0);
+        color: white;
+    }
+    tr {
+        color: white;
+    }
+    tr:nth-child(even) {
+        background-color: black;
+    }
+    tr:nth-child(odd) {
+        background-color: $color-2;
+    }
+}
+
+.disappear {
+    opacity: 0;
+}
+
+// https://codepen.io/0pensource/pen/KKYdWeg
+.circle-container {
+    position: relative;
+    height: 30px;
+    width: 30px;
+    
+
+  }
+  
+  .circle-progress {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    border-radius: 50%;
+    border: 2px solid #ACCAFF36;
+    border-radius: 50%;
+  }
+  
+  .circle-progress::before {
+    content: "";
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    border-top-color: #ACCAFF;
+    top: -2px;
+    left: -2px;
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+.btn {
+    padding: 7px 15px;
+    font-size: 1rem;
+    border-radius: $border-radius;
+    border: none;
+    background-color: $color-2;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    border: 2px solid $color-2;
+    margin: 20px 0;
+    &:hover {
+        // background-color: $color-1;
+        border: 2px solid $color-2;
+    }
+    &:active {
+        transform: scale(.9);
+    }
+
+}
+
+
+#loader-flex-container {
+    display: flex;
+    column-gap: 15px;
+    color: white;
+    align-items: center;
+    justify-content: center;
+
+    background-color: $color-2;
+    border-radius: $border-radius 0 0 $border-radius;
+}
+
+.card {
+    // padding: 10px;
+    // border: 1px solid white;
+    border-radius: $border-radius;
+    // background-color: $color-2;
+    background-color: black;
+    width: 100%;
+    max-width: 400px;
+    min-width: 200px;
+    display: flex;
+    // align-items: center;
+    // justify-content: start;
+    // text-align: center;
+
+    button {
+        padding: 7px 15px;
+        font-size: 1rem;
+        border-radius: $border-radius;
+        border: none;
+        background-color: $color-2;
+        color: white;
+        cursor: pointer;
+        transition: all 0.3s ease-in-out;
+        border: 2px solid $color-2;
+        margin: 20px 0;
+        &:hover {
+            background-color: $color-1;
+            border: 2px solid $color-2;
+            transform: scale(1.10);
+        }
+        &:active {
+            transform: scale(1);
+        }
+    }
+}
+
+#loader-container {
+    display: grid;
+    grid-template-columns: 40px 1fr;
+    column-gap: 10px;
+    > div {
+        padding: 4px;
+    }
+}

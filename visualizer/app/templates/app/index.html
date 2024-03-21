@@ -82,10 +82,25 @@
                         </div>
                       {% endfor %}
                       
+                      {% comment %} <p style="font-style: italic;">Note that the fields "Rows" and "Columns" only apply to Maze models</p> {% endcomment %}
+
                       <div class="center"> 
                         <input type="submit" value="Submit Model">
                       </div>
                   </form>
+
+                <h1>Instructions</h1>
+                <p>Enter your OOP code in the text area on the left and click the visualize button to see the visual representation of your code</p>
+                <h1>Features</h1>
+                <p>Visualize your OOP code</p>
+                <p>Download the visual representation of your code</p>
+                <p>Share the visual representation of your code</p>
+
+                <select id="theme-select" class="btn">
+                  <option default>Choose a theme</option>
+                  <option value="transparent">Transparent</option>
+                  <option value="white">White</option>
+                </select>
 
             </div>
             <div class="middle">
@@ -94,18 +109,40 @@
                 </div>
             </div>
             <div class="right">
-                <h1>Instructions</h1>
-                <p>Enter your OOP code in the text area on the left and click the visualize button to see the visual representation of your code</p>
-                <h1>Features</h1>
-                <p>Visualize your OOP code</p>
-                <p>Download the visual representation of your code</p>
-                <p>Share the visual representation of your code</p>
 
-                <select id="theme-select">
-                  <option default>Choose a theme</option>
-                  <option value="transparent">Transparent</option>
-                  <option value="white">White</option>
-                </select>
+                <h1>Model Solution Status</h1>
+
+                <div class="card">
+                  <div id="loader-container">
+                    <div id ="loader-flex-container">
+                      <div id="loader" class="circle-container disappear">
+                        <div class="circle-progress"></div>
+                      </div>
+                    </div>
+                    <p>Time elapsed to solve model: <span id="counter">0</span> seconds</p>
+                  </div>
+                </div>
+                <div>
+                  <button id="downloadButton" class="btn">Download Model</button>
+                </div>
+
+
+                <br/>
+                <br/>
+
+                <h1>Strategic Probabilities</h1>
+
+                <table id="strat-table" class="nice-table">
+                  <thead>
+                      <tr>
+                          <th>Color (strategy) / Action</th>
+                          <th>Right</th>
+                          <th>Left</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                  </tbody>
+              </table>
             </div>
         </div>
 

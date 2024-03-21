@@ -11,9 +11,9 @@ from itertools import chain, combinations
 def create_grid_constrained(budget, target, size, threshold, det):
 
 	if det == 0:
-		file = open('grid_' + str(size) +  'x' + str(size) +'_ran_z3.py', 'w')
+		file = open('OOP/generated_models/grid_' + str(size) +  'x' + str(size) +'_ran_z3.py', 'w')
 	else:
-		file = open('grid_' + str(size) +  'x' + str(size) +'_det_z3.py', 'w')
+		file = open('OOP/generated_models/grid_' + str(size) +  'x' + str(size) +'_det_z3.py', 'w')
 
 	file.write('from z3 import *\n\n')
 
@@ -187,14 +187,16 @@ def create_grid_constrained(budget, target, size, threshold, det):
 	file.write('print(\'No solution!!!\')\n')
 	file.write('else:\n\t')
 	file.write('print(\'Unknown\')')
+	# Added
+	file.write('\nsol = lambda : solver.model() if solver.check() == sat else "No Solution" if solver.check() == unsat else None')
+	file.close()
+
+# size = int(sys.argv[1])
+# target = int(sys.argv[2])
+# budget = int(sys.argv[3])
+# threshold = sys.argv[4]
+# det = int(sys.argv[5])
 
 
-size = int(sys.argv[1])
-target = int(sys.argv[2])
-budget = int(sys.argv[3])
-threshold = sys.argv[4]
-det = int(sys.argv[5])
-
-
-create_grid_constrained(budget, target, size, threshold, det)
+# create_grid_constrained(budget, target, size, threshold, det)
 

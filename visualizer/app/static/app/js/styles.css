@@ -334,4 +334,137 @@ input[type=submit]:hover {
 }
 input[type=submit]:active {
   transform: scale(1);
+}
+
+.nice-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+}
+.nice-table th, .nice-table td {
+  padding: 10px;
+  border: 1px solid white;
+  text-align: center;
+}
+.nice-table th {
+  background-color: rgb(0, 0, 0);
+  color: white;
+}
+.nice-table tr {
+  color: white;
+}
+.nice-table tr:nth-child(even) {
+  background-color: black;
+}
+.nice-table tr:nth-child(odd) {
+  background-color: rgb(75, 74, 77);
+}
+
+.disappear {
+  opacity: 0;
+}
+
+.circle-container {
+  position: relative;
+  height: 30px;
+  width: 30px;
+}
+
+.circle-progress {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  border-radius: 50%;
+  border: 2px solid rgba(172, 202, 255, 0.2117647059);
+  border-radius: 50%;
+}
+
+.circle-progress::before {
+  content: "";
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  border-top-color: #ACCAFF;
+  top: -2px;
+  left: -2px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.btn {
+  padding: 7px 15px;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: none;
+  background-color: rgb(75, 74, 77);
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  border: 2px solid rgb(75, 74, 77);
+  margin: 20px 0;
+}
+.btn:hover {
+  border: 2px solid rgb(75, 74, 77);
+}
+.btn:active {
+  transform: scale(0.9);
+}
+
+#loader-flex-container {
+  display: flex;
+  -moz-column-gap: 15px;
+       column-gap: 15px;
+  color: white;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(75, 74, 77);
+  border-radius: 5px 0 0 5px;
+}
+
+.card {
+  border-radius: 5px;
+  background-color: black;
+  width: 100%;
+  max-width: 400px;
+  min-width: 200px;
+  display: flex;
+}
+.card button {
+  padding: 7px 15px;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: none;
+  background-color: rgb(75, 74, 77);
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  border: 2px solid rgb(75, 74, 77);
+  margin: 20px 0;
+}
+.card button:hover {
+  background-color: rgb(47, 46, 51);
+  border: 2px solid rgb(75, 74, 77);
+  transform: scale(1.1);
+}
+.card button:active {
+  transform: scale(1);
+}
+
+#loader-container {
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  -moz-column-gap: 10px;
+       column-gap: 10px;
+}
+#loader-container > div {
+  padding: 4px;
 }/*# sourceMappingURL=styles.css.map */
