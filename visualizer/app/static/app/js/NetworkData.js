@@ -1,29 +1,3 @@
-configs = {
-    white: {
-        canvas_bg: "rgb(255, 255, 255)",
-        node_bg: "rgb(255, 255, 255)",
-        node_border: "rgb(0, 0, 0)",
-        node_highlight_bg: "rgb(255, 255, 255)",
-        node_highlight_border: "rgb(0, 0, 0)",
-        node_font_color: "rgb(0, 0, 0)",
-        edge_color: "rgb(0, 0, 0)",
-        nodeBorderSize: 2,
-    },
-    transparent: {
-        canvas_bg: "rgb(47, 46, 51)",
-        node_bg: "rgb(47, 46, 51)",
-        node_border: "rgb(255, 255, 255)",
-        node_highlight_bg: "rgb(47, 46, 51)",
-        node_highlight_border: "rgb(255, 255, 255)",
-        node_font_color: "rgb(255, 255, 255)",
-        edge_color: "rgb(255, 255, 255)",
-        nodeBorderSize: 2,
-    },
-}
-
-config = configs.transparent;
-
-
 class NetworkData {
     constructor({model, size = 1, rows = 1, columns = 1, target}) {
 
@@ -38,6 +12,31 @@ class NetworkData {
         
         this.tableBodyRef = document.querySelector("#strat-table").querySelector("tbody")
 
+        this.configs = {
+            white: {
+                canvas_bg: "rgb(255, 255, 255)",
+                node_bg: "rgb(255, 255, 255)",
+                node_border: "rgb(0, 0, 0)",
+                node_highlight_bg: "rgb(255, 255, 255)",
+                node_highlight_border: "rgb(0, 0, 0)",
+                node_font_color: "rgb(0, 0, 0)",
+                edge_color: "rgb(0, 0, 0)",
+                nodeBorderSize: 2,
+            },
+            transparent: {
+                canvas_bg: "rgb(47, 46, 51)",
+                node_bg: "rgb(47, 46, 51)",
+                node_border: "rgb(255, 255, 255)",
+                node_highlight_bg: "rgb(47, 46, 51)",
+                node_highlight_border: "rgb(255, 255, 255)",
+                node_font_color: "rgb(255, 255, 255)",
+                edge_color: "rgb(255, 255, 255)",
+                nodeBorderSize: 2,
+            },
+        }
+
+        this.config = this.configs.transparent
+
         const options = {
             autoResize: true,
             height: '100%',
@@ -47,7 +46,7 @@ class NetworkData {
             configure: {},    // defined in the configure module.
             edges: {
                 color: {
-                    color: config.edge_color,
+                    color: this.config.edge_color,
                     inherit: false, // Disable color inheritance
                     opacity: 1.0
                 }
@@ -64,7 +63,7 @@ class NetworkData {
                 font: {
                     size: 20,
                     face: 'Tahoma',
-                    color: config.node_font_color,
+                    color: this.config.node_font_color,
                 }
             },        // defined in the nodes module.
             // groups: {},       // defined in the groups module.
@@ -81,10 +80,11 @@ class NetworkData {
                 }
             }, // defined in the physics module.
         }
-
+        
+        
 
         this.container = document.querySelector("#network")
-        this.setBgColor()
+        this.setBgColor("transparent")
 
         this.createModel()
         this.styleGraph()
@@ -105,18 +105,21 @@ class NetworkData {
         this.stratInfo = {}
     }
 
-    setBgColor = () => this.container.style.backgroundColor = config.canvas_bg
+    setBgColor = (c) => {
+        this.config = this.configs[c]
+        this.container.style.backgroundColor = this.config.canvas_bg
+    }
 
     styleGraph = () => {
-        const nodeBorderSize = config.nodeBorderSize
+        const nodeBorderSize = this.config.nodeBorderSize
         for (let node of this.nodes.get()) {
             if (node.id == this.target) {
                 node.color = {
                     border: "green",  // Color of the border
-                    background: config.node_bg,  // Color of the background
+                    background: this.config.node_bg,  // Color of the background
                     highlight: {  // Colors when the node is selected
                         border: "green",  // Color of the border
-                        background: config.node_highlight_bg,  // Color of the background
+                        background: this.config.node_highlight_bg,  // Color of the background
                     }
                 }
                 node.borderWidth = nodeBorderSize
@@ -124,11 +127,11 @@ class NetworkData {
                 continue
             }
             node.color = {
-                border: config.node_border,  // Color of the border
-                background: config.node_bg,  // Color of the background
+                border: this.config.node_border,  // Color of the border
+                background: this.config.node_bg,  // Color of the background
                 highlight: {  // Colors when the node is selected
-                    border: config.node_highlight_border,  // Color of the border
-                    background: config.node_highlight_bg,  // Color of the background
+                    border: this.config.node_highlight_border,  // Color of the border
+                    background: this.config.node_highlight_bg,  // Color of the background
                 }
             }
             node.borderWidth = nodeBorderSize
@@ -183,9 +186,6 @@ class NetworkData {
     createDirectedModel = () => {
         // recreate grid model with directed edges
         // remove all nodes and edges
-
-        
-
         this.nodes.clear()
         this.edges.clear()
         switch (this.model) {
@@ -226,7 +226,6 @@ class NetworkData {
                         if (this.satelliteNodeData[id]) {
                             const strategy = this.satelliteNodeData[id].observable
                             if (this.stratInfo[strategy]) {
-                                console.log(id, strategy, Object.entries(this.stratInfo[strategy].actionProbabilities))
                                 for (const [action, prob] of Object.entries(this.stratInfo[strategy].actionProbabilities)) {
                                     if (i > 0) {
                                         if (action == "up") {
@@ -288,10 +287,10 @@ class NetworkData {
                 if (this.stratInfo[strategy] != null) {
                     node.color = {
                         border: this.stratInfo[strategy].color,
-                        background: config.node_bg,
+                        background: this.config.node_bg,
                         highlight: {
                             border: this.stratInfo[strategy].color,
-                            background: config.node_highlight_bg,
+                            background: this.config.node_highlight_bg,
                         }
                     }
                     this.nodes.update(node)

@@ -12,141 +12,141 @@ const aspectRatio = () => {
     window.addEventListener("resize", () => network_canvas.style.height = styles.width);
 }
 
-const handleNetwork = ({model, target, size = 1, rows = 1, columns = 1}) => {
+// const handleNetwork = ({model, target, size = 1, rows = 1, columns = 1}) => {
 
-    const nodes = new vis.DataSet();
-    const edges = new vis.DataSet();
+//     const nodes = new vis.DataSet();
+//     const edges = new vis.DataSet();
 
-    switch (model) {
-        case "Line":
-            // create the line model
-            for (let i = 0; i < size; i++) {
-                nodes.add({ id: i, label: i.toString() });
-                if (i > 0) {
-                    edges.add({ from: i - 1, to: i });
-                }
-            }
-            break;
-        case "Grid":
-            // create the grid model
-            for (let i = 0; i < size; i++) {
-                for (let j = 0; j < size; j++) {
-                    let id = i * size + j;
-                    nodes.add({ id: id, label: id.toString() });
-                    if (i > 0) {
-                        edges.add({ from: id - size, to: id });
-                    }
-                    if (j > 0) {
-                        edges.add({ from: id - 1, to: id });
-                    }
-                }
-            }
-            break;
-        case "Maze":
-            // create the maze model
-            for (let i = 0; i < size; i++) {
-                for (let j = 0; j < size; j++) {
-                    let id = i * size + j;
-                    nodes.add({ id: id, label: id.toString() });
-                    if (i > 0) {
-                        edges.add({ from: id - size, to: id });
-                    }
-                    if (j > 0) {
-                        edges.add({ from: id - 1, to: id });
-                    }
-                }
-            }
-            break;
-    }
+//     switch (model) {
+//         case "Line":
+//             // create the line model
+//             for (let i = 0; i < size; i++) {
+//                 nodes.add({ id: i, label: i.toString() });
+//                 if (i > 0) {
+//                     edges.add({ from: i - 1, to: i });
+//                 }
+//             }
+//             break;
+//         case "Grid":
+//             // create the grid model
+//             for (let i = 0; i < size; i++) {
+//                 for (let j = 0; j < size; j++) {
+//                     let id = i * size + j;
+//                     nodes.add({ id: id, label: id.toString() });
+//                     if (i > 0) {
+//                         edges.add({ from: id - size, to: id });
+//                     }
+//                     if (j > 0) {
+//                         edges.add({ from: id - 1, to: id });
+//                     }
+//                 }
+//             }
+//             break;
+//         case "Maze":
+//             // create the maze model
+//             for (let i = 0; i < size; i++) {
+//                 for (let j = 0; j < size; j++) {
+//                     let id = i * size + j;
+//                     nodes.add({ id: id, label: id.toString() });
+//                     if (i > 0) {
+//                         edges.add({ from: id - size, to: id });
+//                     }
+//                     if (j > 0) {
+//                         edges.add({ from: id - 1, to: id });
+//                     }
+//                 }
+//             }
+//             break;
+//     }
 
-    // create a network
-    const container = document.getElementById("network")
-    const data = { nodes, edges }
-    const options = {
-        autoResize: true,
-        height: '100%',
-        width: '100%',
-        locale: 'en',
-        clickToUse: false,
-        configure: {},    // defined in the configure module.
-        edges: {
-            color: {
-                color: config.edge_color,
-                inherit: false, // Disable color inheritance
-                opacity: 1.0
-            }
-        },        // defined in the edges module.
-        nodes: {
-            shape: "dot",
-            size: 20,
-            scaling: {
-                label: {
-                    min: 10,  // minimum font size
-                    max: 30   // maximum font size
-                }
-            },
-            font: {
-                size: 20,
-                face: 'Tahoma',
-                color: config.node_font_color,
-            }
-        },        // defined in the nodes module.
-        // groups: {},       // defined in the groups module.
-        // layout: {},       // defined in the layout module.
-        // manipulation: {}, // defined in the manipulation module.
-        interaction: {
-            dragView: false,
-            zoomView: false,
-        },  // defined in the interaction module.
-        physics: {
-            barnesHut: {
-                springLength: 100, // Set your desired default edge length
-                springConstant: 0.04 // Tweak other physics parameters if needed
-            }
-        },      // defined in the physics module.
-    }
-    const network = new vis.Network(container, data, options);
+//     // create a network
+//     const container = document.getElementById("network")
+//     const data = { nodes, edges }
+//     const options = {
+//         autoResize: true,
+//         height: '100%',
+//         width: '100%',
+//         locale: 'en',
+//         clickToUse: false,
+//         configure: {},    // defined in the configure module.
+//         edges: {
+//             color: {
+//                 color: config.edge_color,
+//                 inherit: false, // Disable color inheritance
+//                 opacity: 1.0
+//             }
+//         },        // defined in the edges module.
+//         nodes: {
+//             shape: "dot",
+//             size: 20,
+//             scaling: {
+//                 label: {
+//                     min: 10,  // minimum font size
+//                     max: 30   // maximum font size
+//                 }
+//             },
+//             font: {
+//                 size: 20,
+//                 face: 'Tahoma',
+//                 color: config.node_font_color,
+//             }
+//         },        // defined in the nodes module.
+//         // groups: {},       // defined in the groups module.
+//         // layout: {},       // defined in the layout module.
+//         // manipulation: {}, // defined in the manipulation module.
+//         interaction: {
+//             dragView: false,
+//             zoomView: false,
+//         },  // defined in the interaction module.
+//         physics: {
+//             barnesHut: {
+//                 springLength: 100, // Set your desired default edge length
+//                 springConstant: 0.04 // Tweak other physics parameters if needed
+//             }
+//         },      // defined in the physics module.
+//     }
+//     const network = new vis.Network(container, data, options);
     
-    nodeBorderSize = config.nodeBorderSize
-    for (node of nodes.get()) {
-        if (node.id == target) {
-            node.color = {
-                border: "green",  // Color of the border
-                background: config.node_bg,  // Color of the background
-                highlight: {  // Colors when the node is selected
-                    border: "green",  // Color of the border
-                    background: config.node_highlight_bg,  // Color of the background
-                }
-            }
-            node.borderWidth = nodeBorderSize
-            nodes.update(node)
-            continue
-        }
-        node.color = {
-            border: config.node_border,  // Color of the border
-            background: config.node_bg,  // Color of the background
-            highlight: {  // Colors when the node is selected
-                border: config.node_highlight_border,  // Color of the border
-                background: config.node_highlight_bg,  // Color of the background
-            }
-        }
-        node.borderWidth = nodeBorderSize
-        nodes.update(node)
-    }
+//     nodeBorderSize = config.nodeBorderSize
+//     for (node of nodes.get()) {
+//         if (node.id == target) {
+//             node.color = {
+//                 border: "green",  // Color of the border
+//                 background: config.node_bg,  // Color of the background
+//                 highlight: {  // Colors when the node is selected
+//                     border: "green",  // Color of the border
+//                     background: config.node_highlight_bg,  // Color of the background
+//                 }
+//             }
+//             node.borderWidth = nodeBorderSize
+//             nodes.update(node)
+//             continue
+//         }
+//         node.color = {
+//             border: config.node_border,  // Color of the border
+//             background: config.node_bg,  // Color of the background
+//             highlight: {  // Colors when the node is selected
+//                 border: config.node_highlight_border,  // Color of the border
+//                 background: config.node_highlight_bg,  // Color of the background
+//             }
+//         }
+//         node.borderWidth = nodeBorderSize
+//         nodes.update(node)
+//     }
 
-    // handle download button
-    network.on("afterDrawing", ctx => {
-        let dataURL = ctx.canvas.toDataURL();
-        document.getElementById('downloadButton').onclick = () => {
-          let link = document.createElement('a');
-          link.download = 'network.png';
-          link.href = dataURL;
-          link.click();
-        };
-    });
+//     // handle download button
+//     network.on("afterDrawing", ctx => {
+//         let dataURL = ctx.canvas.toDataURL();
+//         document.getElementById('downloadButton').onclick = () => {
+//           let link = document.createElement('a');
+//           link.download = 'network.png';
+//           link.href = dataURL;
+//           link.click();
+//         };
+//     });
 
-    return new NetworkData(network, nodes, edges, target, model, size)
-}
+//     return new NetworkData(network, nodes, edges, target, model, size)
+// }
 
 // const handleNetworkSolution = ({networkData, solution}) => {
 //     const nodes = networkData.nodes
@@ -332,7 +332,6 @@ const modelFormHandler = () => {
     form = document.querySelector('#oop_form')
     let form_data = serializeForm(form)
     let networkData = new NetworkData({model: form_data.model, size: parseInt(form_data.size), target: parseInt(form_data.target)})
-    // let networkData = handleNetwork({model: form_data.model, size : parseInt(form_data.size), target: parseInt(form_data.target)})
 
     form.addEventListener('submit', async event => {
         event.preventDefault()
@@ -382,13 +381,11 @@ const modelFormHandler = () => {
     form.addEventListener('change', event => {
         form_data = serializeForm(form)
             networkData.updateNetwork({model: form_data.model, size : parseInt(form_data.size), target: parseInt(form_data.target)})
-            // networkData = handleNetwork({model: form_data.model, size : parseInt(form_data.size), target: parseInt(form_data.target)})
     })
 
     document.querySelector("#theme-select").addEventListener("change", e => {
-        config = configs[e.target.value];
         networkData.updateNetwork({model: form_data.model, size : parseInt(form_data.size), target: parseInt(form_data.target)})
-        networkData.setBgColor()
+        networkData.setBgColor(e.target.value)
         // networkData = handleNetwork({model: form_data.model, size : parseInt(form_data.size), target: parseInt(form_data.target)})
         // handleNetwrokContainerColor();
     })
