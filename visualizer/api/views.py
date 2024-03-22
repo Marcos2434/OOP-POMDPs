@@ -61,7 +61,7 @@ def createModel(request):
                 det = bool(request.data['deterministic'])
             )
 
-       
+    
         # Specify path to generated file
         if bool(request.data['deterministic']):
             module_path = 'OOP/generated_models/' + request.data['model'].lower() + '_' + (request.data['size'] if not request.data['model'] == 'Grid' else request.data['size'] + 'x' + request.data['size'])+ '_det_z3.py'
@@ -101,6 +101,8 @@ def createModel(request):
     else:
         return Response(form.errors,
         status=status.HTTP_400_BAD_REQUEST)
+
+        
     
 
 # @api_view(['GET'])

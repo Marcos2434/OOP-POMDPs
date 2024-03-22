@@ -13,32 +13,41 @@ const modelFormHandler = () => {
     let form_data = serializeForm(form)
     let networkData = new NetworkData({model: form_data.model, size: parseInt(form_data.size), target: parseInt(form_data.target)})
 
+    let controller;
+
     form.addEventListener('submit', async event => {
+        if (controller) controller.abort()
+        
         event.preventDefault()
+
+        controller = new AbortController()
         
         const loader = document.querySelector("#loader")
         loader.classList.remove("disappear")
-
+        
         const counter = document.querySelector("#counter")
         counter.innerHTML = 0
         const increaseCounter = () => counter.innerHTML = parseInt(counter.innerHTML) + 1
         const counterInterval = setInterval(increaseCounter, 1000)
 
-        response = await fetch('api/createModel', {
-            method: 'POST',
-            body: JSON.stringify(serializeForm(form)),
-            headers: {
-                "X-CSRFToken": getCookie("csrftoken"),
-                "Accept": "application/json",
-                "Content-Type": "application/json"
-            },
-        })
+        const signal = controller.signal
 
-        clearInterval(counterInterval)
-        loader.classList.add("disappear")
-
-        if (response.status === 200) {
+        try {
+            const response = await fetch('api/createModel', {
+                method: 'POST',
+                body: JSON.stringify(serializeForm(form)),
+                headers: {
+                    "X-CSRFToken": getCookie("csrftoken"),
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
+                },
+                signal,
+            })
             const data = await response.json()
+            console.log(data)
+
+            clearInterval(counterInterval)
+            loader.classList.add("disappear")
 
             if (data.solution == "No solution") {
                 alert("No solution found for the given model")
@@ -47,13 +56,19 @@ const modelFormHandler = () => {
                 alert("Unknown error")
                 return
             }
-            console.log(data.solution)
-            console.log(form_data)
+
             networkData.updateNetwork({model: form_data.model, size : parseInt(form_data.size), target: parseInt(form_data.target)})
             networkData.drawSolution(data.solution)
-        } else {
-            console.error(response)
-            alert("Error: " + response.status + "\n" + response.statusText)
+        } catch (error) {
+            clearInterval(counterInterval)
+            loader.classList.add("disappear")
+            if (error.name == "AbortError") {
+                console.log("Request aborted")
+            } 
+            else {
+                console.error(error)
+            }
+            return
         }
     })
 
