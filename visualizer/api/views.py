@@ -35,7 +35,6 @@ def apiIndex(request):
 def createModel(request):
     form = OOP_Form(request.data)
     if form.is_valid():
-        print("deterministic?", bool(request.data['deterministic']))
         if request.data['model'] == "Line":
             create_line_constrained(
                 target=int(request.data['target']),
