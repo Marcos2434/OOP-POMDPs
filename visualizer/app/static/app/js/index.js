@@ -1,33 +1,12 @@
 document.addEventListener("DOMContentLoaded", () => {
+
+    // Responsive menu bar
     const mobileNav = document.querySelector(".hamburger")
     mobileNav.addEventListener("click", toggleNav)
 
+    // Handle form inputs and outputs to update graph
     modelFormHandler()
 })
-
-const aspectRatio = () => {
-    const network_canvas = document.querySelector("#network");
-    const styles = getComputedStyle(network_canvas);
-    network_canvas.style.height = styles.width;
-    window.addEventListener("resize", () => network_canvas.style.height = styles.width);
-}
-
-const toggleNav = () => {
-    const navbar = document.querySelector(".menubar");
-    const mobileNav = document.querySelector(".hamburger");
-    navbar.classList.toggle("active");
-    mobileNav.classList.toggle("hamburger-active");
-}
-
-const serializeForm = form => {
-    // Serialize form data into JSON object
-    const formData = new FormData(form)
-    const data = {}
-    for (const [key, value] of formData.entries()) {
-        data[key] = value
-    }
-    return data
-}
 
 const modelFormHandler = () => {
     form = document.querySelector('#oop_form')
@@ -92,6 +71,31 @@ const modelFormHandler = () => {
     })
 }
 
+const aspectRatio = () => {
+    const network_canvas = document.querySelector("#network");
+    const styles = getComputedStyle(network_canvas);
+    network_canvas.style.height = styles.width;
+    window.addEventListener("resize", () => network_canvas.style.height = styles.width);
+}
+
+const toggleNav = () => {
+    const navbar = document.querySelector(".menubar");
+    const mobileNav = document.querySelector(".hamburger");
+    navbar.classList.toggle("active");
+    mobileNav.classList.toggle("hamburger-active");
+}
+
+const serializeForm = form => {
+    // Serialize form data into JSON object
+    const formData = new FormData(form)
+    const data = {}
+    for (const [key, value] of formData.entries()) {
+        data[key] = value
+    }
+    return data
+}
+
+// Get CSRF token for POST requests, Django
 function getCookie(name) {
     let cookieValue = null;
     if (document.cookie && document.cookie !== '') {
