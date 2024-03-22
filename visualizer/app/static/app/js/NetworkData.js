@@ -49,6 +49,10 @@ class NetworkData {
                     color: this.config.edge_color,
                     inherit: false, // Disable color inheritance
                     opacity: 1.0
+                },
+                font: {
+                    size: 25,
+                    color: "white",
                 }
             },        // defined in the edges module.
             nodes: {
@@ -81,8 +85,6 @@ class NetworkData {
             }, // defined in the physics module.
         }
         
-        
-
         this.container = document.querySelector("#network")
         this.setBgColor("transparent")
 
@@ -230,21 +232,21 @@ class NetworkData {
                                     if (i > 0) {
                                         if (action == "up") {
                                             if (prob > 0) {
-                                                this.edges.add({ from: id, to: id - columns, arrows: "to", label: prob.toString() })
+                                                this.edges.add({ from: id, to: id - columns, arrows: "to", label: prob.toString(), color: this.stratInfo[strategy].color })
                                             } else { this.edges.add({ from: id, to: id - columns, arrows: "to"}) }  
                                         } 
                                     }
                                     if (i < rows - 1) {
                                         if (action == "down") {
                                             if (prob > 0) {
-                                                this.edges.add({ from: id, to: id + columns, arrows: "to", label: prob.toString() })
+                                                this.edges.add({ from: id, to: id + columns, arrows: "to", label: prob.toString(), color: this.stratInfo[strategy].color })
                                             } else { this.edges.add({ from: id, to: id + columns, arrows: "to"}) }
                                         }
                                     }
                                     if (j > 0) {
                                         if (action == "left") {
                                             if (prob > 0) {
-                                                this.edges.add({ from: id, to: id - 1, arrows: "to", label: prob.toString() })
+                                                this.edges.add({ from: id, to: id - 1, arrows: "to", label: prob.toString(), color: this.stratInfo[strategy].color })
                                             } else { this.edges.add({ from: id, to: id - 1, arrows: "to"}) }
                                         }
                                     }
@@ -252,7 +254,7 @@ class NetworkData {
                                         if (action == "right") {
                                             // console.log(id, action, prob)
                                             if (prob > 0) {
-                                                this.edges.add({ from: id, to: id + 1, arrows: "to", label: prob.toString() })
+                                                this.edges.add({ from: id, to: id + 1, arrows: "to", label: prob.toString(), color: this.stratInfo[strategy].color })
                                             } else { this.edges.add({ from: id, to: id + 1, arrows: "to"}) }
                                         }
                                     }
@@ -316,6 +318,8 @@ class NetworkData {
     }
 
     drawSolution = (solution) => {
+        this.solution = solution
+
         const colors = [
             "blue", "magenta", "lime", "olive", "purple", 
             "yellow", "pink", "orange", "red", "cyan", 
@@ -330,8 +334,13 @@ class NetworkData {
 
                 // In state s, observable o is found, 1 yes, 0 no
                 if (value == 1) {
-                    const s = parseInt(key[2]) // s for state
-                    const o = parseInt(key[3]) // o for observable
+                    
+                    // format key = ys<state>_<observable>
+
+                    // check order of magnitude of budget in the tens
+                    // s equals from 2 to "_"
+                    const s = parseInt(key.substring(2, key.indexOf('_')))
+                    const o = parseInt(key.substring(key.indexOf('_')+1, key.length))
 
                     if (!this.stratInfo[o]) {
                         this.stratInfo[o] = {

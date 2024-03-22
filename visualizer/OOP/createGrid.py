@@ -38,7 +38,7 @@ def create_grid_constrained(budget, target, size, threshold, det):
 		if i == target:
 			continue
 		for j in range(1, budget + 1):
-			file.write('ys' + str(i) + str(j) + ' = Real(\'ys' + str(i) + str(j) + '\')\n')
+			file.write('ys' + str(i) + "_" + str(j) + ' = Real(\'ys' + str(i) + "_" + str(j) + '\')\n')
 
 
 	file.write('\n# Rates of randomized strategies\n')
@@ -83,27 +83,27 @@ def create_grid_constrained(budget, target, size, threshold, det):
 
 		for o in range(1, budget+1):
 			if o < budget:
-				left = left + 'ys' + str(i) + str(o) + '*xo' + str(o) + 'l + '
-				right = right + 'ys' + str(i) + str(o) + '*xo' + str(o) + 'r + '
-				up = up + 'ys' + str(i) + str(o) + '*xo' + str(o) + 'u + '
-				down = down + 'ys' + str(i) + str(o) + '*xo' + str(o) + 'd + '
+				left = left + 'ys' + str(i) + "_" + str(o) + '*xo' + str(o) + 'l + '
+				right = right + 'ys' + str(i) + "_" + str(o) + '*xo' + str(o) + 'r + '
+				up = up + 'ys' + str(i) + "_" + str(o) + '*xo' + str(o) + 'u + '
+				down = down + 'ys' + str(i) + "_" + str(o) + '*xo' + str(o) + 'd + '
 			else:
 				if i%side == 0:
-					left = left + 'ys' + str(i) + str(o) + '*xo' + str(o) + 'l) * (1 + pi' + str(i) + ') + ('
+					left = left + 'ys' + str(i) + "_" + str(o) + '*xo' + str(o) + 'l) * (1 + pi' + str(i) + ') + ('
 				else: 
-					left = left + 'ys' + str(i) + str(o) + '*xo' + str(o) + 'l) * (1 + pi' + str(i - 1) + ') + ('
+					left = left + 'ys' + str(i) + "_" + str(o) + '*xo' + str(o) + 'l) * (1 + pi' + str(i - 1) + ') + ('
 				if i%side == side-1:
-					right = right + 'ys' + str(i) + str(o) + '*xo' + str(o) + 'r) * (1 + pi' + str(i) + ') + ('
+					right = right + 'ys' + str(i) + "_" + str(o) + '*xo' + str(o) + 'r) * (1 + pi' + str(i) + ') + ('
 				else: 
-					right = right + 'ys' + str(i) + str(o) + '*xo' + str(o) + 'r) * (1 + pi' + str(i + 1) + ') + ('
+					right = right + 'ys' + str(i) + "_" + str(o) + '*xo' + str(o) + 'r) * (1 + pi' + str(i + 1) + ') + ('
 				if i - side >=0:
-					up = up + 'ys' + str(i) + str(o) + '*xo' + str(o) + 'u) * (1 + pi' + str(i - side) + ') + ('
+					up = up + 'ys' + str(i) + "_" + str(o) + '*xo' + str(o) + 'u) * (1 + pi' + str(i - side) + ') + ('
 				else: 
-					up = up + 'ys' + str(i) + str(o) + '*xo' + str(o) + 'u) * (1 + pi' + str(i) + ') + ('
+					up = up + 'ys' + str(i) + "_" + str(o) + '*xo' + str(o) + 'u) * (1 + pi' + str(i) + ') + ('
 				if i + side < size:
-					down = down + 'ys' + str(i) + str(o) + '*xo' + str(o) + 'd) * (1 + pi' + str(i + side) + '),\n'
+					down = down + 'ys' + str(i) + "_" + str(o) + '*xo' + str(o) + 'd) * (1 + pi' + str(i + side) + '),\n'
 				else: 
-					down = down + 'ys' + str(i) + str(o) + '*xo' + str(o) + 'd) * (1 + pi' + str(i) + '),\n'
+					down = down + 'ys' + str(i) + "_" + str(o) + '*xo' + str(o) + 'd) * (1 + pi' + str(i) + '),\n'
 		file.write(left + right + up + down)
 
 
@@ -155,7 +155,7 @@ def create_grid_constrained(budget, target, size, threshold, det):
 		if i == target:
 			continue
 		for j in range(1, budget + 1):
-			file.write('Or(ys' + str(i) + str(j) +  '== 0 , ys' + str(i) + str(j) + '== 1),\n')
+			file.write('Or(ys' + str(i) + "_" + str(j) +  '== 0 , ys' + str(i) + "_" + str(j) + '== 1),\n')
 
 	file.write('# Every state should be mapped to exactly one equivalence class\n')
 
@@ -163,7 +163,7 @@ def create_grid_constrained(budget, target, size, threshold, det):
 		if i == target:
 			continue
 		for j in range(1, budget + 1):
-			file.write('ys' + str(i) + str(j))
+			file.write('ys' + str(i) + "_" + str(j))
 			if j < budget:
 				file.write(' + ')
 			else:

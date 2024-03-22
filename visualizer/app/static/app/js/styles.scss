@@ -369,15 +369,21 @@ input[type="submit"] {
     color: white;
     cursor: pointer;
     transition: all 0.3s ease-in-out;
-    border: 2px solid $color-2;
+    // border: 2px solid $color-2;
     margin: 20px 0;
     &:hover {
         background-color: $color-1;
-        border: 2px solid $color-2;
+        // border: 2px solid $color-2;
         transform: scale(1.10);
     }
     &:active {
         transform: scale(1);
+    }
+    &:disabled {
+        // darken color 2
+        background-color: darken($color-2, 10%);
+        // border: 2px solid darken($color-2, 10%);
+        cursor: not-allowed;
     }
 }
 

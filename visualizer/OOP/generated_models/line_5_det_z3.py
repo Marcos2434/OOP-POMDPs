@@ -8,14 +8,14 @@ pi3 = Real('pi3')
 pi4 = Real('pi4')
 
 # Choice of observations (e.g. ys01 = 1 means that in state 0, observable 1 is observed)
-ys01 = Real('ys01')
-ys02 = Real('ys02')
-ys11 = Real('ys11')
-ys12 = Real('ys12')
-ys31 = Real('ys31')
-ys32 = Real('ys32')
-ys41 = Real('ys41')
-ys42 = Real('ys42')
+ys0_1 = Real('ys0_1')
+ys0_2 = Real('ys0_2')
+ys1_1 = Real('ys1_1')
+ys1_2 = Real('ys1_2')
+ys3_1 = Real('ys3_1')
+ys3_2 = Real('ys3_2')
+ys4_1 = Real('ys4_1')
+ys4_2 = Real('ys4_2')
 
 # Rates of randomized strategies
 xo1l = Real('xo1l')
@@ -29,14 +29,14 @@ solver.add(
 #We cannot do better than the fully observable case
 pi0>=2, pi1>=1, pi2>=0, pi3>=1, pi4>=2, 
 # Expected cost/reard equations
-pi0 == (ys01*xo1l+ ys02*xo2l)*(1 + pi0) + (ys01*xo1r+ ys02*xo2r)*(1 + pi1),
-pi1 == (ys11*xo1l+ ys12*xo2l)*(1 + pi0) + (ys11*xo1r+ ys12*xo2r)*(1 + pi2),
+pi0 == (ys0_1*xo1l+ ys0_2*xo2l)*(1 + pi0) + (ys0_1*xo1r+ ys0_2*xo2r)*(1 + pi1),
+pi1 == (ys1_1*xo1l+ ys1_2*xo2l)*(1 + pi0) + (ys1_1*xo1r+ ys1_2*xo2r)*(1 + pi2),
 pi2 == 0, 
-pi3 == (ys31*xo1l+ ys32*xo2l)*(1 + pi2) + (ys31*xo1r+ ys32*xo2r)*(1 + pi4),
-pi4 == (ys41*xo1l+ ys42*xo2l)*(1 + pi3) + (ys41*xo1r+ ys42*xo2r)*(1 + pi4),
+pi3 == (ys3_1*xo1l+ ys3_2*xo2l)*(1 + pi2) + (ys3_1*xo1r+ ys3_2*xo2r)*(1 + pi4),
+pi4 == (ys4_1*xo1l+ ys4_2*xo2l)*(1 + pi3) + (ys4_1*xo1r+ ys4_2*xo2r)*(1 + pi4),
 # We are dropped uniformly in the line
-# We want to check if the minimal expected cost is below some threshold <= 1.5
-(pi0+pi1+pi3+pi4) * Q(1,4) <= 1.5,
+# We want to check if the minimal expected cost is below some threshold <= 2.25
+(pi0+pi1+pi3+pi4) * Q(1,4) <= 2.25,
 # Randomised strategies (proper probability distributions)
 xo1l>= 0,
 xo1l<= 1,
@@ -54,19 +54,19 @@ Or(xo1r == 0, xo1r == 1),
 Or(xo2l == 0, xo2l == 1),
 Or(xo2r == 0, xo2r == 1),
 # ysNM is a function that should map every state N to some observable class M
-Or(ys01== 0 , ys01== 1),
-Or(ys02== 0 , ys02== 1),
-Or(ys11== 0 , ys11== 1),
-Or(ys12== 0 , ys12== 1),
-Or(ys31== 0 , ys31== 1),
-Or(ys32== 0 , ys32== 1),
-Or(ys41== 0 , ys41== 1),
-Or(ys42== 0 , ys42== 1),
+Or(ys0_1== 0 , ys0_1== 1),
+Or(ys0_2== 0 , ys0_2== 1),
+Or(ys1_1== 0 , ys1_1== 1),
+Or(ys1_2== 0 , ys1_2== 1),
+Or(ys3_1== 0 , ys3_1== 1),
+Or(ys3_2== 0 , ys3_2== 1),
+Or(ys4_1== 0 , ys4_1== 1),
+Or(ys4_2== 0 , ys4_2== 1),
 # Every state should be mapped to exactly one equivalence class
-ys01 + ys02 == 1,
-ys11 + ys12 == 1,
-ys31 + ys32 == 1,
-ys41 + ys42 == 1
+ys0_1 + ys0_2 == 1,
+ys1_1 + ys1_2 == 1,
+ys3_1 + ys3_2 == 1,
+ys4_1 + ys4_2 == 1
 )
 
 if solver.check() == sat:

@@ -15,11 +15,12 @@ const modelFormHandler = () => {
 
     let controller;
 
+    const submitButton = form.querySelector("#submit_model")
     form.addEventListener('submit', async event => {
-        if (controller) controller.abort()
-        
         event.preventDefault()
+        submitButton.disabled = true
 
+        if (controller) controller.abort()
         controller = new AbortController()
         
         const loader = document.querySelector("#loader")
@@ -48,6 +49,7 @@ const modelFormHandler = () => {
 
             clearInterval(counterInterval)
             loader.classList.add("disappear")
+            submitButton.disabled = false
 
             if (data.solution == "No solution") {
                 alert("No solution found for the given model")
@@ -60,6 +62,7 @@ const modelFormHandler = () => {
             networkData.updateNetwork({model: form_data.model, size : parseInt(form_data.size), target: parseInt(form_data.target)})
             networkData.drawSolution(data.solution)
         } catch (error) {
+            submitButton.disabled = false
             clearInterval(counterInterval)
             loader.classList.add("disappear")
             if (error.name == "AbortError") {
@@ -70,6 +73,7 @@ const modelFormHandler = () => {
             }
             return
         }
+        submitButton.disabled = false
     })
 
     

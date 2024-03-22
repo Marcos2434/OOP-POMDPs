@@ -32,7 +32,7 @@ def create_line_constrained(budget, target, size, threshold, det):
 		if i == target:
 			continue
 		for j in range(1, budget + 1):
-			file.write('ys' + str(i) + str(j) + ' = Real(\'ys' + str(i) + str(j) + '\')\n')
+			file.write('ys' + str(i) + "_" + str(j) + ' = Real(\'ys' + str(i) + "_" + str(j) + '\')\n')
 
 
 	file.write('\n# Rates of randomized strategies\n')
@@ -56,17 +56,17 @@ def create_line_constrained(budget, target, size, threshold, det):
 	for i in range(0, size):
 		if i == target:
 			file.write('pi' + str(i) + ' == 0, \n')
-		line = 'pi' + str(i) + ' == ' + '(ys' + str(i)
+		line = 'pi' + str(i) + ' == ' + '(ys' + str(i) + "_"
 		if i == int(target):
 			continue
 		for a in actions:
 			for o in range(1, budget + 1):
 				line = line  + str(o) + '*xo' + str(o) + a
 				if o < budget:
-					line = line + '+ ys' + str(i)
+					line = line + '+ ys' + str(i) + "_"
 				else:
 					if a == 'l':
-						line = line + ')*(1 + pi' + str(max(i-1, 0)) + ') + (ys' + str(i)
+						line = line + ')*(1 + pi' + str(max(i-1, 0)) + ') + (ys' + str(i) + "_"
 					else:
 						line = line + ')*(1 + pi' + str(min(i+1, size-1)) + ')'
 		file.write(line + ',\n')
@@ -111,7 +111,7 @@ def create_line_constrained(budget, target, size, threshold, det):
 		if i == target:
 			continue
 		for j in range(1, budget + 1):
-			file.write('Or(ys' + str(i) + str(j) +  '== 0 , ys' + str(i) + str(j) + '== 1),\n')
+			file.write('Or(ys' + str(i) + "_" + str(j) +  '== 0 , ys' + str(i) + "_" + str(j) + '== 1),\n')
 
 	file.write('# Every state should be mapped to exactly one equivalence class\n')
 
@@ -119,7 +119,7 @@ def create_line_constrained(budget, target, size, threshold, det):
 		if i == target:
 			continue
 		for j in range(1, budget + 1):
-			file.write('ys' + str(i) + str(j))
+			file.write('ys' + str(i) + "_" + str(j))
 			if j < budget:
 				file.write(' + ')
 			else:

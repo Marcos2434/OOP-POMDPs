@@ -12,22 +12,22 @@ pi7 = Real('pi7')
 pi8 = Real('pi8')
 
 # Choice of observations (e.g. ys01 = 1 means that in state 0, observable 1 is observed)
-ys01 = Real('ys01')
-ys02 = Real('ys02')
-ys11 = Real('ys11')
-ys12 = Real('ys12')
-ys21 = Real('ys21')
-ys22 = Real('ys22')
-ys31 = Real('ys31')
-ys32 = Real('ys32')
-ys41 = Real('ys41')
-ys42 = Real('ys42')
-ys51 = Real('ys51')
-ys52 = Real('ys52')
-ys61 = Real('ys61')
-ys62 = Real('ys62')
-ys71 = Real('ys71')
-ys72 = Real('ys72')
+ys0_1 = Real('ys0_1')
+ys0_2 = Real('ys0_2')
+ys1_1 = Real('ys1_1')
+ys1_2 = Real('ys1_2')
+ys2_1 = Real('ys2_1')
+ys2_2 = Real('ys2_2')
+ys3_1 = Real('ys3_1')
+ys3_2 = Real('ys3_2')
+ys4_1 = Real('ys4_1')
+ys4_2 = Real('ys4_2')
+ys5_1 = Real('ys5_1')
+ys5_2 = Real('ys5_2')
+ys6_1 = Real('ys6_1')
+ys6_2 = Real('ys6_2')
+ys7_1 = Real('ys7_1')
+ys7_2 = Real('ys7_2')
 
 # Rates of randomized strategies
 xo1l = Real('xo1l')
@@ -45,14 +45,14 @@ solver.add(
 #We cannot do better than the fully observable case
 pi0>=4, pi1>=3, pi2>=2, pi3>=3, pi4>=2, pi5>=1, pi6>=2, pi7>=1, pi8>=0, 
 # Expected cost/reard equations
-pi0 == (ys01*xo1l + ys02*xo2l) * (1 + pi0) + (ys01*xo1r + ys02*xo2r) * (1 + pi1) + (ys01*xo1u + ys02*xo2u) * (1 + pi0) + (ys01*xo1d + ys02*xo2d) * (1 + pi3),
-pi1 == (ys11*xo1l + ys12*xo2l) * (1 + pi0) + (ys11*xo1r + ys12*xo2r) * (1 + pi2) + (ys11*xo1u + ys12*xo2u) * (1 + pi1) + (ys11*xo1d + ys12*xo2d) * (1 + pi4),
-pi2 == (ys21*xo1l + ys22*xo2l) * (1 + pi1) + (ys21*xo1r + ys22*xo2r) * (1 + pi2) + (ys21*xo1u + ys22*xo2u) * (1 + pi2) + (ys21*xo1d + ys22*xo2d) * (1 + pi5),
-pi3 == (ys31*xo1l + ys32*xo2l) * (1 + pi3) + (ys31*xo1r + ys32*xo2r) * (1 + pi4) + (ys31*xo1u + ys32*xo2u) * (1 + pi0) + (ys31*xo1d + ys32*xo2d) * (1 + pi6),
-pi4 == (ys41*xo1l + ys42*xo2l) * (1 + pi3) + (ys41*xo1r + ys42*xo2r) * (1 + pi5) + (ys41*xo1u + ys42*xo2u) * (1 + pi1) + (ys41*xo1d + ys42*xo2d) * (1 + pi7),
-pi5 == (ys51*xo1l + ys52*xo2l) * (1 + pi4) + (ys51*xo1r + ys52*xo2r) * (1 + pi5) + (ys51*xo1u + ys52*xo2u) * (1 + pi2) + (ys51*xo1d + ys52*xo2d) * (1 + pi8),
-pi6 == (ys61*xo1l + ys62*xo2l) * (1 + pi6) + (ys61*xo1r + ys62*xo2r) * (1 + pi7) + (ys61*xo1u + ys62*xo2u) * (1 + pi3) + (ys61*xo1d + ys62*xo2d) * (1 + pi6),
-pi7 == (ys71*xo1l + ys72*xo2l) * (1 + pi6) + (ys71*xo1r + ys72*xo2r) * (1 + pi8) + (ys71*xo1u + ys72*xo2u) * (1 + pi4) + (ys71*xo1d + ys72*xo2d) * (1 + pi7),
+pi0 == (ys0_1*xo1l + ys0_2*xo2l) * (1 + pi0) + (ys0_1*xo1r + ys0_2*xo2r) * (1 + pi1) + (ys0_1*xo1u + ys0_2*xo2u) * (1 + pi0) + (ys0_1*xo1d + ys0_2*xo2d) * (1 + pi3),
+pi1 == (ys1_1*xo1l + ys1_2*xo2l) * (1 + pi0) + (ys1_1*xo1r + ys1_2*xo2r) * (1 + pi2) + (ys1_1*xo1u + ys1_2*xo2u) * (1 + pi1) + (ys1_1*xo1d + ys1_2*xo2d) * (1 + pi4),
+pi2 == (ys2_1*xo1l + ys2_2*xo2l) * (1 + pi1) + (ys2_1*xo1r + ys2_2*xo2r) * (1 + pi2) + (ys2_1*xo1u + ys2_2*xo2u) * (1 + pi2) + (ys2_1*xo1d + ys2_2*xo2d) * (1 + pi5),
+pi3 == (ys3_1*xo1l + ys3_2*xo2l) * (1 + pi3) + (ys3_1*xo1r + ys3_2*xo2r) * (1 + pi4) + (ys3_1*xo1u + ys3_2*xo2u) * (1 + pi0) + (ys3_1*xo1d + ys3_2*xo2d) * (1 + pi6),
+pi4 == (ys4_1*xo1l + ys4_2*xo2l) * (1 + pi3) + (ys4_1*xo1r + ys4_2*xo2r) * (1 + pi5) + (ys4_1*xo1u + ys4_2*xo2u) * (1 + pi1) + (ys4_1*xo1d + ys4_2*xo2d) * (1 + pi7),
+pi5 == (ys5_1*xo1l + ys5_2*xo2l) * (1 + pi4) + (ys5_1*xo1r + ys5_2*xo2r) * (1 + pi5) + (ys5_1*xo1u + ys5_2*xo2u) * (1 + pi2) + (ys5_1*xo1d + ys5_2*xo2d) * (1 + pi8),
+pi6 == (ys6_1*xo1l + ys6_2*xo2l) * (1 + pi6) + (ys6_1*xo1r + ys6_2*xo2r) * (1 + pi7) + (ys6_1*xo1u + ys6_2*xo2u) * (1 + pi3) + (ys6_1*xo1d + ys6_2*xo2d) * (1 + pi6),
+pi7 == (ys7_1*xo1l + ys7_2*xo2l) * (1 + pi6) + (ys7_1*xo1r + ys7_2*xo2r) * (1 + pi8) + (ys7_1*xo1u + ys7_2*xo2u) * (1 + pi4) + (ys7_1*xo1d + ys7_2*xo2d) * (1 + pi7),
 pi8 == 0, 
 # We are dropped uniformly in the grid
 # We want to check if the minimal expected cost is below some threshold <= 2.25
@@ -86,31 +86,31 @@ Or(xo2r == 0, xo2r == 1),
 Or(xo2u == 0, xo2u == 1),
 Or(xo2d == 0, xo2d == 1),
 # ysNM is a function that should map every state N to some observable class M
-Or(ys01== 0 , ys01== 1),
-Or(ys02== 0 , ys02== 1),
-Or(ys11== 0 , ys11== 1),
-Or(ys12== 0 , ys12== 1),
-Or(ys21== 0 , ys21== 1),
-Or(ys22== 0 , ys22== 1),
-Or(ys31== 0 , ys31== 1),
-Or(ys32== 0 , ys32== 1),
-Or(ys41== 0 , ys41== 1),
-Or(ys42== 0 , ys42== 1),
-Or(ys51== 0 , ys51== 1),
-Or(ys52== 0 , ys52== 1),
-Or(ys61== 0 , ys61== 1),
-Or(ys62== 0 , ys62== 1),
-Or(ys71== 0 , ys71== 1),
-Or(ys72== 0 , ys72== 1),
+Or(ys0_1== 0 , ys0_1== 1),
+Or(ys0_2== 0 , ys0_2== 1),
+Or(ys1_1== 0 , ys1_1== 1),
+Or(ys1_2== 0 , ys1_2== 1),
+Or(ys2_1== 0 , ys2_1== 1),
+Or(ys2_2== 0 , ys2_2== 1),
+Or(ys3_1== 0 , ys3_1== 1),
+Or(ys3_2== 0 , ys3_2== 1),
+Or(ys4_1== 0 , ys4_1== 1),
+Or(ys4_2== 0 , ys4_2== 1),
+Or(ys5_1== 0 , ys5_1== 1),
+Or(ys5_2== 0 , ys5_2== 1),
+Or(ys6_1== 0 , ys6_1== 1),
+Or(ys6_2== 0 , ys6_2== 1),
+Or(ys7_1== 0 , ys7_1== 1),
+Or(ys7_2== 0 , ys7_2== 1),
 # Every state should be mapped to exactly one equivalence class
-ys01 + ys02 == 1,
-ys11 + ys12 == 1,
-ys21 + ys22 == 1,
-ys31 + ys32 == 1,
-ys41 + ys42 == 1,
-ys51 + ys52 == 1,
-ys61 + ys62 == 1,
-ys71 + ys72 == 1
+ys0_1 + ys0_2 == 1,
+ys1_1 + ys1_2 == 1,
+ys2_1 + ys2_2 == 1,
+ys3_1 + ys3_2 == 1,
+ys4_1 + ys4_2 == 1,
+ys5_1 + ys5_2 == 1,
+ys6_1 + ys6_2 == 1,
+ys7_1 + ys7_2 == 1
 )
 
 if solver.check() == sat:

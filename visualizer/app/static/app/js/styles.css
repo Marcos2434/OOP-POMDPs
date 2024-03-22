@@ -324,16 +324,18 @@ input[type=submit] {
   color: white;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
-  border: 2px solid rgb(75, 74, 77);
   margin: 20px 0;
 }
 input[type=submit]:hover {
   background-color: rgb(47, 46, 51);
-  border: 2px solid rgb(75, 74, 77);
   transform: scale(1.1);
 }
 input[type=submit]:active {
   transform: scale(1);
+}
+input[type=submit]:disabled {
+  background-color: #323133;
+  cursor: not-allowed;
 }
 
 .nice-table {

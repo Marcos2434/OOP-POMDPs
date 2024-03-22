@@ -19,36 +19,51 @@ pi14 = Real('pi14')
 pi15 = Real('pi15')
 
 # Choice of observations (e.g. ys01 = 1 means that in state 0, observable 1 is observed)
-ys01 = Real('ys01')
-ys02 = Real('ys02')
-ys11 = Real('ys11')
-ys12 = Real('ys12')
-ys21 = Real('ys21')
-ys22 = Real('ys22')
-ys31 = Real('ys31')
-ys32 = Real('ys32')
-ys41 = Real('ys41')
-ys42 = Real('ys42')
-ys51 = Real('ys51')
-ys52 = Real('ys52')
-ys61 = Real('ys61')
-ys62 = Real('ys62')
-ys71 = Real('ys71')
-ys72 = Real('ys72')
-ys81 = Real('ys81')
-ys82 = Real('ys82')
-ys91 = Real('ys91')
-ys92 = Real('ys92')
-ys101 = Real('ys101')
-ys102 = Real('ys102')
-ys111 = Real('ys111')
-ys112 = Real('ys112')
-ys121 = Real('ys121')
-ys122 = Real('ys122')
-ys131 = Real('ys131')
-ys132 = Real('ys132')
-ys141 = Real('ys141')
-ys142 = Real('ys142')
+ys0_1 = Real('ys0_1')
+ys0_2 = Real('ys0_2')
+ys0_3 = Real('ys0_3')
+ys1_1 = Real('ys1_1')
+ys1_2 = Real('ys1_2')
+ys1_3 = Real('ys1_3')
+ys2_1 = Real('ys2_1')
+ys2_2 = Real('ys2_2')
+ys2_3 = Real('ys2_3')
+ys3_1 = Real('ys3_1')
+ys3_2 = Real('ys3_2')
+ys3_3 = Real('ys3_3')
+ys4_1 = Real('ys4_1')
+ys4_2 = Real('ys4_2')
+ys4_3 = Real('ys4_3')
+ys5_1 = Real('ys5_1')
+ys5_2 = Real('ys5_2')
+ys5_3 = Real('ys5_3')
+ys6_1 = Real('ys6_1')
+ys6_2 = Real('ys6_2')
+ys6_3 = Real('ys6_3')
+ys7_1 = Real('ys7_1')
+ys7_2 = Real('ys7_2')
+ys7_3 = Real('ys7_3')
+ys8_1 = Real('ys8_1')
+ys8_2 = Real('ys8_2')
+ys8_3 = Real('ys8_3')
+ys10_1 = Real('ys10_1')
+ys10_2 = Real('ys10_2')
+ys10_3 = Real('ys10_3')
+ys11_1 = Real('ys11_1')
+ys11_2 = Real('ys11_2')
+ys11_3 = Real('ys11_3')
+ys12_1 = Real('ys12_1')
+ys12_2 = Real('ys12_2')
+ys12_3 = Real('ys12_3')
+ys13_1 = Real('ys13_1')
+ys13_2 = Real('ys13_2')
+ys13_3 = Real('ys13_3')
+ys14_1 = Real('ys14_1')
+ys14_2 = Real('ys14_2')
+ys14_3 = Real('ys14_3')
+ys15_1 = Real('ys15_1')
+ys15_2 = Real('ys15_2')
+ys15_3 = Real('ys15_3')
 
 # Rates of randomized strategies
 xo1l = Real('xo1l')
@@ -59,32 +74,36 @@ xo2l = Real('xo2l')
 xo2r = Real('xo2r')
 xo2u = Real('xo2u')
 xo2d = Real('xo2d')
+xo3l = Real('xo3l')
+xo3r = Real('xo3r')
+xo3u = Real('xo3u')
+xo3d = Real('xo3d')
 solver = Solver()
 
 
 solver.add(
 #We cannot do better than the fully observable case
-pi0>=6, pi1>=5, pi2>=4, pi3>=3, pi4>=5, pi5>=4, pi6>=3, pi7>=2, pi8>=4, pi9>=3, pi10>=2, pi11>=1, pi12>=3, pi13>=2, pi14>=1, pi15>=0, 
+pi0>=3, pi1>=2, pi2>=2, pi3>=3, pi4>=2, pi5>=1, pi6>=1, pi7>=2, pi8>=1, pi9>=0, pi10>=0, pi11>=2, pi12>=1, pi13>=1, pi14>=2, pi15>=3, 
 # Expected cost/reard equations
-pi0 == (ys01*xo1l + ys02*xo2l) * (1 + pi0) + (ys01*xo1r + ys02*xo2r) * (1 + pi1) + (ys01*xo1u + ys02*xo2u) * (1 + pi0) + (ys01*xo1d + ys02*xo2d) * (1 + pi4),
-pi1 == (ys11*xo1l + ys12*xo2l) * (1 + pi0) + (ys11*xo1r + ys12*xo2r) * (1 + pi2) + (ys11*xo1u + ys12*xo2u) * (1 + pi1) + (ys11*xo1d + ys12*xo2d) * (1 + pi5),
-pi2 == (ys21*xo1l + ys22*xo2l) * (1 + pi1) + (ys21*xo1r + ys22*xo2r) * (1 + pi3) + (ys21*xo1u + ys22*xo2u) * (1 + pi2) + (ys21*xo1d + ys22*xo2d) * (1 + pi6),
-pi3 == (ys31*xo1l + ys32*xo2l) * (1 + pi2) + (ys31*xo1r + ys32*xo2r) * (1 + pi3) + (ys31*xo1u + ys32*xo2u) * (1 + pi3) + (ys31*xo1d + ys32*xo2d) * (1 + pi7),
-pi4 == (ys41*xo1l + ys42*xo2l) * (1 + pi4) + (ys41*xo1r + ys42*xo2r) * (1 + pi5) + (ys41*xo1u + ys42*xo2u) * (1 + pi0) + (ys41*xo1d + ys42*xo2d) * (1 + pi8),
-pi5 == (ys51*xo1l + ys52*xo2l) * (1 + pi4) + (ys51*xo1r + ys52*xo2r) * (1 + pi6) + (ys51*xo1u + ys52*xo2u) * (1 + pi1) + (ys51*xo1d + ys52*xo2d) * (1 + pi9),
-pi6 == (ys61*xo1l + ys62*xo2l) * (1 + pi5) + (ys61*xo1r + ys62*xo2r) * (1 + pi7) + (ys61*xo1u + ys62*xo2u) * (1 + pi2) + (ys61*xo1d + ys62*xo2d) * (1 + pi10),
-pi7 == (ys71*xo1l + ys72*xo2l) * (1 + pi6) + (ys71*xo1r + ys72*xo2r) * (1 + pi7) + (ys71*xo1u + ys72*xo2u) * (1 + pi3) + (ys71*xo1d + ys72*xo2d) * (1 + pi11),
-pi8 == (ys81*xo1l + ys82*xo2l) * (1 + pi8) + (ys81*xo1r + ys82*xo2r) * (1 + pi9) + (ys81*xo1u + ys82*xo2u) * (1 + pi4) + (ys81*xo1d + ys82*xo2d) * (1 + pi12),
-pi9 == (ys91*xo1l + ys92*xo2l) * (1 + pi8) + (ys91*xo1r + ys92*xo2r) * (1 + pi10) + (ys91*xo1u + ys92*xo2u) * (1 + pi5) + (ys91*xo1d + ys92*xo2d) * (1 + pi13),
-pi10 == (ys101*xo1l + ys102*xo2l) * (1 + pi9) + (ys101*xo1r + ys102*xo2r) * (1 + pi11) + (ys101*xo1u + ys102*xo2u) * (1 + pi6) + (ys101*xo1d + ys102*xo2d) * (1 + pi14),
-pi11 == (ys111*xo1l + ys112*xo2l) * (1 + pi10) + (ys111*xo1r + ys112*xo2r) * (1 + pi11) + (ys111*xo1u + ys112*xo2u) * (1 + pi7) + (ys111*xo1d + ys112*xo2d) * (1 + pi15),
-pi12 == (ys121*xo1l + ys122*xo2l) * (1 + pi12) + (ys121*xo1r + ys122*xo2r) * (1 + pi13) + (ys121*xo1u + ys122*xo2u) * (1 + pi8) + (ys121*xo1d + ys122*xo2d) * (1 + pi12),
-pi13 == (ys131*xo1l + ys132*xo2l) * (1 + pi12) + (ys131*xo1r + ys132*xo2r) * (1 + pi14) + (ys131*xo1u + ys132*xo2u) * (1 + pi9) + (ys131*xo1d + ys132*xo2d) * (1 + pi13),
-pi14 == (ys141*xo1l + ys142*xo2l) * (1 + pi13) + (ys141*xo1r + ys142*xo2r) * (1 + pi15) + (ys141*xo1u + ys142*xo2u) * (1 + pi10) + (ys141*xo1d + ys142*xo2d) * (1 + pi14),
-pi15 == 0, 
+pi0 == (ys0_1*xo1l + ys0_2*xo2l + ys0_3*xo3l) * (1 + pi0) + (ys0_1*xo1r + ys0_2*xo2r + ys0_3*xo3r) * (1 + pi1) + (ys0_1*xo1u + ys0_2*xo2u + ys0_3*xo3u) * (1 + pi0) + (ys0_1*xo1d + ys0_2*xo2d + ys0_3*xo3d) * (1 + pi4),
+pi1 == (ys1_1*xo1l + ys1_2*xo2l + ys1_3*xo3l) * (1 + pi0) + (ys1_1*xo1r + ys1_2*xo2r + ys1_3*xo3r) * (1 + pi2) + (ys1_1*xo1u + ys1_2*xo2u + ys1_3*xo3u) * (1 + pi1) + (ys1_1*xo1d + ys1_2*xo2d + ys1_3*xo3d) * (1 + pi5),
+pi2 == (ys2_1*xo1l + ys2_2*xo2l + ys2_3*xo3l) * (1 + pi1) + (ys2_1*xo1r + ys2_2*xo2r + ys2_3*xo3r) * (1 + pi3) + (ys2_1*xo1u + ys2_2*xo2u + ys2_3*xo3u) * (1 + pi2) + (ys2_1*xo1d + ys2_2*xo2d + ys2_3*xo3d) * (1 + pi6),
+pi3 == (ys3_1*xo1l + ys3_2*xo2l + ys3_3*xo3l) * (1 + pi2) + (ys3_1*xo1r + ys3_2*xo2r + ys3_3*xo3r) * (1 + pi3) + (ys3_1*xo1u + ys3_2*xo2u + ys3_3*xo3u) * (1 + pi3) + (ys3_1*xo1d + ys3_2*xo2d + ys3_3*xo3d) * (1 + pi7),
+pi4 == (ys4_1*xo1l + ys4_2*xo2l + ys4_3*xo3l) * (1 + pi4) + (ys4_1*xo1r + ys4_2*xo2r + ys4_3*xo3r) * (1 + pi5) + (ys4_1*xo1u + ys4_2*xo2u + ys4_3*xo3u) * (1 + pi0) + (ys4_1*xo1d + ys4_2*xo2d + ys4_3*xo3d) * (1 + pi8),
+pi5 == (ys5_1*xo1l + ys5_2*xo2l + ys5_3*xo3l) * (1 + pi4) + (ys5_1*xo1r + ys5_2*xo2r + ys5_3*xo3r) * (1 + pi6) + (ys5_1*xo1u + ys5_2*xo2u + ys5_3*xo3u) * (1 + pi1) + (ys5_1*xo1d + ys5_2*xo2d + ys5_3*xo3d) * (1 + pi9),
+pi6 == (ys6_1*xo1l + ys6_2*xo2l + ys6_3*xo3l) * (1 + pi5) + (ys6_1*xo1r + ys6_2*xo2r + ys6_3*xo3r) * (1 + pi7) + (ys6_1*xo1u + ys6_2*xo2u + ys6_3*xo3u) * (1 + pi2) + (ys6_1*xo1d + ys6_2*xo2d + ys6_3*xo3d) * (1 + pi10),
+pi7 == (ys7_1*xo1l + ys7_2*xo2l + ys7_3*xo3l) * (1 + pi6) + (ys7_1*xo1r + ys7_2*xo2r + ys7_3*xo3r) * (1 + pi7) + (ys7_1*xo1u + ys7_2*xo2u + ys7_3*xo3u) * (1 + pi3) + (ys7_1*xo1d + ys7_2*xo2d + ys7_3*xo3d) * (1 + pi11),
+pi8 == (ys8_1*xo1l + ys8_2*xo2l + ys8_3*xo3l) * (1 + pi8) + (ys8_1*xo1r + ys8_2*xo2r + ys8_3*xo3r) * (1 + pi9) + (ys8_1*xo1u + ys8_2*xo2u + ys8_3*xo3u) * (1 + pi4) + (ys8_1*xo1d + ys8_2*xo2d + ys8_3*xo3d) * (1 + pi12),
+pi9 == 0, 
+pi10 == (ys10_1*xo1l + ys10_2*xo2l + ys10_3*xo3l) * (1 + pi9) + (ys10_1*xo1r + ys10_2*xo2r + ys10_3*xo3r) * (1 + pi11) + (ys10_1*xo1u + ys10_2*xo2u + ys10_3*xo3u) * (1 + pi6) + (ys10_1*xo1d + ys10_2*xo2d + ys10_3*xo3d) * (1 + pi14),
+pi11 == (ys11_1*xo1l + ys11_2*xo2l + ys11_3*xo3l) * (1 + pi10) + (ys11_1*xo1r + ys11_2*xo2r + ys11_3*xo3r) * (1 + pi11) + (ys11_1*xo1u + ys11_2*xo2u + ys11_3*xo3u) * (1 + pi7) + (ys11_1*xo1d + ys11_2*xo2d + ys11_3*xo3d) * (1 + pi15),
+pi12 == (ys12_1*xo1l + ys12_2*xo2l + ys12_3*xo3l) * (1 + pi12) + (ys12_1*xo1r + ys12_2*xo2r + ys12_3*xo3r) * (1 + pi13) + (ys12_1*xo1u + ys12_2*xo2u + ys12_3*xo3u) * (1 + pi8) + (ys12_1*xo1d + ys12_2*xo2d + ys12_3*xo3d) * (1 + pi12),
+pi13 == (ys13_1*xo1l + ys13_2*xo2l + ys13_3*xo3l) * (1 + pi12) + (ys13_1*xo1r + ys13_2*xo2r + ys13_3*xo3r) * (1 + pi14) + (ys13_1*xo1u + ys13_2*xo2u + ys13_3*xo3u) * (1 + pi9) + (ys13_1*xo1d + ys13_2*xo2d + ys13_3*xo3d) * (1 + pi13),
+pi14 == (ys14_1*xo1l + ys14_2*xo2l + ys14_3*xo3l) * (1 + pi13) + (ys14_1*xo1r + ys14_2*xo2r + ys14_3*xo3r) * (1 + pi15) + (ys14_1*xo1u + ys14_2*xo2u + ys14_3*xo3u) * (1 + pi10) + (ys14_1*xo1d + ys14_2*xo2d + ys14_3*xo3d) * (1 + pi14),
+pi15 == (ys15_1*xo1l + ys15_2*xo2l + ys15_3*xo3l) * (1 + pi14) + (ys15_1*xo1r + ys15_2*xo2r + ys15_3*xo3r) * (1 + pi15) + (ys15_1*xo1u + ys15_2*xo2u + ys15_3*xo3u) * (1 + pi11) + (ys15_1*xo1d + ys15_2*xo2d + ys15_3*xo3d) * (1 + pi15),
 # We are dropped uniformly in the grid
-# We want to check if the minimal expected cost is below some threshold <= 1.5
-(pi0+pi1+pi2+pi3+pi4+pi5+pi6+pi7+pi8+pi9+pi10+pi11+pi12+pi13+pi14) * Q(1,15) <= 1.5,
+# We want to check if the minimal expected cost is below some threshold <= 5
+(pi0+pi1+pi2+pi3+pi4+pi5+pi6+pi7+pi8+pi10+pi11+pi12+pi13+pi14+pi15) * Q(1,15) <= 5,
 # Randomised strategies (proper probability distributions)
 xo1l>= 0,
 xo1l<= 1,
@@ -102,55 +121,92 @@ xo2u>= 0,
 xo2u<= 1,
 xo2d>= 0,
 xo2d<= 1,
+xo3l>= 0,
+xo3l<= 1,
+xo3r>= 0,
+xo3r<= 1,
+xo3u>= 0,
+xo3u<= 1,
+xo3d>= 0,
+xo3d<= 1,
 xo1l + xo1r + xo1u + xo1d == 1,
 xo2l + xo2r + xo2u + xo2d == 1,
+xo3l + xo3r + xo3u + xo3d == 1,
+# Deterministic Strategies activated
+Or(xo1l == 0, xo1l == 1),
+Or(xo1r == 0, xo1r == 1),
+Or(xo1u == 0, xo1u == 1),
+Or(xo1d == 0, xo1d == 1),
+Or(xo2l == 0, xo2l == 1),
+Or(xo2r == 0, xo2r == 1),
+Or(xo2u == 0, xo2u == 1),
+Or(xo2d == 0, xo2d == 1),
+Or(xo3l == 0, xo3l == 1),
+Or(xo3r == 0, xo3r == 1),
+Or(xo3u == 0, xo3u == 1),
+Or(xo3d == 0, xo3d == 1),
 # ysNM is a function that should map every state N to some observable class M
-Or(ys01== 0 , ys01== 1),
-Or(ys02== 0 , ys02== 1),
-Or(ys11== 0 , ys11== 1),
-Or(ys12== 0 , ys12== 1),
-Or(ys21== 0 , ys21== 1),
-Or(ys22== 0 , ys22== 1),
-Or(ys31== 0 , ys31== 1),
-Or(ys32== 0 , ys32== 1),
-Or(ys41== 0 , ys41== 1),
-Or(ys42== 0 , ys42== 1),
-Or(ys51== 0 , ys51== 1),
-Or(ys52== 0 , ys52== 1),
-Or(ys61== 0 , ys61== 1),
-Or(ys62== 0 , ys62== 1),
-Or(ys71== 0 , ys71== 1),
-Or(ys72== 0 , ys72== 1),
-Or(ys81== 0 , ys81== 1),
-Or(ys82== 0 , ys82== 1),
-Or(ys91== 0 , ys91== 1),
-Or(ys92== 0 , ys92== 1),
-Or(ys101== 0 , ys101== 1),
-Or(ys102== 0 , ys102== 1),
-Or(ys111== 0 , ys111== 1),
-Or(ys112== 0 , ys112== 1),
-Or(ys121== 0 , ys121== 1),
-Or(ys122== 0 , ys122== 1),
-Or(ys131== 0 , ys131== 1),
-Or(ys132== 0 , ys132== 1),
-Or(ys141== 0 , ys141== 1),
-Or(ys142== 0 , ys142== 1),
+Or(ys0_1== 0 , ys0_1== 1),
+Or(ys0_2== 0 , ys0_2== 1),
+Or(ys0_3== 0 , ys0_3== 1),
+Or(ys1_1== 0 , ys1_1== 1),
+Or(ys1_2== 0 , ys1_2== 1),
+Or(ys1_3== 0 , ys1_3== 1),
+Or(ys2_1== 0 , ys2_1== 1),
+Or(ys2_2== 0 , ys2_2== 1),
+Or(ys2_3== 0 , ys2_3== 1),
+Or(ys3_1== 0 , ys3_1== 1),
+Or(ys3_2== 0 , ys3_2== 1),
+Or(ys3_3== 0 , ys3_3== 1),
+Or(ys4_1== 0 , ys4_1== 1),
+Or(ys4_2== 0 , ys4_2== 1),
+Or(ys4_3== 0 , ys4_3== 1),
+Or(ys5_1== 0 , ys5_1== 1),
+Or(ys5_2== 0 , ys5_2== 1),
+Or(ys5_3== 0 , ys5_3== 1),
+Or(ys6_1== 0 , ys6_1== 1),
+Or(ys6_2== 0 , ys6_2== 1),
+Or(ys6_3== 0 , ys6_3== 1),
+Or(ys7_1== 0 , ys7_1== 1),
+Or(ys7_2== 0 , ys7_2== 1),
+Or(ys7_3== 0 , ys7_3== 1),
+Or(ys8_1== 0 , ys8_1== 1),
+Or(ys8_2== 0 , ys8_2== 1),
+Or(ys8_3== 0 , ys8_3== 1),
+Or(ys10_1== 0 , ys10_1== 1),
+Or(ys10_2== 0 , ys10_2== 1),
+Or(ys10_3== 0 , ys10_3== 1),
+Or(ys11_1== 0 , ys11_1== 1),
+Or(ys11_2== 0 , ys11_2== 1),
+Or(ys11_3== 0 , ys11_3== 1),
+Or(ys12_1== 0 , ys12_1== 1),
+Or(ys12_2== 0 , ys12_2== 1),
+Or(ys12_3== 0 , ys12_3== 1),
+Or(ys13_1== 0 , ys13_1== 1),
+Or(ys13_2== 0 , ys13_2== 1),
+Or(ys13_3== 0 , ys13_3== 1),
+Or(ys14_1== 0 , ys14_1== 1),
+Or(ys14_2== 0 , ys14_2== 1),
+Or(ys14_3== 0 , ys14_3== 1),
+Or(ys15_1== 0 , ys15_1== 1),
+Or(ys15_2== 0 , ys15_2== 1),
+Or(ys15_3== 0 , ys15_3== 1),
 # Every state should be mapped to exactly one equivalence class
-ys01 + ys02 == 1,
-ys11 + ys12 == 1,
-ys21 + ys22 == 1,
-ys31 + ys32 == 1,
-ys41 + ys42 == 1,
-ys51 + ys52 == 1,
-ys61 + ys62 == 1,
-ys71 + ys72 == 1,
-ys81 + ys82 == 1,
-ys91 + ys92 == 1,
-ys101 + ys102 == 1,
-ys111 + ys112 == 1,
-ys121 + ys122 == 1,
-ys131 + ys132 == 1,
-ys141 + ys142 == 1
+ys0_1 + ys0_2 + ys0_3 == 1,
+ys1_1 + ys1_2 + ys1_3 == 1,
+ys2_1 + ys2_2 + ys2_3 == 1,
+ys3_1 + ys3_2 + ys3_3 == 1,
+ys4_1 + ys4_2 + ys4_3 == 1,
+ys5_1 + ys5_2 + ys5_3 == 1,
+ys6_1 + ys6_2 + ys6_3 == 1,
+ys7_1 + ys7_2 + ys7_3 == 1,
+ys8_1 + ys8_2 + ys8_3 == 1,
+ys10_1 + ys10_2 + ys10_3 == 1,
+ys11_1 + ys11_2 + ys11_3 == 1,
+ys12_1 + ys12_2 + ys12_3 == 1,
+ys13_1 + ys13_2 + ys13_3 == 1,
+ys14_1 + ys14_2 + ys14_3 == 1,
+ys15_1 + ys15_2 + ys15_3 == 1
 )
 
 if solver.check() == sat:
