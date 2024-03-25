@@ -35,8 +35,8 @@ pi2 == 0,
 pi3 == (ys3_1*xo1l+ ys3_2*xo2l)*(1 + pi2) + (ys3_1*xo1r+ ys3_2*xo2r)*(1 + pi4),
 pi4 == (ys4_1*xo1l+ ys4_2*xo2l)*(1 + pi3) + (ys4_1*xo1r+ ys4_2*xo2r)*(1 + pi4),
 # We are dropped uniformly in the line
-# We want to check if the minimal expected cost is below some threshold <= 2.25
-(pi0+pi1+pi3+pi4) * Q(1,4) <= 2.25,
+# We want to check if the minimal expected cost is below some threshold <= 1.5
+(pi0+pi1+pi3+pi4) * Q(1,4) <= 1.5,
 # Randomised strategies (proper probability distributions)
 xo1l>= 0,
 xo1l<= 1,

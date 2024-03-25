@@ -43,9 +43,9 @@ ys6_3 = Real('ys6_3')
 ys7_1 = Real('ys7_1')
 ys7_2 = Real('ys7_2')
 ys7_3 = Real('ys7_3')
-ys8_1 = Real('ys8_1')
-ys8_2 = Real('ys8_2')
-ys8_3 = Real('ys8_3')
+ys9_1 = Real('ys9_1')
+ys9_2 = Real('ys9_2')
+ys9_3 = Real('ys9_3')
 ys10_1 = Real('ys10_1')
 ys10_2 = Real('ys10_2')
 ys10_3 = Real('ys10_3')
@@ -83,7 +83,7 @@ solver = Solver()
 
 solver.add(
 #We cannot do better than the fully observable case
-pi0>=3, pi1>=2, pi2>=2, pi3>=3, pi4>=2, pi5>=1, pi6>=1, pi7>=2, pi8>=1, pi9>=0, pi10>=0, pi11>=2, pi12>=1, pi13>=1, pi14>=2, pi15>=3, 
+pi0>=2, pi1>=2, pi2>=3, pi3>=4, pi4>=1, pi5>=1, pi6>=2, pi7>=3, pi8>=0, pi9>=1, pi10>=2, pi11>=3, pi12>=1, pi13>=2, pi14>=3, pi15>=4, 
 # Expected cost/reard equations
 pi0 == (ys0_1*xo1l + ys0_2*xo2l + ys0_3*xo3l) * (1 + pi0) + (ys0_1*xo1r + ys0_2*xo2r + ys0_3*xo3r) * (1 + pi1) + (ys0_1*xo1u + ys0_2*xo2u + ys0_3*xo3u) * (1 + pi0) + (ys0_1*xo1d + ys0_2*xo2d + ys0_3*xo3d) * (1 + pi4),
 pi1 == (ys1_1*xo1l + ys1_2*xo2l + ys1_3*xo3l) * (1 + pi0) + (ys1_1*xo1r + ys1_2*xo2r + ys1_3*xo3r) * (1 + pi2) + (ys1_1*xo1u + ys1_2*xo2u + ys1_3*xo3u) * (1 + pi1) + (ys1_1*xo1d + ys1_2*xo2d + ys1_3*xo3d) * (1 + pi5),
@@ -93,8 +93,8 @@ pi4 == (ys4_1*xo1l + ys4_2*xo2l + ys4_3*xo3l) * (1 + pi4) + (ys4_1*xo1r + ys4_2*
 pi5 == (ys5_1*xo1l + ys5_2*xo2l + ys5_3*xo3l) * (1 + pi4) + (ys5_1*xo1r + ys5_2*xo2r + ys5_3*xo3r) * (1 + pi6) + (ys5_1*xo1u + ys5_2*xo2u + ys5_3*xo3u) * (1 + pi1) + (ys5_1*xo1d + ys5_2*xo2d + ys5_3*xo3d) * (1 + pi9),
 pi6 == (ys6_1*xo1l + ys6_2*xo2l + ys6_3*xo3l) * (1 + pi5) + (ys6_1*xo1r + ys6_2*xo2r + ys6_3*xo3r) * (1 + pi7) + (ys6_1*xo1u + ys6_2*xo2u + ys6_3*xo3u) * (1 + pi2) + (ys6_1*xo1d + ys6_2*xo2d + ys6_3*xo3d) * (1 + pi10),
 pi7 == (ys7_1*xo1l + ys7_2*xo2l + ys7_3*xo3l) * (1 + pi6) + (ys7_1*xo1r + ys7_2*xo2r + ys7_3*xo3r) * (1 + pi7) + (ys7_1*xo1u + ys7_2*xo2u + ys7_3*xo3u) * (1 + pi3) + (ys7_1*xo1d + ys7_2*xo2d + ys7_3*xo3d) * (1 + pi11),
-pi8 == (ys8_1*xo1l + ys8_2*xo2l + ys8_3*xo3l) * (1 + pi8) + (ys8_1*xo1r + ys8_2*xo2r + ys8_3*xo3r) * (1 + pi9) + (ys8_1*xo1u + ys8_2*xo2u + ys8_3*xo3u) * (1 + pi4) + (ys8_1*xo1d + ys8_2*xo2d + ys8_3*xo3d) * (1 + pi12),
-pi9 == 0, 
+pi8 == 0, 
+pi9 == (ys9_1*xo1l + ys9_2*xo2l + ys9_3*xo3l) * (1 + pi8) + (ys9_1*xo1r + ys9_2*xo2r + ys9_3*xo3r) * (1 + pi10) + (ys9_1*xo1u + ys9_2*xo2u + ys9_3*xo3u) * (1 + pi5) + (ys9_1*xo1d + ys9_2*xo2d + ys9_3*xo3d) * (1 + pi13),
 pi10 == (ys10_1*xo1l + ys10_2*xo2l + ys10_3*xo3l) * (1 + pi9) + (ys10_1*xo1r + ys10_2*xo2r + ys10_3*xo3r) * (1 + pi11) + (ys10_1*xo1u + ys10_2*xo2u + ys10_3*xo3u) * (1 + pi6) + (ys10_1*xo1d + ys10_2*xo2d + ys10_3*xo3d) * (1 + pi14),
 pi11 == (ys11_1*xo1l + ys11_2*xo2l + ys11_3*xo3l) * (1 + pi10) + (ys11_1*xo1r + ys11_2*xo2r + ys11_3*xo3r) * (1 + pi11) + (ys11_1*xo1u + ys11_2*xo2u + ys11_3*xo3u) * (1 + pi7) + (ys11_1*xo1d + ys11_2*xo2d + ys11_3*xo3d) * (1 + pi15),
 pi12 == (ys12_1*xo1l + ys12_2*xo2l + ys12_3*xo3l) * (1 + pi12) + (ys12_1*xo1r + ys12_2*xo2r + ys12_3*xo3r) * (1 + pi13) + (ys12_1*xo1u + ys12_2*xo2u + ys12_3*xo3u) * (1 + pi8) + (ys12_1*xo1d + ys12_2*xo2d + ys12_3*xo3d) * (1 + pi12),
@@ -103,7 +103,7 @@ pi14 == (ys14_1*xo1l + ys14_2*xo2l + ys14_3*xo3l) * (1 + pi13) + (ys14_1*xo1r + 
 pi15 == (ys15_1*xo1l + ys15_2*xo2l + ys15_3*xo3l) * (1 + pi14) + (ys15_1*xo1r + ys15_2*xo2r + ys15_3*xo3r) * (1 + pi15) + (ys15_1*xo1u + ys15_2*xo2u + ys15_3*xo3u) * (1 + pi11) + (ys15_1*xo1d + ys15_2*xo2d + ys15_3*xo3d) * (1 + pi15),
 # We are dropped uniformly in the grid
 # We want to check if the minimal expected cost is below some threshold <= 5
-(pi0+pi1+pi2+pi3+pi4+pi5+pi6+pi7+pi8+pi10+pi11+pi12+pi13+pi14+pi15) * Q(1,15) <= 5,
+(pi0+pi1+pi2+pi3+pi4+pi5+pi6+pi7+pi9+pi10+pi11+pi12+pi13+pi14+pi15) * Q(1,15) <= 5,
 # Randomised strategies (proper probability distributions)
 xo1l>= 0,
 xo1l<= 1,
@@ -170,9 +170,9 @@ Or(ys6_3== 0 , ys6_3== 1),
 Or(ys7_1== 0 , ys7_1== 1),
 Or(ys7_2== 0 , ys7_2== 1),
 Or(ys7_3== 0 , ys7_3== 1),
-Or(ys8_1== 0 , ys8_1== 1),
-Or(ys8_2== 0 , ys8_2== 1),
-Or(ys8_3== 0 , ys8_3== 1),
+Or(ys9_1== 0 , ys9_1== 1),
+Or(ys9_2== 0 , ys9_2== 1),
+Or(ys9_3== 0 , ys9_3== 1),
 Or(ys10_1== 0 , ys10_1== 1),
 Or(ys10_2== 0 , ys10_2== 1),
 Or(ys10_3== 0 , ys10_3== 1),
@@ -200,7 +200,7 @@ ys4_1 + ys4_2 + ys4_3 == 1,
 ys5_1 + ys5_2 + ys5_3 == 1,
 ys6_1 + ys6_2 + ys6_3 == 1,
 ys7_1 + ys7_2 + ys7_3 == 1,
-ys8_1 + ys8_2 + ys8_3 == 1,
+ys9_1 + ys9_2 + ys9_3 == 1,
 ys10_1 + ys10_2 + ys10_3 == 1,
 ys11_1 + ys11_2 + ys11_3 == 1,
 ys12_1 + ys12_2 + ys12_3 == 1,

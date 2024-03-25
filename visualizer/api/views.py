@@ -43,6 +43,8 @@ def createModel(request):
                 threshold="<= " + request.data['threshold'],
                 det=bool(request.data['deterministic']),
             )
+            if bool(request.data['deterministic']): module_path = 'OOP/generated_models/' + request.data['model'].lower() + '_' + request.data['size'] + '_det_z3.py'
+            else: module_path = 'OOP/generated_models/' + request.data['model'].lower() + '_' + request.data['size'] + '_ran_z3.py'
         elif request.data['model'] == "Grid":
             create_grid_constrained(
                 target=int(request.data['target']),
@@ -51,22 +53,19 @@ def createModel(request):
                 threshold="<= " + request.data['threshold'],
                 det=bool(request.data['deterministic']),
             )
+            if bool(request.data['deterministic']): module_path = 'OOP/generated_models/' + request.data['model'].lower() + '_' + request.data['size'] + 'x' + request.data['size'] + '_det_z3.py'
+            else: module_path = 'OOP/generated_models/' + request.data['model'].lower() + '_' + request.data['size'] + 'x' + request.data['size'] + '_ran_z3.py'
         elif request.data['model'] == "Maze":
             create_maze_constrained(
-                budget = request.data['budget'], 
-                target = request.data['target'], 
-                sizex = request.data['rows'], 
-                sizey = request.data['columns'], 
-                threshold = request.data['threshold'], 
+                budget = int(request.data['budget']),
+                target = int(request.data['target']),
+                sizex = int(request.data['rows']), 
+                sizey = int(request.data['columns']), 
+                threshold="<= " + request.data['threshold'],
                 det = bool(request.data['deterministic'])
             )
-
-    
-        # Specify path to generated file
-        if bool(request.data['deterministic']):
-            module_path = 'OOP/generated_models/' + request.data['model'].lower() + '_' + (request.data['size'] if not request.data['model'] == 'Grid' else request.data['size'] + 'x' + request.data['size'])+ '_det_z3.py'
-        else:
-            module_path = 'OOP/generated_models/' + request.data['model'].lower() + '_' + (request.data['size'] if not request.data['model'] == 'Grid' else request.data['size'] + 'x' + request.data['size']) + request.data['size'] + '_ran_z3.py'
+            if bool(request.data['deterministic']): module_path = 'OOP/generated_models/' + request.data['model'].lower() + '_' + request.data['rows'] + 'x' + request.data['columns'] + '_det_z3.py'
+            else: module_path = 'OOP/generated_models/' + request.data['model'].lower() + '_' + request.data['rows'] + 'x' + request.data['columns'] + '_ran_z3.py'
         
         # import module
         spec = importlib.util.spec_from_file_location("generated_module", module_path)
@@ -83,9 +82,6 @@ def createModel(request):
             return Response({
                 'solution' : 'Unknown'
             }, status=status.HTTP_200_OK)
-        
-        # from time import sleep
-        # sleep(3)
         
         content = {
             'budget' : request.data['budget'],

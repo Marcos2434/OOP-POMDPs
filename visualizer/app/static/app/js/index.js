@@ -11,7 +11,13 @@ document.addEventListener("DOMContentLoaded", () => {
 const modelFormHandler = () => {
     form = document.querySelector('#oop_form')
     let form_data = serializeForm(form)
-    let networkData = new NetworkData({model: form_data.model, size: parseInt(form_data.size), target: parseInt(form_data.target)})
+    let networkData = new NetworkData({
+        model: form_data.model, 
+        target: parseInt(form_data.target), 
+        size: parseInt(form_data.size), 
+        rows: parseInt(form_data.rows),
+        columns: parseInt(form_data.columns)
+    })
 
     let controller;
 
@@ -44,8 +50,15 @@ const modelFormHandler = () => {
                 },
                 signal,
             })
+            
+            if (response.status == 400) {
+                string = ""
+                for (const [key, value] of Object.entries(await response.json())) 
+                    string += `${key}: ${value}\n`
+                alert(string)
+            }
+
             const data = await response.json()
-            console.log(data)
 
             clearInterval(counterInterval)
             loader.classList.add("disappear")
@@ -65,12 +78,8 @@ const modelFormHandler = () => {
             submitButton.disabled = false
             clearInterval(counterInterval)
             loader.classList.add("disappear")
-            if (error.name == "AbortError") {
-                console.log("Request aborted")
-            } 
-            else {
-                console.error(error)
-            }
+            if (error.name == "AbortError") console.log("Request aborted") 
+            else console.error(error)
             return
         }
         submitButton.disabled = false
@@ -79,11 +88,23 @@ const modelFormHandler = () => {
     
     form.addEventListener('change', event => {
         form_data = serializeForm(form)
-            networkData.updateNetwork({model: form_data.model, size : parseInt(form_data.size), target: parseInt(form_data.target)})
+            networkData.updateNetwork({
+                model: form_data.model, 
+                target: parseInt(form_data.target), 
+                size: parseInt(form_data.size), 
+                rows: parseInt(form_data.rows),
+                columns: parseInt(form_data.columns)
+            })
     })
 
     document.querySelector("#theme-select").addEventListener("change", e => {
-        networkData.updateNetwork({model: form_data.model, size : parseInt(form_data.size), target: parseInt(form_data.target)})
+        networkData.updateNetwork({
+            model: form_data.model, 
+            target: parseInt(form_data.target), 
+            size: parseInt(form_data.size), 
+            rows: parseInt(form_data.rows),
+            columns: parseInt(form_data.columns)
+        })
         networkData.setBgColor(e.target.value)
         // networkData = handleNetwork({model: form_data.model, size : parseInt(form_data.size), target: parseInt(form_data.target)})
         // handleNetwrokContainerColor();

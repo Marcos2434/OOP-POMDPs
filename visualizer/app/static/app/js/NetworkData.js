@@ -156,28 +156,38 @@ class NetworkData {
                 // create the grid model
                 for (let i = 0; i < this.size; i++) {
                     for (let j = 0; j < this.size; j++) {
-                        let id = i * this.size + j;
-                        this.nodes.add({ id: id, label: id.toString() });
+                        let id = i * this.size + j
+                        this.nodes.add({ id: id, label: id.toString() })
                         if (i > 0) {
-                            this.edges.add({ from: id - this.size, to: id });
+                            this.edges.add({ from: id - this.size, to: id })
                         }
                         if (j > 0) {
-                            this.edges.add({ from: id - 1, to: id });
+                            this.edges.add({ from: id - 1, to: id })
                         }
                     }
                 }
                 break;
             case "Maze":
                 // create the maze model
-                for (let i = 0; i < this.size; i++) {
-                    for (let j = 0; j < this.size; j++) {
-                        let id = i * this.size + j;
-                        this.nodes.add({ id: id, label: id.toString() });
-                        if (i > 0) {
-                            this.edges.add({ from: id - this.size, to: id });
-                        }
-                        if (j > 0) {
-                            this.edges.add({ from: id - 1, to: id });
+                for (let i = 0; i < this.rows; i++) {
+                    for (let j = 0; j < this.columns; j++) {
+                        let id = (i * this.columns) + j
+                        if (i == 0) {
+                            this.nodes.add({ id, label: id.toString() })
+                            if (j != 0) this.edges.add({ from: id - 1, to: id })
+                        } else if (j % 2 != 0) {
+                            // id = (i * this.columns) + Math.ceil(j / 2)
+                            // let nodeOnTop = id - this.columns
+                            
+                            // id = (i * this.columns) + Math.ceil(j / 2) + ( (i - 1) * Math.ceil(this.columns / 2) - 1 )
+                            // let nodeOnTop = id - Math.floor(this.columns / 2)
+
+
+                            id = (i * this.columns) + Math.floor(j/2) - (i - 1) * (Math.floor(this.columns / 2)+1)
+                            let nodeOnTop = (i == 1) ? id - (this.columns - 1) + Math.floor(j/2) : id - Math.floor(this.columns / 2)
+                        
+                            this.nodes.add({ id, label: id.toString() })
+                            this.edges.add({ from: id, to: nodeOnTop })
                         }
                     }
                 }
@@ -301,11 +311,13 @@ class NetworkData {
         }
     }
 
-    updateNetwork = ({ model, size, target }) => {
+    updateNetwork = ({ model, target, size, rows, columns }) => {
         // set the new parameters
         this.model = model
         this.size = size
         this.target = target
+        this.rows = rows
+        this.columns = columns
 
         // reset graph
         this.nodes.clear()
@@ -430,6 +442,5 @@ class NetworkData {
 
         this.createDirectedModel()
     }
-
     
 }
