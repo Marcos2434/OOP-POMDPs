@@ -20,7 +20,6 @@ const modelFormHandler = () => {
     })
 
     let controller;
-
     const submitButton = form.querySelector("#submit_model")
     form.addEventListener('submit', async event => {
         event.preventDefault()
@@ -98,6 +97,7 @@ const modelFormHandler = () => {
     })
 
     document.querySelector("#theme-select").addEventListener("change", e => {
+        networkData.setBgColor(e.target.value)
         networkData.updateNetwork({
             model: form_data.model, 
             target: parseInt(form_data.target), 
@@ -105,7 +105,6 @@ const modelFormHandler = () => {
             rows: parseInt(form_data.rows),
             columns: parseInt(form_data.columns)
         })
-        networkData.setBgColor(e.target.value)
         // networkData = handleNetwork({model: form_data.model, size : parseInt(form_data.size), target: parseInt(form_data.target)})
         // handleNetwrokContainerColor();
     })

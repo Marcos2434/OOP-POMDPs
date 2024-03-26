@@ -107,37 +107,47 @@ class NetworkData {
         this.stratInfo = {}
     }
 
-    setBgColor = (c) => {
-        this.config = this.configs[c]
-        this.container.style.backgroundColor = this.config.canvas_bg
-    }
-
+    setBgColor = (c) => this.config = this.configs[c]
+    
     styleGraph = () => {
+        console.log(this.config)
+        this.container.style.backgroundColor = this.config.canvas_bg
         const nodeBorderSize = this.config.nodeBorderSize
         for (let node of this.nodes.get()) {
             if (node.id == this.target) {
                 node.color = {
-                    border: "green",  // Color of the border
-                    background: this.config.node_bg,  // Color of the background
+                    border: "green",
+                    background: this.config.node_bg,
                     highlight: {  // Colors when the node is selected
-                        border: "green",  // Color of the border
-                        background: this.config.node_highlight_bg,  // Color of the background
+                        border: "green",
+                        background: this.config.node_highlight_bg,
                     }
                 }
                 node.borderWidth = nodeBorderSize
+                node.font = {color: this.config.node_border} // update label color 
                 this.nodes.update(node)
                 continue
             }
             node.color = {
-                border: this.config.node_border,  // Color of the border
-                background: this.config.node_bg,  // Color of the background
+                border: this.config.node_border,
+                background: this.config.node_bg,
                 highlight: {  // Colors when the node is selected
-                    border: this.config.node_highlight_border,  // Color of the border
-                    background: this.config.node_highlight_bg,  // Color of the background
+                    border: this.config.node_highlight_border,
+                    background: this.config.node_highlight_bg,
                 }
             }
             node.borderWidth = nodeBorderSize
+            node.font = {color: this.config.node_border} // update label color 
             this.nodes.update(node)
+        }
+
+        for (let edge of this.edges.get()) {
+            edge.color = this.config.edge_color
+            // update label color 
+            edge.font = {
+                color: this.config.edge_color
+            }
+            this.edges.update(edge)
         }
     }
 
@@ -169,6 +179,7 @@ class NetworkData {
                 break;
             case "Maze":
                 // create the maze model
+                if (this.columns % 2 == 0) return // columns must be odd
                 for (let i = 0; i < this.rows; i++) {
                     for (let j = 0; j < this.columns; j++) {
                         let id = (i * this.columns) + j
@@ -288,6 +299,26 @@ class NetworkData {
                     }
                 }
                 break
+            case "Maze":
+                for (let i = 0; i < this.rows; i++) {
+                    for (let j = 0; j < this.columns; j++) {
+                        let id = (i * this.columns) + j
+                        if (i == 0) {
+                            this.nodes.add({ id, label: id.toString() })
+                            if (j != 0) {
+                                this.edges.add({ from: id - 1, to: id, arrows: "to" })
+                                this.edges.add({ from: id, to: id - 1, arrows: "to" })
+                            }
+                        } else if (j % 2 != 0) {
+                            id = (i * this.columns) + Math.floor(j/2) - (i - 1) * (Math.floor(this.columns / 2)+1)
+                            let nodeOnTop = (i == 1) ? id - (this.columns - 1) + Math.floor(j/2) : id - Math.floor(this.columns / 2)
+                        
+                            this.nodes.add({ id, label: id.toString() })
+                            this.edges.add({ from: id, to: nodeOnTop, arrows: "to" })
+                            this.edges.add({ from: nodeOnTop, to: id, arrows: "to" })
+                        }
+                    }
+                }
             
         }
 
