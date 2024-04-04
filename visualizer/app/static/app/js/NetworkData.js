@@ -189,20 +189,20 @@ class NetworkData {
                             if (j != 0) this.edges.add({ from: id - 1, to: id })
                         } else if (j % 2 == 0) {
                             // id = (i * this.columns) + Math.ceil(j / 2)
-                            // let nodeOnTop = id - this.columns
+                            // let nodeAbove = id - this.columns
                             
                             // id = (i * this.columns) + Math.ceil(j / 2) + ( (i - 1) * Math.ceil(this.columns / 2) - 1 )
-                            // let nodeOnTop = id - Math.floor(this.columns / 2)
+                            // let nodeAbove = id - Math.floor(this.columns / 2)
 
 
                             // id = (i * this.columns) + Math.floor(j/2) - (i - 1) * (Math.floor(this.columns / 2)+1)
-                            // let nodeOnTop = (i == 1) ? id - (this.columns - 1) + Math.floor(j/2) : id - Math.floor(this.columns / 2)
+                            // let nodeAbove = (i == 1) ? id - (this.columns - 1) + Math.floor(j/2) : id - Math.floor(this.columns / 2)
 
                             id = this.columns + (i - 1) * Math.ceil(this.columns / 2) + j / 2
-                            let nodeOnTop = (i == 1) ? id - this.columns + j / 2 : id - Math.ceil(this.columns / 2)
+                            let nodeAbove = (i == 1) ? id - this.columns + j / 2 : id - Math.ceil(this.columns / 2)
                         
                             this.nodes.add({ id, label: id.toString() })
-                            this.edges.add({ from: id, to: nodeOnTop })
+                            this.edges.add({ from: id, to: nodeAbove })
                         }
                     }
                 }
@@ -292,7 +292,8 @@ class NetworkData {
                                     }
                                 }
                             // } else console.log("strategy not found")
-                        } else {
+                        } 
+                        else {
                             if (i > 0) {
                                 this.edges.add({ from: id, to: id - columns, arrows: "to"})
                             }
@@ -313,20 +314,61 @@ class NetworkData {
             case "Maze":
                 for (let i = 0; i < this.rows; i++) {
                     for (let j = 0; j < this.columns; j++) {
+                        
                         let id = (i * this.columns) + j
                         if (i == 0) {
                             this.nodes.add({ id, label: this.satelliteNodeData[id] ? id.toString() + (this.satelliteNodeData[id].active ? ', @' : '') : id.toString() })
-                            if (j != 0) {
-                                this.edges.add({ from: id - 1, to: id, arrows: "to" })
-                                this.edges.add({ from: id, to: id - 1, arrows: "to" })
+                            
+                            if (!this.satelliteNodeData[id]) continue
+                            const iterable = this.sensor_selection ? this.satelliteNodeData[id] : this.stratInfo[this.satelliteNodeData[id].observable]
+                            for (const [action, prob] of Object.entries(iterable.actionProbabilities)) {
+                                switch(action) {
+                                    case "right":
+                                        if (j != this.columns - 1) {
+                                            if (prob > 0) this.edges.add({ from: id, to: id + 1, arrows: "to", label: prob.toString(), color: iterable.color })
+                                            else this.edges.add({ from: id, to: id + 1, arrows: "to" })
+                                        }
+                                    break
+                                    case "left":
+                                        if (prob > 0) this.edges.add({ from: id, to: id - 1, arrows: "to", label: prob.toString(), color: iterable.color })
+                                        else this.edges.add({ from: id, to: id - 1, arrows: "to" })
+                                        break
+                                    case "down":
+                                        let nodeBelow = id + this.columns - j/2
+                                        if (prob > 0) this.edges.add({ from: id, to: nodeBelow, arrows: "to", label: prob.toString(), color: iterable.color })
+                                        else this.edges.add({ from: id, to: nodeBelow, arrows: "to" })
+                                        break
+                                }
+                            
                             }
-                        } else if (j % 2 != 0) {
+                        } else if (j % 2 == 0) {
                             id = this.columns + (i - 1) * Math.ceil(this.columns / 2) + j / 2
-                            let nodeOnTop = (i == 1) ? id - this.columns + j / 2 : id - Math.ceil(this.columns / 2)
-                        
+                            let nodeAbove = (i == 1) ? id - this.columns + j / 2 : id - Math.ceil(this.columns / 2)
+                            let nodeBelow = id + Math.ceil(this.columns / 2)
+
                             this.nodes.add({ id, label: this.satelliteNodeData[id] ? id.toString() + (this.satelliteNodeData[id].active ? ', @' : '') : id.toString() })
-                            this.edges.add({ from: id, to: nodeOnTop, arrows: "to" })
-                            this.edges.add({ from: nodeOnTop, to: id, arrows: "to" })
+                            if (this.satelliteNodeData[id]) {
+                                console.log(nodeAbove, id, nodeBelow)
+                                const iterable = this.sensor_selection ? this.satelliteNodeData[id] : this.stratInfo[this.satelliteNodeData[id].observable]
+                                for (const [action, prob] of Object.entries(iterable.actionProbabilities)) {
+                                    switch(action) {
+                                        case "up":
+                                            if (prob > 0) this.edges.add({ from: id, to: nodeAbove, arrows: "to", label: prob.toString(), color: iterable.color })
+                                            else this.edges.add({ from: id, to: nodeAbove, arrows: "to" })
+                                            break
+                                        case "down":
+                                            if (prob > 0) this.edges.add({ from: id, to: nodeBelow, arrows: "to", label: prob.toString(), color: iterable.color })
+                                            else this.edges.add({ from: id, to: nodeBelow, arrows: "to" })
+                                            break
+                                    }
+                                }
+                            }
+                            // this.nodes.add({ id, label: this.satelliteNodeData[id] ? id.toString() + (this.satelliteNodeData[id].active ? ', @' : '') : id.toString() })
+                            // this.edges.add({ from: id, to: nodeAbove, arrows: "to" })
+                            // this.edges.add({ from: nodeAbove, to: id, arrows: "to" })
+
+
+
                         }
                     }
                 }
