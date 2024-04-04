@@ -187,7 +187,7 @@ class NetworkData {
                         if (i == 0) {
                             this.nodes.add({ id, label: id.toString() })
                             if (j != 0) this.edges.add({ from: id - 1, to: id })
-                        } else if (j % 2 != 0) {
+                        } else if (j % 2 == 0) {
                             // id = (i * this.columns) + Math.ceil(j / 2)
                             // let nodeOnTop = id - this.columns
                             
@@ -195,8 +195,11 @@ class NetworkData {
                             // let nodeOnTop = id - Math.floor(this.columns / 2)
 
 
-                            id = (i * this.columns) + Math.floor(j/2) - (i - 1) * (Math.floor(this.columns / 2)+1)
-                            let nodeOnTop = (i == 1) ? id - (this.columns - 1) + Math.floor(j/2) : id - Math.floor(this.columns / 2)
+                            // id = (i * this.columns) + Math.floor(j/2) - (i - 1) * (Math.floor(this.columns / 2)+1)
+                            // let nodeOnTop = (i == 1) ? id - (this.columns - 1) + Math.floor(j/2) : id - Math.floor(this.columns / 2)
+
+                            id = this.columns + (i - 1) * Math.ceil(this.columns / 2) + j / 2
+                            let nodeOnTop = (i == 1) ? id - this.columns + j / 2 : id - Math.ceil(this.columns / 2)
                         
                             this.nodes.add({ id, label: id.toString() })
                             this.edges.add({ from: id, to: nodeOnTop })
@@ -223,7 +226,6 @@ class NetworkData {
                         // const strategy = this.satelliteNodeData[id].observable
                         const iterable = this.sensor_selection ? this.satelliteNodeData[i] : this.stratInfo[this.satelliteNodeData[i].observable]
                         for (const [action, prob] of Object.entries(iterable.actionProbabilities)) {
-                            console.log(action, prob, iterable.active)
                             switch (action) {
                                 case "right":
                                     if (i < this.size - 1 && prob > 0) this.edges.add({ from: i, to: i + 1, arrows: "to", label: prob.toString() });
@@ -316,8 +318,8 @@ class NetworkData {
                                 this.edges.add({ from: id, to: id - 1, arrows: "to" })
                             }
                         } else if (j % 2 != 0) {
-                            id = (i * this.columns) + Math.floor(j/2) - (i - 1) * (Math.floor(this.columns / 2)+1)
-                            let nodeOnTop = (i == 1) ? id - (this.columns - 1) + Math.floor(j/2) : id - Math.floor(this.columns / 2)
+                            id = this.columns + (i - 1) * Math.ceil(this.columns / 2) + j / 2
+                            let nodeOnTop = (i == 1) ? id - this.columns + j / 2 : id - Math.ceil(this.columns / 2)
                         
                             this.nodes.add({ id, label: this.satelliteNodeData[id] ? id.toString() + (this.satelliteNodeData[id].active ? ', @' : '') : id.toString() })
                             this.edges.add({ from: id, to: nodeOnTop, arrows: "to" })
@@ -493,8 +495,6 @@ class NetworkData {
                 }
             }
         }
-
-        console.log(this.satelliteNodeData)
         
         
         // Clear table
@@ -528,6 +528,13 @@ class NetworkData {
                 }
             }
         }
+
+        console.log("Solution:")
+        console.log(solution)
+        console.log("Strat Info:")
+        console.log(this.stratInfo)
+        console.log("Satellite Node Data:")
+        console.log(this.satelliteNodeData)
 
         this.createDirectedModel()
     }

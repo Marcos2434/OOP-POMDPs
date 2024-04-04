@@ -58,13 +58,14 @@ const modelFormHandler = () => {
                 alert(string)
             }
 
-            const data = await response.json()
-
-            console.log(data)
-
             clearInterval(counterInterval)
             loader.classList.add("disappear")
             submitButton.disabled = false
+
+            const data = await response.json()
+
+            // console.log(data)
+
 
             if (data.solution == "No solution") {
                 alert("No solution found for the given model")
