@@ -13,15 +13,15 @@ def validate_odd(value):
 
 class OOP_Form(forms.Form):
     model = forms.ChoiceField(choices=OOP_MODEL_CHOICES)
-    size = forms.IntegerField(min_value=1, max_value=1000, step_size=1)
-    target = forms.IntegerField(min_value=0, max_value=1000, step_size=1) # (goal)
-    budget = forms.IntegerField(min_value=1, max_value=1000, step_size=1)
-    threshold = forms.DecimalField(min_value=1, max_value=1000, step_size=.05)
+    size = forms.IntegerField(min_value=1, step_size=1)
+    target = forms.IntegerField(min_value=0, step_size=1) # (goal)
+    budget = forms.IntegerField(min_value=1, step_size=1)
+    threshold = forms.DecimalField(min_value=1, step_size=.05)
     deterministic = forms.BooleanField(required=False)
     sensor_selection = forms.BooleanField(required=False)
     
-    rows = forms.IntegerField(min_value=1, max_value=1000, step_size=1)
-    columns = forms.IntegerField(min_value=1, max_value=1000, step_size=1, validators=[validate_odd])
+    rows = forms.IntegerField(min_value=1, step_size=1)
+    columns = forms.IntegerField(min_value=1, step_size=1, validators=[validate_odd])
     observables = forms.CharField(label='Observables', required=False)
     # Another possibility:
     # observables = forms.CharField(label='Observables', required=False, widget=forms.Textarea(attrs={'rows': 5, 'cols': 40}))
@@ -61,15 +61,27 @@ class OOP_Form(forms.Form):
         # self.initial['columns'] = initial_values.get('column', 5)
         # self.initial['sensor_selection'] = initial_values.get('sensor_selection', False)
         
+        
         # self.initial['sensor_selection'] = initial_values.get('sensor_selection', True)
         # self.initial['observables'] = initial_values.get('observables', '0 0 | 1 1 | 2 2 | 3 3 | 4 4 | 5 5 | 6 6 | 7 7 | 8 8')
         
-        self.initial['model'] = initial_values.get('model', 'Maze')
+        
+        self.initial['model'] = initial_values.get('model', 'Grid')
         self.initial['size'] = initial_values.get('size', 3)
-        self.initial['target'] = initial_values.get('target', 6)
-        self.initial['budget'] = initial_values.get('budget', 2)
-        self.initial['threshold'] = initial_values.get('threshold', 3)
+        self.initial['target'] = initial_values.get('target', 4)
+        self.initial['budget'] = initial_values.get('budget', 5)
+        self.initial['threshold'] = initial_values.get('threshold', 1.5)
         self.initial['deterministic'] = initial_values.get('deterministic', True)
-        self.initial['rows'] = initial_values.get('row', 2)
+        self.initial['rows'] = initial_values.get('row', 5)
         self.initial['columns'] = initial_values.get('column', 5)
         self.initial['sensor_selection'] = initial_values.get('sensor_selection', False)
+        
+        # self.initial['model'] = initial_values.get('model', 'Maze')
+        # self.initial['size'] = initial_values.get('size', 3)
+        # self.initial['target'] = initial_values.get('target', 6)
+        # self.initial['budget'] = initial_values.get('budget', 2)
+        # self.initial['threshold'] = initial_values.get('threshold', 3)
+        # self.initial['deterministic'] = initial_values.get('deterministic', True)
+        # self.initial['rows'] = initial_values.get('row', 2)
+        # self.initial['columns'] = initial_values.get('column', 5)
+        # self.initial['sensor_selection'] = initial_values.get('sensor_selection', False)
