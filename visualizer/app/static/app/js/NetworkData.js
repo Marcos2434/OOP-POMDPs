@@ -226,14 +226,17 @@ class NetworkData {
                         // const strategy = this.satelliteNodeData[id].observable
                         const iterable = this.sensor_selection ? this.satelliteNodeData[i] : this.stratInfo[this.satelliteNodeData[i].observable]
                         for (const [action, prob] of Object.entries(iterable.actionProbabilities)) {
+                            console.log(parseFloat(prob))
                             switch (action) {
                                 case "right":
-                                    if (i < this.size - 1 && prob > 0) this.edges.add({ from: i, to: i + 1, arrows: "to", label: prob.toString() });
+                                    if (prob > 0) this.edges.add({ from: i, to: i + 1, arrows: "to", label: prob.toString() })
                                     else this.edges.add({ from: i, to: i + 1, arrows: "to" })
+                                    // if (i < this.size - 1 && prob > 0) this.edges.add({ from: i, to: i + 1, arrows: "to", label: prob.toString() });
                                     break
                                 case "left":
-                                    if (i > 0 && prob > 0) this.edges.add({ from: i, to: i - 1, arrows: "to", label: prob.toString() });
+                                    if (prob > 0) this.edges.add({ from: i, to: i - 1, arrows: "to", label: prob.toString() })
                                     else this.edges.add({ from: i, to: i - 1, arrows: "to" })
+                                    // if (i > 0 && prob > 0) this.edges.add({ from: i, to: i - 1, arrows: "to", label: prob.toString() })
                                     break
                             }   
                         }
@@ -444,16 +447,16 @@ class NetworkData {
                     if (!this.stratInfo[o]) continue
                     switch (a) {
                         case 'l':
-                            this.stratInfo[o].actionProbabilities.left = value
+                            this.stratInfo[o].actionProbabilities.left = fractionToDecimal(value)
                             break
                         case 'r':
-                            this.stratInfo[o].actionProbabilities.right = value
+                            this.stratInfo[o].actionProbabilities.right = fractionToDecimal(value)
                             break
                         case 'u':
-                            this.stratInfo[o].actionProbabilities.up = value
+                            this.stratInfo[o].actionProbabilities.up = fractionToDecimal(value)
                             break
                         case 'd':
-                            this.stratInfo[o].actionProbabilities.down = value
+                            this.stratInfo[o].actionProbabilities.down = fractionToDecimal(value)
                             break
                     }
                 }
@@ -535,3 +538,6 @@ class NetworkData {
         this.createDirectedModel()
     }
 }
+
+
+fractionToDecimal = f => f.split('/').reduce((n, d, i) => n / (i ? d : 1))
