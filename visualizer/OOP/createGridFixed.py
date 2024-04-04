@@ -36,9 +36,9 @@ def create_grid_pre(budget, target, sizex, sizey, threshold, det, pre):
 				total[i] = ''
 
 	if det == 0:
-		file = open('fixed_grid_' + str(sizex) +  'x' + str(sizex) +'ran_z3.py', 'w')
+		file = open('OOP/generated_models/fixed_grid_' + str(sizex) +  'x' + str(sizex) +'ran_z3.py', 'w')
 	else:
-		file = open('fixed_grid_' + str(sizex) +  'x' + str(sizex) +'det_z3.py', 'w')
+		file = open('OOP/generated_models/fixed_grid_' + str(sizex) +  'x' + str(sizex) +'det_z3.py', 'w')
 
 
 	file.write('from z3 import *\n\n')
@@ -267,17 +267,21 @@ def create_grid_pre(budget, target, sizex, sizey, threshold, det, pre):
 	file.write('print(\'No solution!!!\')\n')
 	file.write('else:\n\t')
 	file.write('print(\'Unknown\')')
+ 
+  	# Added
+	file.write('\nsol = lambda : solver.model() if solver.check() == sat else "No Solution" if solver.check() == unsat else None')
+	file.close()
 
 
 	
 
 
-size = int(sys.argv[1])
-target = int(sys.argv[2])
-budget = int(sys.argv[3])
-threshold = sys.argv[4]
-det = int(sys.argv[5])
-pre = sys.argv[6]
+# size = int(sys.argv[1])
+# target = int(sys.argv[2])
+# budget = int(sys.argv[3])
+# threshold = sys.argv[4]
+# det = int(sys.argv[5])
+# pre = sys.argv[6]
 
 
-create_grid_pre(budget, target, size, size, threshold, det, pre)
+# create_grid_pre(budget, target, size, size, threshold, det, pre)

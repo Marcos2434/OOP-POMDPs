@@ -38,7 +38,7 @@ const modelFormHandler = () => {
 
         const signal = controller.signal
 
-        try {
+        // try {
             const response = await fetch('api/createModel', {
                 method: 'POST',
                 body: JSON.stringify(serializeForm(form)),
@@ -50,6 +50,7 @@ const modelFormHandler = () => {
                 signal,
             })
             
+            // Error handling
             if (response.status == 400) {
                 string = ""
                 for (const [key, value] of Object.entries(await response.json())) 
@@ -58,6 +59,8 @@ const modelFormHandler = () => {
             }
 
             const data = await response.json()
+
+            console.log(data)
 
             clearInterval(counterInterval)
             loader.classList.add("disappear")
@@ -71,16 +74,24 @@ const modelFormHandler = () => {
                 return
             }
 
-            networkData.updateNetwork({model: form_data.model, size : parseInt(form_data.size), target: parseInt(form_data.target)})
+            networkData.updateNetwork({
+                model: form_data.model, 
+                size : parseInt(form_data.size), 
+                target: parseInt(form_data.target),
+                rows: parseInt(form_data.rows),
+                columns: parseInt(form_data.columns),
+                sensor_selection: form_data.sensor_selection,
+            })
             networkData.drawSolution(data.solution)
-        } catch (error) {
-            submitButton.disabled = false
-            clearInterval(counterInterval)
-            loader.classList.add("disappear")
-            if (error.name == "AbortError") console.log("Request aborted") 
-            else console.error(error)
-            return
-        }
+        // } 
+        // catch (error) {
+        //     submitButton.disabled = false
+        //     clearInterval(counterInterval)
+        //     loader.classList.add("disappear")
+        //     if (error.name == "AbortError") console.log("Request aborted") 
+        //     else console.error(error)
+        //     return
+        // }
         submitButton.disabled = false
     })
 
@@ -92,7 +103,8 @@ const modelFormHandler = () => {
                 target: parseInt(form_data.target), 
                 size: parseInt(form_data.size), 
                 rows: parseInt(form_data.rows),
-                columns: parseInt(form_data.columns)
+                columns: parseInt(form_data.columns),
+                sensor_selection: form_data.sensor_selection,
             })
     })
 
@@ -103,7 +115,8 @@ const modelFormHandler = () => {
             target: parseInt(form_data.target), 
             size: parseInt(form_data.size), 
             rows: parseInt(form_data.rows),
-            columns: parseInt(form_data.columns)
+            columns: parseInt(form_data.columns),
+            sensor_selection: form_data.sensor_selection,
         })
         // networkData = handleNetwork({model: form_data.model, size : parseInt(form_data.size), target: parseInt(form_data.target)})
         // handleNetwrokContainerColor();

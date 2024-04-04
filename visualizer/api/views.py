@@ -18,6 +18,10 @@ from OOP.createLine import create_line_constrained
 from OOP.createGrid import create_grid_constrained
 from OOP.createMaze import create_maze_constrained
 
+from OOP.createLineFixed import create_line_pre
+from OOP.createGridFixed import create_grid_pre
+from OOP.createMazeFixed import create_maze_pre
+
 import importlib.util
 
 @api_view(['GET'])
@@ -36,37 +40,79 @@ def createModel(request):
     form = OOP_Form(request.data)
     if form.is_valid():
         if request.data['model'] == "Line":
-            create_line_constrained(
-                target=int(request.data['target']),
-                size=int(request.data['size']),
-                budget=int(request.data['budget']),
-                threshold="<= " + request.data['threshold'],
-                det=bool(request.data['deterministic']),
-            )
-            if bool(request.data['deterministic']): module_path = 'OOP/generated_models/' + request.data['model'].lower() + '_' + request.data['size'] + '_det_z3.py'
-            else: module_path = 'OOP/generated_models/' + request.data['model'].lower() + '_' + request.data['size'] + '_ran_z3.py'
+
+            if not 'sensor_selection' in request.data:
+                create_line_constrained(
+                    target=int(request.data['target']),
+                    size=int(request.data['size']),
+                    budget=int(request.data['budget']),
+                    threshold="<= " + request.data['threshold'],
+                    det=bool(request.data['deterministic']),
+                )
+                
+                if bool(request.data['deterministic']): module_path = 'OOP/generated_models/' + request.data['model'].lower() + '_' + request.data['size'] + '_det_z3.py'
+                else: module_path = 'OOP/generated_models/' + request.data['model'].lower() + '_' + request.data['size'] + '_ran_z3.py'
+            else:
+                create_line_pre(
+                    target=int(request.data['target']),
+                    size=int(request.data['size']),
+                    budget=int(request.data['budget']),
+                    threshold="<= " + request.data['threshold'],
+                    det=bool(request.data['deterministic']),
+                    pre=request.data['observables'],
+                )
+                if bool(request.data['deterministic']): module_path = 'OOP/generated_models/fixed_line_' + request.data['size'] + '_det_z3.py'
+                else: module_path = 'OOP/generated_models/fixed_line_' + request.data['size'] + '_ran_z3.py'
+                
         elif request.data['model'] == "Grid":
-            create_grid_constrained(
-                target=int(request.data['target']),
-                size=int(request.data['size']),
-                budget=int(request.data['budget']),
-                threshold="<= " + request.data['threshold'],
-                det=bool(request.data['deterministic']),
-            )
-            if bool(request.data['deterministic']): module_path = 'OOP/generated_models/' + request.data['model'].lower() + '_' + request.data['size'] + 'x' + request.data['size'] + '_det_z3.py'
-            else: module_path = 'OOP/generated_models/' + request.data['model'].lower() + '_' + request.data['size'] + 'x' + request.data['size'] + '_ran_z3.py'
+            if not 'sensor_selection' in request.data:
+                create_grid_constrained(
+                    target=int(request.data['target']),
+                    size=int(request.data['size']),
+                    budget=int(request.data['budget']),
+                    threshold="<= " + request.data['threshold'],
+                    det=bool(request.data['deterministic']),
+                )
+                if bool(request.data['deterministic']): module_path = 'OOP/generated_models/' + request.data['model'].lower() + '_' + request.data['size'] + 'x' + request.data['size'] + '_det_z3.py'
+                else: module_path = 'OOP/generated_models/' + request.data['model'].lower() + '_' + request.data['size'] + 'x' + request.data['size'] + '_ran_z3.py'
+            else:
+                create_grid_pre(
+                    target=int(request.data['target']),
+                    sizex=int(request.data['size']),
+                    sizey=int(request.data['size']),
+                    budget=int(request.data['budget']),
+                    threshold="<= " + request.data['threshold'],
+                    det=bool(request.data['deterministic']),
+                    pre=request.data['observables'],
+                )
+                if bool(request.data['deterministic']): module_path = 'OOP/generated_models/fixed_grid_' + request.data['size'] + 'x' + request.data['size'] + 'det_z3.py'
+                else: module_path = 'OOP/generated_models/fixed_grid_' + request.data['size'] + 'x' + request.data['size'] + '_ran_z3.py'
+                
         elif request.data['model'] == "Maze":
-            create_maze_constrained(
-                budget = int(request.data['budget']),
-                target = int(request.data['target']),
-                sizex = int(request.data['rows']), 
-                sizey = int(request.data['columns']), 
-                threshold="<= " + request.data['threshold'],
-                det = bool(request.data['deterministic'])
-            )
-            if bool(request.data['deterministic']): module_path = 'OOP/generated_models/' + request.data['model'].lower() + '_' + request.data['rows'] + 'x' + request.data['columns'] + '_det_z3.py'
-            else: module_path = 'OOP/generated_models/' + request.data['model'].lower() + '_' + request.data['rows'] + 'x' + request.data['columns'] + '_ran_z3.py'
-        
+            if not 'sensor_selection' in request.data:
+                create_maze_constrained(
+                    budget = int(request.data['budget']),
+                    target = int(request.data['target']),
+                    sizex = int(request.data['rows']), 
+                    sizey = int(request.data['columns']), 
+                    threshold="<= " + request.data['threshold'],
+                    det = bool(request.data['deterministic'])
+                )
+                if bool(request.data['deterministic']): module_path = 'OOP/generated_models/' + request.data['model'].lower() + '_' + request.data['rows'] + 'x' + request.data['columns'] + '_det_z3.py'
+                else: module_path = 'OOP/generated_models/' + request.data['model'].lower() + '_' + request.data['rows'] + 'x' + request.data['columns'] + '_ran_z3.py'
+            else:
+                create_maze_pre(
+                    budget = int(request.data['budget']),
+                    target = int(request.data['target']),
+                    sizex = int(request.data['rows']), 
+                    sizey = int(request.data['columns']), 
+                    threshold="<= " + request.data['threshold'],
+                    det = bool(request.data['deterministic']),
+                    pre = request.data['observables']
+                )
+                if bool(request.data['deterministic']): module_path = 'OOP/generated_models/fixed_maze_' + request.data['rows'] + 'x' + request.data['columns'] + '_det_z3.py'
+                else: module_path = 'OOP/generated_models/fixed_maze_' + request.data['rows'] + 'x' + request.data['columns'] + '_ran_z3.py'
+                
         # import module
         spec = importlib.util.spec_from_file_location("generated_module", module_path)
         module = importlib.util.module_from_spec(spec)
@@ -88,8 +134,9 @@ def createModel(request):
             'target' : request.data['target'],
             'size' : request.data['size'],
             'threshold' : request.data['threshold'],
-            'deterministic' : request.data['deterministic'],
-            'solution': Z3Serializer(sol)
+            'deterministic' : True if request.data['deterministic'] else False,
+            'sensor_selection' : True if 'sensor_selection' in request.data else False,
+            'solution': Z3Serializer(sol),
         }
         
         return Response(content,

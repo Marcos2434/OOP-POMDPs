@@ -293,7 +293,7 @@ button:focus {
   margin: 10px 0;
   text-align: left;
 }
-.form-field > input[type=number], .form-field > select {
+.form-field > input[type=number], .form-field > input[type=text], .form-field > select {
   height: 100%;
   padding: 5px 10px;
   border-radius: 5px;
@@ -301,7 +301,7 @@ button:focus {
   background-color: rgb(75, 74, 77);
   color: white;
 }
-.form-field > input[type=number]:focus, .form-field > select:focus {
+.form-field > input[type=number]:focus, .form-field > input[type=text]:focus, .form-field > select:focus {
   box-shadow: none;
 }
 .form-field > input[type=checkbox] {

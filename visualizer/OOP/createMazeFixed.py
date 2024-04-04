@@ -23,9 +23,9 @@ def create_maze_pre(budget, target, sizex, sizey, threshold, det, pre):
 	total = {} #total number of observables and which ones
 
 	if det == 0:
-		file = open('fixed_maze_' + str(sizex) + 'x' + str(sizey)  +'_ran_z3.py', 'w')
+		file = open('OOP/generated_models/fixed_maze_' + str(sizex) + 'x' + str(sizey)  +'_ran_z3.py', 'w')
 	else:
-		file = open('fixed_maze_' + str(sizex) + 'x' + str(sizey) +'_det_z3.py', 'w')
+		file = open('OOP/generated_models/fixed_maze_' + str(sizex) + 'x' + str(sizey) +'_det_z3.py', 'w')
 
 	for sub in states_obs:
 		sub = sub.strip()
@@ -306,18 +306,22 @@ def create_maze_pre(budget, target, sizex, sizey, threshold, det, pre):
 	file.write('print(\'No solution!!!\')\n')
 	file.write('else:\n\t')
 	file.write('print(\'Unknown\')')
+ 
+  	# Added
+	file.write('\nsol = lambda : solver.model() if solver.check() == sat else "No Solution" if solver.check() == unsat else None')
+	file.close()
 
 
 	
 
 
-sizex = int(sys.argv[1])
-sizey = int(sys.argv[2])
-target = int(sys.argv[3])
-budget = int(sys.argv[4])
-threshold = sys.argv[5]
-det = int(sys.argv[6])
-pre = sys.argv[7]
+# sizex = int(sys.argv[1])
+# sizey = int(sys.argv[2])
+# target = int(sys.argv[3])
+# budget = int(sys.argv[4])
+# threshold = sys.argv[5]
+# det = int(sys.argv[6])
+# pre = sys.argv[7]
 
 
-create_maze_pre(budget, target, sizex, sizey, threshold, det, pre)
+# create_maze_pre(budget, target, sizex, sizey, threshold, det, pre)

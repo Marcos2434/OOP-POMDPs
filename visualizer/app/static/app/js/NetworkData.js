@@ -9,6 +9,8 @@ class NetworkData {
         this.size = size
         this.rows = rows
         this.columns = columns
+
+        this.sensor_selection = false
         
         this.tableBodyRef = document.querySelector("#strat-table").querySelector("tbody")
 
@@ -110,7 +112,6 @@ class NetworkData {
     setBgColor = (c) => this.config = this.configs[c]
     
     styleGraph = () => {
-        console.log(this.config)
         this.container.style.backgroundColor = this.config.canvas_bg
         const nodeBorderSize = this.config.nodeBorderSize
         for (let node of this.nodes.get()) {
@@ -215,10 +216,14 @@ class NetworkData {
             case "Line":
                 // create directed line model size
                 for (let i = 0; i < this.size; i++) {
-                    this.nodes.add({ id: i, label: i.toString() })
+                    this.nodes.add({ id: i, 
+                        label: this.satelliteNodeData[i] ? i.toString() + (this.satelliteNodeData[i].active ? ', @' : '') : i.toString()
+                    })
                     if (this.satelliteNodeData[i]) {
-                        const strategy = this.satelliteNodeData[i].observable
-                        for (const [action, prob] of Object.entries(this.stratInfo[strategy].actionProbabilities)) {
+                        // const strategy = this.satelliteNodeData[id].observable
+                        const iterable = this.sensor_selection ? this.satelliteNodeData[i] : this.stratInfo[this.satelliteNodeData[i].observable]
+                        for (const [action, prob] of Object.entries(iterable.actionProbabilities)) {
+                            console.log(action, prob, iterable.active)
                             switch (action) {
                                 case "right":
                                     if (i < this.size - 1 && prob > 0) this.edges.add({ from: i, to: i + 1, arrows: "to", label: prob.toString() });
@@ -234,7 +239,6 @@ class NetworkData {
                         this.edges.add({ from: i, to: i + 1, arrows: "to" })
                         this.edges.add({ from: i, to: i - 1, arrows: "to" })
                     }               
-                
                 }
                 break;
             case "Grid":
@@ -244,30 +248,32 @@ class NetworkData {
                 for (let i = 0; i < rows; i++) {
                     for (let j = 0; j < columns; j++) {
                         let id = i * columns + j
-                        this.nodes.add({ id: id, label: id.toString() })
+                        this.nodes.add({ id, label: this.satelliteNodeData[id] ? id.toString() + (this.satelliteNodeData[id].active ? ', @' : '') : id.toString() })
                         
                         if (this.satelliteNodeData[id]) {
-                            const strategy = this.satelliteNodeData[id].observable
-                            if (this.stratInfo[strategy]) {
-                                for (const [action, prob] of Object.entries(this.stratInfo[strategy].actionProbabilities)) {
+                            
+                            // const strategy = this.satelliteNodeData[id].observable
+                            const iterable = this.sensor_selection ? this.satelliteNodeData[id] : this.stratInfo[this.satelliteNodeData[id].observable]
+                            // if (this.stratInfo[strategy]) {
+                                for (const [action, prob] of Object.entries(iterable.actionProbabilities)) {
                                     if (i > 0) {
                                         if (action == "up") {
                                             if (prob > 0) {
-                                                this.edges.add({ from: id, to: id - columns, arrows: "to", label: prob.toString(), color: this.stratInfo[strategy].color })
+                                                this.edges.add({ from: id, to: id - columns, arrows: "to", label: prob.toString(), color: iterable.color })
                                             } else { this.edges.add({ from: id, to: id - columns, arrows: "to"}) }  
                                         } 
                                     }
                                     if (i < rows - 1) {
                                         if (action == "down") {
                                             if (prob > 0) {
-                                                this.edges.add({ from: id, to: id + columns, arrows: "to", label: prob.toString(), color: this.stratInfo[strategy].color })
+                                                this.edges.add({ from: id, to: id + columns, arrows: "to", label: prob.toString(), color: iterable.color })
                                             } else { this.edges.add({ from: id, to: id + columns, arrows: "to"}) }
                                         }
                                     }
                                     if (j > 0) {
                                         if (action == "left") {
                                             if (prob > 0) {
-                                                this.edges.add({ from: id, to: id - 1, arrows: "to", label: prob.toString(), color: this.stratInfo[strategy].color })
+                                                this.edges.add({ from: id, to: id - 1, arrows: "to", label: prob.toString(), color: iterable.color })
                                             } else { this.edges.add({ from: id, to: id - 1, arrows: "to"}) }
                                         }
                                     }
@@ -275,12 +281,12 @@ class NetworkData {
                                         if (action == "right") {
                                             // console.log(id, action, prob)
                                             if (prob > 0) {
-                                                this.edges.add({ from: id, to: id + 1, arrows: "to", label: prob.toString(), color: this.stratInfo[strategy].color })
+                                                this.edges.add({ from: id, to: id + 1, arrows: "to", label: prob.toString(), color: iterable.color })
                                             } else { this.edges.add({ from: id, to: id + 1, arrows: "to"}) }
                                         }
                                     }
                                 }
-                            }
+                            // } else console.log("strategy not found")
                         } else {
                             if (i > 0) {
                                 this.edges.add({ from: id, to: id - columns, arrows: "to"})
@@ -304,7 +310,7 @@ class NetworkData {
                     for (let j = 0; j < this.columns; j++) {
                         let id = (i * this.columns) + j
                         if (i == 0) {
-                            this.nodes.add({ id, label: id.toString() })
+                            this.nodes.add({ id, label: this.satelliteNodeData[id] ? id.toString() + (this.satelliteNodeData[id].active ? ', @' : '') : id.toString() })
                             if (j != 0) {
                                 this.edges.add({ from: id - 1, to: id, arrows: "to" })
                                 this.edges.add({ from: id, to: id - 1, arrows: "to" })
@@ -313,7 +319,7 @@ class NetworkData {
                             id = (i * this.columns) + Math.floor(j/2) - (i - 1) * (Math.floor(this.columns / 2)+1)
                             let nodeOnTop = (i == 1) ? id - (this.columns - 1) + Math.floor(j/2) : id - Math.floor(this.columns / 2)
                         
-                            this.nodes.add({ id, label: id.toString() })
+                            this.nodes.add({ id, label: this.satelliteNodeData[id] ? id.toString() + (this.satelliteNodeData[id].active ? ', @' : '') : id.toString() })
                             this.edges.add({ from: id, to: nodeOnTop, arrows: "to" })
                             this.edges.add({ from: nodeOnTop, to: id, arrows: "to" })
                         }
@@ -342,13 +348,14 @@ class NetworkData {
         }
     }
 
-    updateNetwork = ({ model, target, size, rows, columns }) => {
+    updateNetwork = ({ model, target, size, rows, columns, sensor_selection }) => {
         // set the new parameters
         this.model = model
         this.size = size
         this.target = target
         this.rows = rows
         this.columns = columns
+        this.sensor_selection = sensor_selection == "on"
 
         // reset graph
         this.nodes.clear()
@@ -360,7 +367,7 @@ class NetworkData {
         this.styleGraph()
     }
 
-    drawSolution = (solution) => {
+    drawSolution = solution => {
         this.solution = solution
 
         const colors = [
@@ -369,27 +376,52 @@ class NetworkData {
         ]
         let availableColors = colors
         let observableColors = {}
-
+        
         // Give each observable a colour and update the nodes
         for (const [key, value] of Object.entries(solution)) {
             
-            if (key.substring(0, 2) == 'ys') {
+            if (!this.sensor_selection) {
+                if (key.substring(0, 2) == 'ys') {
+                    // In state s, observable o is found, 1 yes, 0 no
+                    if (value == 1) {
+                        
+                        // format key = ys<state>_<observable>
+                        const s = parseInt(key.substring(2, key.indexOf('_')))
+                        const o = parseInt(key.substring(key.indexOf('_')+1, key.length))
 
-                // In state s, observable o is found, 1 yes, 0 no
-                if (value == 1) {
-                    
-                    // format key = ys<state>_<observable>
+                        if (!this.stratInfo[o]) {
+                            this.stratInfo[o] = {
+                                id: o,
+                                color: observableColors[o],
+                                nodes: [],
+                                actionProbabilities: {
+                                    right: 0,
+                                    left: 0,
+                                    up: 0,
+                                    down: 0,
+                                }
+                            }
+                        }
 
-                    // check order of magnitude of budget in the tens
-                    // s equals from 2 to "_"
-                    const s = parseInt(key.substring(2, key.indexOf('_')))
-                    const o = parseInt(key.substring(key.indexOf('_')+1, key.length))
+                        // add observable to satellite node data so that we know the strategy 
+                        // of each node when looping through them
+                        if (!this.satelliteNodeData[s]) this.satelliteNodeData[s] = {observable : o}
+                        
+                        // Check if the observable has already been mapped to a colour, if not, assign one
+                        if (!this.stratInfo[o].color) this.stratInfo[o].color = availableColors.pop()
+                    }
+                } 
+            } else {
+                // Observable / sensor is active on state s
+                if (key.substring(0, 1) == 'y') {
+                    if (value == 1) {
 
-                    if (!this.stratInfo[o]) {
-                        this.stratInfo[o] = {
-                            id: o,
-                            color: observableColors[o],
-                            nodes: [],
+                        // format key = y<state>
+                        const s = parseInt(key.substring(1, key.length))
+
+                        // set the observable to active on the node
+                        if (!this.satelliteNodeData[s]) this.satelliteNodeData[s] = {
+                            active : true,
                             actionProbabilities: {
                                 right: 0,
                                 left: 0,
@@ -399,44 +431,70 @@ class NetworkData {
                         }
                     }
 
-                    // add observable to satellite node data so that we know the strategy 
-                    // of each node when looping through each of them
-                    if (!this.satelliteNodeData[s]) {
-                        this.satelliteNodeData[s] = {
-                            observable: o,
-                        }
-                    }
-                    // console.log(s, o, this.satelliteNodeData[s])
-                    
-                    // Check if the observable has already been mapped to a colour
-                    if (!this.stratInfo[o].color) this.stratInfo[o].color = availableColors.pop()
                 }
             }
         }
 
-        
         // Once each observable has been mapped to a colour, update the strategy table
         for (const [key, value] of Object.entries(solution)) {
-            if (key.substring(0, 2) == 'xo') {
-                const o = parseInt(key[2]) // o for observable
-                const a = key[3] // a for action
+            if (!this.sensor_selection) {
+                if (key.substring(0, 2) == 'xo') {
+                    const o = parseInt(key[2]) // o for observable
+                    const a = key[3] // a for action
 
-                switch (a) {
-                    case 'l':
-                        this.stratInfo[o].actionProbabilities.left = value
-                        break
-                    case 'r':
-                        this.stratInfo[o].actionProbabilities.right = value
-                        break
-                    case 'u':
-                        this.stratInfo[o].actionProbabilities.up = value
-                        break
-                    case 'd':
-                        this.stratInfo[o].actionProbabilities.down = value
-                        break
+                    switch (a) {
+                        case 'l':
+                            this.stratInfo[o].actionProbabilities.left = value
+                            break
+                        case 'r':
+                            this.stratInfo[o].actionProbabilities.right = value
+                            break
+                        case 'u':
+                            this.stratInfo[o].actionProbabilities.up = value
+                            break
+                        case 'd':
+                            this.stratInfo[o].actionProbabilities.down = value
+                            break
+                    }
+                }
+            } else {
+                if (key.substring(0, 2) == 'xo') {
+
+                    // format : xo<observable><action>
+                    // since action is always the last character, we can infer that the
+                    // observable goes from the third character to the second to last character
+                    const s = parseInt(key.substring(2, key.length - 1)) // o for observable
+                    const a = key[key.length - 1] // a for action
+
+                    if (!this.satelliteNodeData[s]) this.satelliteNodeData[s] = {
+                        active: false,
+                        actionProbabilities: {
+                            right: 0,
+                            left: 0,
+                            up: 0,
+                            down: 0,
+                        }
+                    }
+
+                    switch (a) {
+                        case 'l':
+                            this.satelliteNodeData[s].actionProbabilities.left = value
+                            break
+                        case 'r':
+                            this.satelliteNodeData[s].actionProbabilities.right = value
+                            break
+                        case 'u':
+                            this.satelliteNodeData[s].actionProbabilities.up = value
+                            break
+                        case 'd':
+                            this.satelliteNodeData[s].actionProbabilities.down = value
+                            break
+                    }
                 }
             }
         }
+
+        console.log(this.satelliteNodeData)
         
         
         // Clear table
@@ -473,5 +531,4 @@ class NetworkData {
 
         this.createDirectedModel()
     }
-    
 }

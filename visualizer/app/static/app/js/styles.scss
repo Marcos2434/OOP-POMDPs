@@ -336,7 +336,7 @@ button:focus {
 
     }
     
-    > input[type="number"], > select {
+    > input[type="number"], > input[type="text"], > select {
         height: 100%;
         padding: 5px 10px;
         border-radius: $border-radius;
