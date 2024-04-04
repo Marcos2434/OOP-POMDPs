@@ -392,11 +392,11 @@ class NetworkData {
                         const s = parseInt(key.substring(2, key.indexOf('_')))
                         const o = parseInt(key.substring(key.indexOf('_')+1, key.length))
 
+                        // assign a color to each observable and add it to the strategy info object
                         if (!this.stratInfo[o])
                             this.stratInfo[o] = {
                                 id: o,
                                 color: colors.pop(),
-                                nodes: [],
                                 actionProbabilities: {
                                     right: 0,
                                     left: 0,
@@ -408,10 +408,6 @@ class NetworkData {
                         // add observable to satellite node data so that we know the strategy 
                         // of each node when looping through them
                         this.satelliteNodeData[s] = {observable : o}
-                        // if (!this.satelliteNodeData[s]) 
-                        
-                        // Check if the observable has already been mapped to a colour, if not, assign one
-                        // if (!this.stratInfo[o].color) this.stratInfo[o].color = 
                     }
                 } 
             } else {
