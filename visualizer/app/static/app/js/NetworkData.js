@@ -372,13 +372,14 @@ class NetworkData {
     drawSolution = solution => {
         this.solution = solution
 
-        const colors = [
+        console.log("Solution:")
+        console.log(solution)
+
+        let colors = [
             "blue", "magenta", "lime", "olive", "purple", 
             "yellow", "pink", "orange", "red", "cyan", 
         ]
-        let availableColors = colors
-        let observableColors = {}
-        
+
         // Give each observable a colour and update the nodes
         for (const [key, value] of Object.entries(solution)) {
             
@@ -391,10 +392,10 @@ class NetworkData {
                         const s = parseInt(key.substring(2, key.indexOf('_')))
                         const o = parseInt(key.substring(key.indexOf('_')+1, key.length))
 
-                        if (!this.stratInfo[o]) {
+                        if (!this.stratInfo[o])
                             this.stratInfo[o] = {
                                 id: o,
-                                color: observableColors[o],
+                                color: colors.pop(),
                                 nodes: [],
                                 actionProbabilities: {
                                     right: 0,
@@ -403,14 +404,14 @@ class NetworkData {
                                     down: 0,
                                 }
                             }
-                        }
 
                         // add observable to satellite node data so that we know the strategy 
                         // of each node when looping through them
-                        if (!this.satelliteNodeData[s]) this.satelliteNodeData[s] = {observable : o}
+                        this.satelliteNodeData[s] = {observable : o}
+                        // if (!this.satelliteNodeData[s]) 
                         
                         // Check if the observable has already been mapped to a colour, if not, assign one
-                        if (!this.stratInfo[o].color) this.stratInfo[o].color = availableColors.pop()
+                        // if (!this.stratInfo[o].color) this.stratInfo[o].color = 
                     }
                 } 
             } else {
@@ -444,6 +445,7 @@ class NetworkData {
                     const o = parseInt(key[2]) // o for observable
                     const a = key[3] // a for action
 
+                    if (!this.stratInfo[o]) continue
                     switch (a) {
                         case 'l':
                             this.stratInfo[o].actionProbabilities.left = value
@@ -529,8 +531,6 @@ class NetworkData {
             }
         }
 
-        console.log("Solution:")
-        console.log(solution)
         console.log("Strat Info:")
         console.log(this.stratInfo)
         console.log("Satellite Node Data:")

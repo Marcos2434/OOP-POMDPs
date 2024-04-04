@@ -41,6 +41,9 @@ def createModel(request):
     if form.is_valid():
         if request.data['model'] == "Line":
 
+            request.data['deterministic'] = True if 'deterministic' in request.data else False
+                
+            
             if not 'sensor_selection' in request.data:
                 create_line_constrained(
                     target=int(request.data['target']),

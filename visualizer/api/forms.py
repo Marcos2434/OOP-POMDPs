@@ -69,7 +69,7 @@ class OOP_Form(forms.Form):
         self.initial['model'] = initial_values.get('model', 'Grid')
         self.initial['size'] = initial_values.get('size', 3)
         self.initial['target'] = initial_values.get('target', 4)
-        self.initial['budget'] = initial_values.get('budget', 5)
+        self.initial['budget'] = initial_values.get('budget', 4)
         self.initial['threshold'] = initial_values.get('threshold', 1.5)
         self.initial['deterministic'] = initial_values.get('deterministic', True)
         self.initial['rows'] = initial_values.get('row', 5)
