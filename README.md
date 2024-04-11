@@ -1,4 +1,51 @@
 
+# Finding the optimal solution to the Optimal Observability Problem
+
+How would one find the optimal solution to the Optimal Observability Problem?
+Consider a POMDP line model, i.e. 5 states connected in a straight line, with a “target” side at state 2. One can clearly see that the optimal solution to this problem is that the states to the left should have a strategy that tells them to go right towards the target and vice versa for the other side. This problem can be applied to a grid too or other shapes. The expected reward (utility function) of such a setup is defined as the average of the distances of the nodes to the target by following their strategy. Were a situation arise where a node cannot reach the target node, this would have a special negative effect on the utility for that system. The goal is to achieve the optimal solution by minimising the threshold. A tool that evaluates the threshold for a given POMDP configuration is provided, we supply it with the strategies and which states contain these. How would one design an ai / machine learning system to not just find a solution, but the optimal solution?
+
+Let us first consider our parameters
+
+MDP=M=(S,I,G,Act,P,rew)=(states, initial state, Goal state, Actions, Probability Function, Reward function)
+POMDP=Mp=(M,O,obs)
+State=s=Mp
+
+Utility(Mp)=MinExpRew(Mp)
+
+Reward(s)=R(s)=E[sum(rew(s,a,s'))]=sum(rew(s,a,s')*P(s,a,s')
+
+say that I want to have my set of states to be defined POMDPs with a strategy assigned to each node in the POMDP. I can then check the utility of this configuration and change it accordingly, what would the actions be?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # Run
 
 Grant execution permissions for the quick launch (Linux / Macos):

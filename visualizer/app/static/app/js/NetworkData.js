@@ -363,12 +363,6 @@ class NetworkData {
                                     }
                                 }
                             }
-                            // this.nodes.add({ id, label: this.satelliteNodeData[id] ? id.toString() + (this.satelliteNodeData[id].active ? ', @' : '') : id.toString() })
-                            // this.edges.add({ from: id, to: nodeAbove, arrows: "to" })
-                            // this.edges.add({ from: nodeAbove, to: id, arrows: "to" })
-
-
-
                         }
                     }
                 }
