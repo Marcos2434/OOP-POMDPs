@@ -2,6 +2,7 @@ from enum import Enum
 from copy import deepcopy
 
 import numpy as np
+from itertools import combinations
 
 class Action:
     UP = 0
@@ -15,28 +16,52 @@ class RangeFloat:
         self.value = value  # utilize setter to ensure value is within range
     
     @property
-    def value(self):
+    def value(self) -> float:
         # when one accesses the value attribute, this function is called
-        return self._value 
+        return self._value
     
     @value.setter
-    def value(self, new_value):
+    def value(self, new_value) -> None:
         # when one sets the value attribute, this function is called
-        if 0.0 <= new_value <= 1.0: self._value = new_value
+        if 0.0 <= float(new_value) <= 1.0: self._value = float(new_value)
         else: raise ValueError("Value must be between 0 and 1")
     
+    def __eq__(self, other) -> bool:
+        return isinstance(other, RangeFloat) and self._value == other._value
+    
+    def __hash__(self) -> int:
+        return hash(self._value)
+    
+    def __str__(self) -> str:
+        return str(self._value)
+
+    def __repr__(self) -> str:
+        return str(self._value)
 
 class Strategy:
-    def __init__(self) -> None:
-        self.actions : dict[Action, RangeFloat] = None
+    def __init__(self, actions : dict[Action, RangeFloat] = None) -> None:
+        self.actions : dict[Action, RangeFloat] = actions
     
     def add_action(self, action : Action, p : RangeFloat):
         self.actions[action] = p
+        
+    def __str__(self) -> str:
+        return str(self.actions)
+    
+    def __repr__(self) -> str:
+        return str(self.actions)
+    
+    def __hash__(self) -> int:
+        return hash(tuple(self.actions.items()))
+
+    def __eq__(self, other) -> bool:
+        return isinstance(other, Strategy) and self.actions == other.actions
 
 class Node:
     def __init__(self, i, j) -> None:
         self.i = i
         self.j = j
+        self.possible_actions : set[Action] = set()
     
     def __hash__(self):
         return hash((self.i, self.j))
@@ -53,8 +78,8 @@ class Node:
     def assign_strategy(self, strategy : Strategy):
         self.strategy = strategy
     
-    def possible_actions(self, actions : set[Action]):
-        self.actions = actions
+    def set_possible_actions(self, possible_actions : set[Action]):
+        self.possible_actions = possible_actions
     
 class Edge:
     def __init__(self, nodes : tuple[Node, Node]) -> None:
@@ -111,7 +136,7 @@ class POMDP:
         self.model = model
         self.budget = budget
         
-        self.strategies : set[Action] = set()
+        # self.strategies : set[Strategy] = set()
         
         if nodes and edges: self.graph = Graph(nodes, edges)
         else: self.generate_model()
@@ -181,13 +206,14 @@ class POMDP:
     def solve(self) -> set[Edge]:
         if self.budget is None: self.budget = len(self.nodes)
 
+        strategies = set()
         # Finding the optimal solution with infinite budget
         for n in self.nodes:
             agent = Agent(n)
             while agent.pos != self.target:
                 action, possible_actions = agent.choose_action(self)
-                self.strategies.add(action) # add the action to the set of strategies
-                n.possible_actions(possible_actions) # add the possible actions to the node
+                strategies.add(action) # no need to use the strategy class since actions are deterministic
+                n.set_possible_actions(possible_actions) # add the possible actions to the node
                 prev_agent_pos = agent.pos
                 agent.pos = self.step(agent.pos, action) # advance the agent
                 new_edge = Edge((prev_agent_pos, agent.pos))
@@ -199,15 +225,33 @@ class POMDP:
                 
                 self.add_strat_edge(new_edge)
         
-        
         # We check if the optimal solution is below the required budget
         # otherwise we recompute the solution with non-determinism in mind
         # where each strategy is a probability distribution between the actions
-        if len(self.strategies) > self.budget:
+        if len(strategies) > self.budget:
             print("[Found optimal solution with infinite budget, adjusting for given budget...]")
+            possible_strategies : set[set[Strategy]] = set(set())
             for n in self.nodes:
-                pass
-                  
+                if n == self.target: continue
+                
+                
+                # for each node, add all action combinations as new strategies
+                for i in range(len(n.possible_actions)):
+                    for comb in set(combinations(n.possible_actions, i+1)):
+                        possible_strategies.add(Strategy(actions = {action: RangeFloat(1 / (i+1)) for action in comb}))
+
+            print(possible_strategies)
+                    
+                    
+                
+                
+                
+                
+                # Check if the node can perform actions corresponding to any of the selected strategies
+                # node_strategies = [strategy for strategy in selected_strategies if strategy in node.actions]
+                
+                
+                
         
         return self.strat_edges
 
@@ -222,7 +266,7 @@ class Agent:
         for a in available_actions:
             expectedMoveValue[a] = pomdp.reward(self.pos, a)
         max_value = max(expectedMoveValue.values())
-        max_keys = [key for key, value in expectedMoveValue.items() if value == max_value]
+        max_keys = set(key for key, value in expectedMoveValue.items() if value == max_value)
         return max(expectedMoveValue, key = lambda k: expectedMoveValue[k]), max_keys
         
 
@@ -239,6 +283,6 @@ if __name__ == '__main__':
     # # Output: ValueError: Value must be between 0 and 1
 
     
-    pomdp = POMDP(gridSize=(3,3), target=Node(2,2), model='grid')
+    pomdp = POMDP(gridSize=(3,3), target=Node(2,1), model='grid', budget=2)
     print(pomdp.solve())
 
