@@ -7,14 +7,29 @@ import math
 from six.moves import input
 from itertools import chain, combinations
 
-# from ..helpers import *
-from helpers import *
+from ..helpers import *
 import importlib.util
 
+# Run directly
+# FILE_PATH = '/Users/marcos/Documents/github_projects/POMDPs/visualizer/api/solver/utility_functions/generated_models/grid.py'
+# MODULE_PATH = '/Users/marcos/Documents/github_projects/POMDPs/visualizer/api/solver/utility_functions/generated_models/grid.py'
+
+# Run through server (Django)
+FILE_PATH = os.getcwd() + '/api/solver/utility_functions/generated_models/grid.py'
+MODULE_PATH = FILE_PATH
+
+
 def grid_utility(budget, target, size, strategies : dict[int, Strategy], assignments : dict[Node, int], det = 0):
-            
-    # file = open('api/utility_functions/generated_models/grid.py', 'w')
-    file = open('/Users/marcos/Documents/github_projects/POMDPs/visualizer/api/solver/utility_functions/generated_models/grid.py', 'w')
+    
+    # import os
+    # print("[HERE] !!!!!!!!!!!!!!!!")
+    # print(os.getcwd())
+    # print(os.path.exists(os.getcwd() + '/api/solver/utility_functions/generated_models/grid.py'))
+    
+    # remove file if it exists 
+    if os.path.exists(FILE_PATH): os.remove(FILE_PATH)
+    
+    file = open(FILE_PATH, 'w')
 
     file.write('from z3 import *\n\n')
     
@@ -132,11 +147,11 @@ def grid_utility(budget, target, size, strategies : dict[int, Strategy], assignm
 
     file.write(line + '\n')
 
-    # file.write('# Randomised strategies (proper probability distributions)\n')
-    # for i in range(1, budget + 1):
-    #     for a in actions:
-    #         file.write('xo' + str(i) + a + '>= 0,\n')
-    #         file.write('xo' + str(i) + a + '<= 1,\n')
+    file.write('# Randomised strategies (proper probability distributions)\n')
+    for i in range(1, budget + 1):
+        for a in actions:
+            file.write('xo' + str(i) + a + '>= 0,\n')
+            file.write('xo' + str(i) + a + '<= 1,\n')
     
     # [MODIFIED]
     file.write('# Randomised strategies (proper probability distributions)\n')
@@ -177,8 +192,14 @@ def grid_utility(budget, target, size, strategies : dict[int, Strategy], assignm
     # We know the the observables assigned to each state from the assignments parameter, 
     # so we can write them directly to the file
     file.write("# Assigned observables\n")
+    # print()
+    # print(sorted([n.id for n, s_id in assignments.items()]))
+    # print()
     for n, s_id in assignments.items():
         file.write(f'ys{n.id}_{s_id} == 1,\n')
+        for i in range(1, budget + 1):
+            if i != s_id:
+                file.write(f'ys{n.id}_{i} == 0,\n')
     
     # [MODIFIED]
     file.write('# Every state should be mapped to exactly one equivalence class\n')
@@ -222,8 +243,7 @@ def grid_utility(budget, target, size, strategies : dict[int, Strategy], assignm
     
     
     # import generated python file and get the function "sol"
-    module_path = '/Users/marcos/Documents/github_projects/POMDPs/visualizer/api/solver/utility_functions/generated_models/grid.py'
-    spec = importlib.util.spec_from_file_location("generated_module", module_path)
+    spec = importlib.util.spec_from_file_location("generated_module", MODULE_PATH)
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
 
@@ -232,10 +252,8 @@ def grid_utility(budget, target, size, strategies : dict[int, Strategy], assignm
     model = module.sol()
     
     if model == "No Solution" or model is None: return 0, None
-    
-    print(model)
-    model = z3_model_to_dict(model)
-    return z3_rational_to_float(model['exp']), model
+    model = Z3Serializer(model)
+    return float(model['exp']), model
 
     # return module.sol()
 

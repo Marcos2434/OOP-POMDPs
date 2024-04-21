@@ -1,16 +1,15 @@
-# from .helpers import *
-from helpers import *
-from utility_functions.createGridUtility import grid_utility
+from .helpers import *
+from .utility_functions.createGridUtility import grid_utility
 
 class POMDP:
     def __init__(self, 
-                 gridSize : tuple[int, int], 
-                 nodes : set[Node] = set(), 
-                 edges : set[Edge] = set(), 
-                 target : Node = None, 
-                 model : str = None,
-                 budget : int = None,
-                ) -> None:
+            gridSize : tuple[int, int], 
+            nodes : set[Node] = set(), 
+            edges : set[Edge] = set(), 
+            target : Node = None, 
+            model : str = None,
+            budget : int = None,
+        ) -> None:
         self.gridSize = gridSize
         self.target = target
         
@@ -105,6 +104,9 @@ class POMDP:
     def translate_grid_coords_to_grid_id(self, pos : Node) -> int:
         return pos.i * self.gridSize[0] + pos.j
     
+    def translate_grid_id_to_grid_coords(self, id : int) -> Node:
+        return Node(id // self.gridSize[0], id % self.gridSize[0])
+    
     def utility(self, strategies : dict[int, Strategy], assignments : dict[Node, int]) -> float:
         if (self.model == 'grid'):
             # translate layer
@@ -118,15 +120,18 @@ class POMDP:
             raise NotImplementedError("Utility function not implemented for this model")
     
     def solve(self) -> set[Edge]:
+        infinite_budget_optimal_solution, minimal_budget_optimal_solution = None, None
+        
         if self.budget is None: self.budget = len(self.nodes)
 
         # [Finding the optimal solution with infinite budget]
-        strategies = set()
+        strategies : set[Strategy] = set()
         for n in self.nodes:
             agent = Agent(n)
             while agent.pos != self.target:
                 action, suitable_actions = agent.choose_action(self)
-                strategies.add(action) # no need to use the strategy class since actions are deterministic
+                strategies.add(Strategy({ action : 1.0 })) # only one action is possible since the best solution is deterministic
+                agent.pos.strategy = Strategy({ action : 1.0 })
                 agent.pos.set_suitable_actions(suitable_actions) # add the possible actions to the node
                 prev_agent_pos = agent.pos
                 agent.pos = self.step(agent.pos, action) # advance the agent
@@ -186,7 +191,6 @@ class POMDP:
                 for strategy in possible_strategies:
                     # add all strategies that contain at least one action 
                     # that the node can perform; possible strategies
-                    
                     if any([action in n.suitable_actions for action in strategy.actions.keys()]):
                         n.possible_strategies.add(strategy)                
 
@@ -241,10 +245,18 @@ class POMDP:
                 best_strategy = get_best_strategy_assignment(strategy_combination, nodes)
                 if best_strategy: best_strategy_assignments.extend(best_strategy)
             # print(best_strategy_assignments)
-            best_strategy_assignment = max(best_strategy_assignments, key = lambda x: x['utility'])
-
-        # This function also creates / updates the self.parsed_pomdp variable
-        return self.strat_edges, best_strategy_assignment
+            minimal_budget_optimal_solution = max(best_strategy_assignments, key = lambda x: x['utility'])
+        else:
+            id_strategy_combination = dict(enumerate(strategies, start=1))
+            # assignments = {n: n.strategy_id for n in self.nodes if n != self.target}
+            for n in self.nodes:
+                if n == self.target: continue
+                for s_id, s in id_strategy_combination.items():
+                    if s == n.strategy: n.strategy_id = s_id
+            
+            _, infinite_budget_optimal_solution = self.utility(id_strategy_combination, {n: n.strategy_id for n in self.nodes if n != self.target})
+        
+        return infinite_budget_optimal_solution, minimal_budget_optimal_solution
 
         
 class Agent:
@@ -275,6 +287,6 @@ if __name__ == '__main__':
     
     # pomdp = POMDP(gridSize=(2, 2), target=Node(1, 1), model='grid', budget=1)
     pomdp = POMDP(gridSize=(3, 3), target=Node(2,1), model='grid', budget=2)
-    infinite_budget_optimal_solution_edges, minimal_budget_optimal_solution = pomdp.solve()
+    infinite_budget_optimal_solution, minimal_budget_optimal_solution = pomdp.solve()
     print(minimal_budget_optimal_solution)
 

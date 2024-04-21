@@ -8,10 +8,16 @@ OOP_MODEL_CHOICES = (
     ("Maze", "Maze"),
 )
 
+SOLVER_CHOICES = (
+    ('Z3', 'Z3'), 
+    ('AI', 'AI')
+)
+
 def validate_odd(value): 
     if value % 2 == 0: raise ValidationError('%(value)s has to be an odd number!', params={'value': value})
 
 class OOP_Form(forms.Form):
+    solver = forms.ChoiceField(choices=SOLVER_CHOICES)
     model = forms.ChoiceField(choices=OOP_MODEL_CHOICES)
     size = forms.IntegerField(min_value=1, step_size=1)
     target = forms.IntegerField(min_value=0, step_size=1) # (goal)

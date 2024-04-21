@@ -174,15 +174,38 @@ class Graph:
     def get_edges(self, n : Node) -> set[Node]:
         return self.adjacency_list.get(n, [])
     
-def z3_model_to_dict(model):
+from z3 import Model, Z3_INT_SORT, Z3_REAL_SORT
+
+def Z3Serializer(m : Model) -> dict:
     """
-    Convert a Z3 model to a dictionary.
+    Convert a Z3 model to a JSON serializable format. Support for int, rational, and string values.
+
+    Args:
+        m (Model): a Z3 model
+        
+    Returns:
+        dict: a dictionary representation of the model
     """
-    result = {}
-    for declaration in model.decls():
-        var = declaration()
-        result[str(var)] = model[var]
-    return result
+    values = {}
+    for decl in m.decls():
+        if m[decl].sort().kind() == Z3_INT_SORT:
+            values[str(decl)] = m[decl].as_long()
+        elif m[decl].sort().kind() == Z3_REAL_SORT:
+            values[str(decl)] = z3_rational_to_float(m[decl])
+        else:
+            values[str(decl)] = str(m[decl])
+    
+    return values
+
+# def z3_model_to_dict(model):
+#     """
+#     Convert a Z3 model to a dictionary.
+#     """
+#     result = {}
+#     for declaration in model.decls():
+#         var = declaration()
+#         result[str(var)] = model[var]
+#     return result
 
 def z3_rational_to_float(rational):
     return float(rational.numerator_as_long()) / float(rational.denominator_as_long())
