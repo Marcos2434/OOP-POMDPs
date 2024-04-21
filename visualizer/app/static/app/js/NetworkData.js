@@ -409,10 +409,13 @@ class NetworkData {
     }
 
     drawSolution = solution => {
+        // Reset
         this.solution = solution
+        this.stratInfo = {}
+        this.satelliteNodeData = {}
 
-        console.log("Solution:")
-        console.log(solution)
+        // console.log("Solution:")
+        // console.log(solution)
 
         let colors = [
             "blue", "magenta", "lime", "olive", "purple", 
@@ -479,20 +482,23 @@ class NetworkData {
                 if (key.substring(0, 2) == 'xo') {
                     const o = parseInt(key[2]) // o for observable
                     const a = key[3] // a for action
+                    
+                    try { value = fractionToDecimal(value) }
+                    catch (e) {}
 
                     if (!this.stratInfo[o]) continue
                     switch (a) {
                         case 'l':
-                            this.stratInfo[o].actionProbabilities.left = fractionToDecimal(value)
+                            this.stratInfo[o].actionProbabilities.left = value
                             break
                         case 'r':
-                            this.stratInfo[o].actionProbabilities.right = fractionToDecimal(value)
+                            this.stratInfo[o].actionProbabilities.right = value
                             break
                         case 'u':
-                            this.stratInfo[o].actionProbabilities.up = fractionToDecimal(value)
+                            this.stratInfo[o].actionProbabilities.up = value
                             break
                         case 'd':
-                            this.stratInfo[o].actionProbabilities.down = fractionToDecimal(value)
+                            this.stratInfo[o].actionProbabilities.down = value
                             break
                     }
                 }
@@ -535,6 +541,7 @@ class NetworkData {
         
         
         // Clear table
+        console.log("cleared")
         this.tableBodyRef.innerHTML = ""
         
         for (const [_, info] of Object.entries(this.stratInfo)) {
@@ -573,7 +580,7 @@ class NetworkData {
 
         this.createDirectedModel()
     }
-}
+};
 
 
-fractionToDecimal = f => f.split('/').reduce((n, d, i) => n / (i ? d : 1))
+const fractionToDecimal = f => f.split('/').reduce((n, d, i) => n / (i ? d : 1))
