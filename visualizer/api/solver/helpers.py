@@ -2,7 +2,7 @@ from enum import Enum
 from copy import deepcopy
 
 import numpy as np
-from itertools import combinations
+
 
 class Action(Enum):
     """

@@ -1,5 +1,6 @@
 from .helpers import *
 from .utility_functions.createGridUtility import grid_utility
+from itertools import combinations
 
 class POMDP:
     def __init__(self, 
@@ -125,13 +126,13 @@ class POMDP:
         if self.budget is None: self.budget = len(self.nodes)
 
         # [Finding the optimal solution with infinite budget]
-        strategies : set[Strategy] = set()
+        used_actions : set[Action]  = set()
         for n in self.nodes:
             agent = Agent(n)
             while agent.pos != self.target:
                 action, suitable_actions = agent.choose_action(self)
-                strategies.add(Strategy({ action : 1.0 })) # only one action is possible since the best solution is deterministic
-                agent.pos.strategy = Strategy({ action : 1.0 })
+                used_actions.add(action)
+                # agent.pos.strategy = Strategy({ action : 1.0 })
                 agent.pos.set_suitable_actions(suitable_actions) # add the possible actions to the node
                 prev_agent_pos = agent.pos
                 agent.pos = self.step(agent.pos, action) # advance the agent
@@ -147,53 +148,70 @@ class POMDP:
         # We check if the optimal solution is below the required budget
         # otherwise we recompute the solution with non-determinism in mind
         # where each strategy is a probability distribution between the actions
-        if len(strategies) > self.budget:
+        if len(used_actions) > self.budget:
             print("[Found optimal solution with infinite budget, adjusting for given budget...]")
             
-            # iterate through all the nodes to find the possible strategies
-            possible_strategies : set[set[Strategy]] = set(set())
-            for n in self.nodes:
-                if n == self.target: continue
+            # # iterate through all the nodes to find the possible strategies
+            # possible_strategies : set[set[Strategy]] = set(set())
+            # for n in self.nodes:
+            #     if n == self.target: continue
                 
-                # for each node, add all action combinations as new strategies
-                for i in range(len(n.suitable_actions)):
-                    for comb in set(combinations(n.suitable_actions, i+1)):
-                        possible_strategies.add(Strategy(actions = {action: RangeFloat(1 / (i+1)) for action in comb}))
+            #     # for each node, add all action combinations as new strategies
+            #     # print(n, n.suitable_actions)
+            #     for i in range(len(n.suitable_actions)):    
+            #         for comb in set(combinations(n.suitable_actions, i+1)):
+            #             # print({action: RangeFloat(1 / (i+1)) for action in comb})
+            #             possible_strategies.add(Strategy(actions = {action: RangeFloat(1 / (i+1)) for action in comb}))
 
-            # the possible strategies within the given budget (budget or less) are all 
-            # the combinations of size 1 to B of the possible strategies
-            available_strategy_combinations = set()
-            for i in range(1, self.budget+1):
-                available_strategy_combinations.update(set(combinations(possible_strategies, i)))
+            # # the possible strategies within the given budget (budget or less) are all 
+            # # the combinations of size 1 to B of the possible strategies
+            # available_strategy_combinations = set()
+            # for i in range(1, self.budget+1):
+            #     available_strategy_combinations.update(set(combinations(possible_strategies, i)))
 
             
-            for n in self.ordered_nodes:
-                if n == self.target: continue
+            # for n in self.ordered_nodes:
+            #     if n == self.target: continue
                 
-                # we know that possible strategies are by definition less suitable than the suitable strategies,
-                # however we need to include them if we want to find the optimal strategy within a given budget
-                # as one node's unoptimal strategy could still lead to the optimal low budget solution
+            #     # we know that possible strategies are by definition less suitable than the suitable strategies,
+            #     # however we need to include them if we want to find the optimal strategy within a given budget
+            #     # as one node's unoptimal strategy could still lead to the optimal low budget solution
                 
-                # [Finding suitable strategies]
-                # for strategy in possible_strategies:
-                #     # the strategies that are a subset of the node's possible actions
-                #     # i.e. if the node can perform all the actions in the strategy
+            #     # # [Finding suitable strategies]
+            #     # for strategy in possible_strategies:
+            #     #     # the strategies that are a subset of the node's possible actions
+            #     #     # i.e. if the node can perform all the actions in the strategy
                     
-                #     print(n, n.suitable_actions, strategy.actions.keys(), n.suitable_actions.issubset(set(strategy.actions.keys())))
-                #     if n.suitable_actions.issubset(set(strategy.actions.keys())):
-                #     # if set(strategy.actions.keys()).issubset(n.suitable_actions):
-                #         n.suitable_strategies.add(strategy)
+            #     #     print(n, n.suitable_actions, strategy.actions.keys(), n.suitable_actions.issubset(set(strategy.actions.keys())))
+            #     #     if n.suitable_actions.issubset(set(strategy.actions.keys())):
+            #     #     # if set(strategy.actions.keys()).issubset(n.suitable_actions):
+            #     #         n.suitable_strategies.add(strategy)
                 
-                # shorthand for the above commented code
-                # n.suitable_strategies = n.suitable_strategies.union(set(strategy for strategy in possible_strategies if n.suitable_actions.issubset(set(strategy.actions.keys()))))
+            #     # # shorthand for the above commented code
+            #     # n.suitable_strategies = n.suitable_strategies.union(set(strategy for strategy in possible_strategies if n.suitable_actions.issubset(set(strategy.actions.keys()))))
                 
-                # [Finding possible strategies]
-                for strategy in possible_strategies:
-                    # add all strategies that contain at least one action 
-                    # that the node can perform; possible strategies
-                    if any([action in n.suitable_actions for action in strategy.actions.keys()]):
-                        n.possible_strategies.add(strategy)                
-
+            #     # [Finding possible strategies]
+            #     for strategy in possible_strategies:
+            #         # add all strategies that contain at least one action 
+            #         # that the node can perform; possible strategies
+            #         if any([action in n.suitable_actions for action in strategy.actions.keys()]):
+            #             n.possible_strategies.add(strategy)                
+            
+            
+            # for i in range(len(n.suitable_actions)):    
+            #     for comb in set(combinations(n.suitable_actions, i+1)):
+            #         # print({action: RangeFloat(1 / (i+1)) for action in comb})
+            #         possible_strategies.add(Strategy(actions = {action: RangeFloat(1 / (i+1)) for action in comb}))
+            
+            strategies : set[Action] = set()
+            for i in range(len(used_actions)):
+                for comb in set(combinations(used_actions, i+1)):
+                    strategies.add(Strategy(actions = {action: RangeFloat(1 / (i+1)) for action in comb}))
+                
+            strategy_combinations = set()
+            for i in range(self.budget):
+                strategy_combinations |= set(combinations(strategies, i+1))
+            
             def get_best_strategy_assignment(strategy_combination : set[Strategy], nodes : list[Node]):
                 # 1-indexed startegy id numbering
                 # id_strategy_combination = dict(map(lambda kv : (kv[0] + 1, kv[1]), id_strategy_combination.items()))
@@ -209,6 +227,8 @@ class POMDP:
                     if i >= len(nodes):
                         assignments = {n: n.strategy_id for n in nodes if n != self.target}
                         u, parsed_pomdp = self.utility(id_strategy_combination, assignments)
+                        print(id_strategy_combination)
+                        print(u, parsed_pomdp)
                         return [{
                             'utility': u,
                             'assignments': assignments,
@@ -221,10 +241,10 @@ class POMDP:
 
                     results = list()
                     for id, strat in id_strategy_combination.items():
-                        if strat in node.possible_strategies:
-                            node.assign_strategy(strat, id)
-                            result = try_all_from_node(i + 1)
-                            if result: results.extend(result)
+                        # if strat in node.possible_strategies:
+                        node.assign_strategy(strat, id)
+                        result = try_all_from_node(i + 1)
+                        if result: results.extend(result)
                     
                     return results
 
@@ -241,12 +261,14 @@ class POMDP:
             # and it is favourable to compute it once before the recursive function is called.
             # this way we reduce the time complexity to O(n) instead of O(n^2)
             nodes = self.list_nodes
-            for strategy_combination in available_strategy_combinations:
+            # for strategy_combination in available_strategy_combinations:
+            for strategy_combination in strategy_combinations:
                 best_strategy = get_best_strategy_assignment(strategy_combination, nodes)
                 if best_strategy: best_strategy_assignments.extend(best_strategy)
             # print(best_strategy_assignments)
             minimal_budget_optimal_solution = max(best_strategy_assignments, key = lambda x: x['utility'])
         else:
+            strategies = set(Strategy({ action : 1.0 } for action in used_actions))
             id_strategy_combination = dict(enumerate(strategies, start=1))
             # assignments = {n: n.strategy_id for n in self.nodes if n != self.target}
             for n in self.nodes:
@@ -255,7 +277,7 @@ class POMDP:
                     if s == n.strategy: n.strategy_id = s_id
             
             _, infinite_budget_optimal_solution = self.utility(id_strategy_combination, {n: n.strategy_id for n in self.nodes if n != self.target})
-        
+            
         return infinite_budget_optimal_solution, minimal_budget_optimal_solution
 
         

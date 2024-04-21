@@ -251,6 +251,8 @@ def grid_utility(budget, target, size, strategies : dict[int, Strategy], assignm
     # sol = lambda : solver.model() if solver.check() == sat else "No Solution" if solver.check() == unsat else None
     model = module.sol()
     
+    print(model)
+    
     if model == "No Solution" or model is None: return 0, None
     model = Z3Serializer(model)
     return float(model['exp']), model
