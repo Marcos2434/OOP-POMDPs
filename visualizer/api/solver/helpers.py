@@ -121,14 +121,16 @@ class Node:
     def __repr__(self) -> str:
         return f'({self.i}, {self.j})'
     
-    def assign_strategy(self, strategy : Strategy):
+    def __gt__(self, other):
+        return self.i > other.i or (self.i == other.i and self.j > other.j)
+    
+    def assign_strategy(self, strategy : Strategy, strategy_id : int):
         self.strategy = strategy
+        self.strategy_id = strategy_id
     
     def set_suitable_actions(self, suitable_actions : set[Action]):
         self.suitable_actions = suitable_actions
         
-    def __gt__(self, other):
-        return self.i > other.i or (self.i == other.i and self.j > other.j)
     
 class Edge:
     """

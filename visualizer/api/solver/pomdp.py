@@ -1,140 +1,6 @@
-from enum import Enum
-from copy import deepcopy
-
-import numpy as np
-from itertools import combinations
-
-class Action(Enum):
-    UP = 0
-    RIGHT = 1
-    DOWN = 2
-    LEFT = 3
-    
-    def __str__(self):
-        # capitalize the first letter of the action while the rest is lowercase
-        return self.name[0] + self.name[1:].lower()
-    
-    def __repr__(self):
-        return self.name[0]
-
-    def __eq__(self, value: object) -> bool:
-        return super().__eq__(value)
-    
-    def __hash__(self) -> int:
-        return hash(self.name)
-    
-
-class RangeFloat:
-    def __init__(self, value=0.0):
-        self._value = value
-        self.value = value  # utilize setter to ensure value is within range
-    
-    @property
-    def value(self) -> float:
-        # when one accesses the value attribute, this function is called
-        return self._value
-    
-    @value.setter
-    def value(self, new_value) -> None:
-        # when one sets the value attribute, this function is called
-        if 0.0 <= float(new_value) <= 1.0: self._value = float(new_value)
-        else: raise ValueError("Value must be between 0 and 1")
-    
-    def __eq__(self, other) -> bool:
-        return isinstance(other, RangeFloat) and self._value == other._value
-    
-    def __hash__(self) -> int:
-        return hash(self._value)
-    
-    def __str__(self) -> str:
-        return str(self._value)
-
-    def __repr__(self) -> str:
-        return str(self._value)
-
-class Strategy:
-    def __init__(self, actions : dict[Action, RangeFloat] = None) -> None:
-        self.actions : dict[Action, RangeFloat] = actions
-    
-    def add_action(self, action : Action, p : RangeFloat):
-        self.actions[action] = p
-        
-    def __str__(self) -> str:
-        return str(self.actions)
-    
-    def __repr__(self) -> str:
-        return str(self.actions)
-    
-    def __hash__(self) -> int:
-        return hash(tuple(self.actions.items()))
-
-    def __eq__(self, other) -> bool:
-        return isinstance(other, Strategy) and self.actions == other.actions
-
-class Node:
-    def __init__(self, i, j) -> None:
-        self.i = i
-        self.j = j
-        self.suitable_actions : set[Action] = set()
-        self.suitable_strategies : set[Strategy] = set()
-        self.possible_strategies : set[Strategy] = set()
-        
-    def __hash__(self):
-        return hash((self.i, self.j))
-    
-    def __eq__(self, other) -> bool:
-        return isinstance(other, Node) and self.i == other.i and self.j == other.j
-    
-    def __str__(self) -> str:
-        return f'({self.i}, {self.j})'
-    
-    def __repr__(self) -> str:
-        return f'({self.i}, {self.j})'
-    
-    def assign_strategy(self, strategy : Strategy):
-        self.strategy = strategy
-    
-    def set_suitable_actions(self, suitable_actions : set[Action]):
-        self.suitable_actions = suitable_actions
-        
-    def __gt__(self, other):
-        return self.i > other.i or (self.i == other.i and self.j > other.j)
-    
-class Edge:
-    def __init__(self, nodes : tuple[Node, Node]) -> None:
-        self.nodes = nodes
-    
-    def __hash__(self):
-        return hash(self.nodes)
-    
-    def __str__(self) -> str:
-        return f'{self.nodes[0]} -> {self.nodes[1]}'
-
-    def __repr__(self) -> str:
-        return f'{self.nodes[0]} -> {self.nodes[1]}'
-    
-    def __eq__(self, other) -> bool:
-        return isinstance(other, Edge) and self.nodes == other.nodes
-
-
-class Graph:
-    def __init__(self, nodes : set[Node], edges : set[Edge]) -> None:
-        self.nodes = nodes
-        self.edges = edges
-        
-        self.adjacency_list = {}
-        for edge in edges:
-            if edge.nodes[0] not in self.adjacency_list: self.adjacency_list[edge.nodes[0]] = []
-            if edge.nodes[1] not in self.adjacency_list: self.adjacency_list[edge.nodes[1]] = []
-            
-            self.adjacency_list[edge.nodes[0]].append(edge.nodes[1])
-            self.adjacency_list[edge.nodes[1]].append(edge.nodes[0])
-    
-    def __str__(self) -> str:
-        return str(self.adjacency_list)
-    
-    def get_edges(self, n : Node) -> set[Node]:
-        return self.adjacency_list.get(n, [])
+# from .helpers import *
+from helpers import *
+from utility_functions.createGridUtility import grid_utility
 
 class POMDP:
     def __init__(self, 
@@ -163,6 +29,16 @@ class POMDP:
     @property
     def ordered_nodes(self) -> list[Node]:
         return sorted(self.nodes)
+    
+    @property
+    def list_nodes(self) -> list[Node]:
+        """
+        Converts the set of nodes into a list of nodes for indexing purposes.
+
+        Returns:
+            list[Node]: the list of nodes
+        """
+        return list(self.nodes)
     
     def generate_model(self):
         if self.model == 'grid':
@@ -226,9 +102,20 @@ class POMDP:
         # if next_node is None: return -float('inf')
         return -self.distance(next_node, self.target)
 
-    def utility(self) -> float:
-        return 1.0
-        # return sum([self.reward(edge.nodes[0], edge.nodes[1]) for edge in self.strat_edges])
+    def translate_grid_coords_to_grid_id(self, pos : Node) -> int:
+        return pos.i * self.gridSize[0] + pos.j
+    
+    def utility(self, strategies : dict[int, Strategy], assignments : dict[Node, int]) -> float:
+        if (self.model == 'grid'):
+            # translate layer
+            # modify the node coordinates into grid ids for the OOP library
+            target = self.translate_grid_coords_to_grid_id(pos = self.target)
+            
+            for n in self.nodes: n.id = self.translate_grid_coords_to_grid_id(n)
+            u, parsed_pomdp = grid_utility(self.budget, target, self.gridSize[0], strategies, assignments)
+            return u, parsed_pomdp
+        else:
+            raise NotImplementedError("Utility function not implemented for this model")
     
     def solve(self) -> set[Edge]:
         if self.budget is None: self.budget = len(self.nodes)
@@ -303,21 +190,35 @@ class POMDP:
                     if any([action in n.suitable_actions for action in strategy.actions.keys()]):
                         n.possible_strategies.add(strategy)                
 
-            def get_best_strategy_assignment(strategy_combination : set[Strategy]):
+            def get_best_strategy_assignment(strategy_combination : set[Strategy], nodes : list[Node]):
+                # 1-indexed startegy id numbering
+                # id_strategy_combination = dict(map(lambda kv : (kv[0] + 1, kv[1]), id_strategy_combination.items()))
+                id_strategy_combination = dict(enumerate(strategy_combination, start=1))
+                
                 def try_all_from_node(i : int):
-                    if i >= len(self.nodes):
+                    """
+                    Args:
+                        i (int): the index of the list of nodes to try from 
+                        (not to be confused with the node id or its coordinates)
+                    """
+                    
+                    if i >= len(nodes):
+                        assignments = {n: n.strategy_id for n in nodes if n != self.target}
+                        u, parsed_pomdp = self.utility(id_strategy_combination, assignments)
                         return [{
-                            'utility': self.utility(),
-                            'assignments': {node: node.strategy for node in self.nodes if node != self.target}
+                            'utility': u,
+                            'assignments': assignments,
+                            'strategy_combination': id_strategy_combination,
+                            'parsed_pomdp': parsed_pomdp,
                         }]
 
-                    node = self.ordered_nodes[i]
+                    node = nodes[i]
                     if node == self.target: return try_all_from_node(i + 1)
 
                     results = list()
-                    for strat in strategy_combination:
+                    for id, strat in id_strategy_combination.items():
                         if strat in node.possible_strategies:
-                            node.assign_strategy(strat)
+                            node.assign_strategy(strat, id)
                             result = try_all_from_node(i + 1)
                             if result: results.extend(result)
                     
@@ -331,11 +232,18 @@ class POMDP:
             # Order of the nodes is not imperative since all combinations are tried regardless of order
             # and one node's strategy cannot affect another node's strategy in this implementation.
             best_strategy_assignments = list()
+            
+            # we precompute the list of nodes since it takes O(n) time to convert the set to a list
+            # and it is favourable to compute it once before the recursive function is called.
+            # this way we reduce the time complexity to O(n) instead of O(n^2)
+            nodes = self.list_nodes
             for strategy_combination in available_strategy_combinations:
-                bs = get_best_strategy_assignment(strategy_combination)
-                if bs: best_strategy_assignments.extend(bs)
+                best_strategy = get_best_strategy_assignment(strategy_combination, nodes)
+                if best_strategy: best_strategy_assignments.extend(best_strategy)
+            # print(best_strategy_assignments)
             best_strategy_assignment = max(best_strategy_assignments, key = lambda x: x['utility'])
 
+        # This function also creates / updates the self.parsed_pomdp variable
         return self.strat_edges, best_strategy_assignment
 
         
@@ -345,11 +253,10 @@ class Agent:
     
     def choose_action(self, pomdp : POMDP) -> Action:
         available_actions = pomdp.observe_actions(self.pos)
-        expectedMoveValue = {}
-        for a in available_actions:
-            expectedMoveValue[a] = pomdp.reward(self.pos, a)
-        max_value = max(expectedMoveValue.values())
-        max_keys = set(key for key, value in expectedMoveValue.items() if value == max_value)
+        expectedMoveValue = {a : pomdp.reward(self.pos, a) for a in available_actions}
+        # for a in available_actions: expectedMoveValue[a] = pomdp.reward(self.pos, a)
+        max_value = max(expectedMoveValue.values()) # maximum expected value
+        max_keys = set(key for key, value in expectedMoveValue.items() if value == max_value) # all actions with the maximum expected value
         return max(expectedMoveValue, key = lambda k: expectedMoveValue[k]), max_keys
         
 
@@ -366,7 +273,8 @@ if __name__ == '__main__':
     # # Output: ValueError: Value must be between 0 and 1
 
     
-    pomdp = POMDP(gridSize=(2, 2), target=Node(1, 1), model='grid', budget=1)
-    # pomdp = POMDP(gridSize=(3, 3), target=Node(2,1), model='grid', budget=2)
+    # pomdp = POMDP(gridSize=(2, 2), target=Node(1, 1), model='grid', budget=1)
+    pomdp = POMDP(gridSize=(3, 3), target=Node(2,1), model='grid', budget=2)
     infinite_budget_optimal_solution_edges, minimal_budget_optimal_solution = pomdp.solve()
+    print(minimal_budget_optimal_solution)
 
