@@ -3,7 +3,6 @@ from copy import deepcopy
 
 import numpy as np
 
-
 class Action(Enum):
     """
     Enum class for the actions that the agent can take.

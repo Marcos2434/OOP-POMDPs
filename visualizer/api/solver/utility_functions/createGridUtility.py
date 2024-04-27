@@ -6,30 +6,59 @@ import itertools
 import math
 from six.moves import input
 from itertools import chain, combinations
-
-from ..helpers import *
 import importlib.util
 
-# Run directly
-# FILE_PATH = '/Users/marcos/Documents/github_projects/POMDPs/visualizer/api/solver/utility_functions/generated_models/grid.py'
-# MODULE_PATH = '/Users/marcos/Documents/github_projects/POMDPs/visualizer/api/solver/utility_functions/generated_models/grid.py'
 
-# Run through server (Django)
-FILE_PATH = os.getcwd() + '/api/solver/utility_functions/generated_models/grid.py'
-MODULE_PATH = FILE_PATH
+# prevent .pyc (python cache) files from generating since we are reusing
+# the same file name to generate the new file
+import sys
+sys.dont_write_bytecode = True
 
+FILE_PATH_FLAG = True
+
+if FILE_PATH_FLAG:
+    # Run directly
+    from helpers import *
+    DIR_PATH = '/Users/marcos/Documents/github_projects/POMDPs/visualizer/api/solver/utility_functions/generated_models/'
+else:
+    # Run through server (Django)
+    from ..helpers import *
+    DIR_PATH = os.getcwd() + '/api/solver/utility_functions/generated_models/'
+
+
+def find_latest_file(directory, base_filename):
+    """Find the latest file with the base filename."""
+    files = [f for f in os.listdir(directory) if f.startswith(base_filename)]
+    if files:
+        latest_file = max(files)
+        index = int(latest_file.split("[")[1].split("]")[0])
+        return index
+    else: return 0
+
+def generate_next_filename(directory, base_filename):
+    """Generate the next filename."""
+    latest_index = find_latest_file(directory, base_filename)
+    next_index = latest_index + 1
+    return f"{base_filename}[{next_index}].py"
 
 def grid_utility(budget, target, size, strategies : dict[int, Strategy], assignments : dict[Node, int], det = 0):
-    
+
     # import os
-    # print("[HERE] !!!!!!!!!!!!!!!!")
     # print(os.getcwd())
     # print(os.path.exists(os.getcwd() + '/api/solver/utility_functions/generated_models/grid.py'))
     
     # remove file if it exists 
-    if os.path.exists(FILE_PATH): os.remove(FILE_PATH)
+    # if os.path.exists(FILE_PATH): os.remove(FILE_PATH)
     
-    file = open(FILE_PATH, 'w')
+    # filename = generate_next_filename(DIR_PATH, "grid")
+    # file_path = DIR_PATH + filename
+    # file = open(file_path, 'w')
+    
+
+
+    filename = "grid.py"
+    file_path = DIR_PATH + filename
+    file = open(file_path, 'w')
 
     file.write('from z3 import *\n\n')
     
@@ -241,20 +270,18 @@ def grid_utility(budget, target, size, strategies : dict[int, Strategy], assignm
     file.write('\nsol = lambda : solver.model() if solver.check() == sat else "No Solution" if solver.check() == unsat else None')
     file.close()
     
-    
     # import generated python file and get the function "sol"
-    spec = importlib.util.spec_from_file_location("generated_module", MODULE_PATH)
+    spec = importlib.util.spec_from_file_location("generated_module", file_path)
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
 
     # ModelRef to python dict
-    # sol = lambda : solver.model() if solver.check() == sat else "No Solution" if solver.check() == unsat else None
     model = module.sol()
-    
-    print(model)
-    
+
     if model == "No Solution" or model is None: return 0, None
     model = Z3Serializer(model)
+    
+    
     return float(model['exp']), model
 
     # return module.sol()

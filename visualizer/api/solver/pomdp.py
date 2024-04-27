@@ -1,6 +1,22 @@
-from .helpers import *
-from .utility_functions.createGridUtility import grid_utility
-from itertools import combinations
+from itertools import combinations, product
+import plotly.graph_objects as go
+import os
+
+FILE_PATH_FLAG = True
+
+if FILE_PATH_FLAG:
+    # Run directly
+    from helpers import *
+    from utility_functions.createGridUtility import grid_utility
+    DIR_PATH = '/Users/marcos/Documents/github_projects/POMDPs/visualizer/api/solver/utility_functions/generated_models/'
+else:
+    # Run through server (Django)
+    from .helpers import *
+    from .utility_functions.createGridUtility import grid_utility
+    DIR_PATH = os.getcwd() + '/api/solver/utility_functions/generated_models/'
+
+from numpy.typing import *
+import numpy as np
 
 class POMDP:
     def __init__(self, 
@@ -120,6 +136,54 @@ class POMDP:
         else:
             raise NotImplementedError("Utility function not implemented for this model")
     
+    def generate_points(self, strategies : dict[int, Strategy], assignments : dict[Node, int], samples = 5, write_to_file = False) -> set[ArrayLike]:
+
+        
+        # generate all possible combinations of action probabilities depending on the sample step size
+        probabilities = [i / (samples - 1) for i in range(samples)]
+
+        
+        strategy_points = []
+        
+        for _, s in strategies.items():
+            actions = s.actions.keys()
+            
+            # get all proper uniformly distibuted combinations of action probabilities
+            combinations_ = np.array([ comb for comb in product(probabilities, repeat=len(actions)) if sum(comb) == 1 ])
+            points = np.zeros((len(combinations_), len(Action)))
+            for j in range(points.shape[0]):
+                for k, a in enumerate(actions):
+                    points[j][a.value] = combinations_[j][k]
+            strategy_points.append(points)
+        
+        # combinations of all properly distributed probabilities of each strategy
+        combinations_ = np.array(list(product(*strategy_points)))
+    
+        U = np.empty(len(combinations_))
+        for i in range(len(U)):
+            # print(combinations_[i])
+            # update each strategy with the action probabilities
+            
+            for j in range(len(strategies)):
+                # print(strategies[j+1])
+                # print(combinations_[i][j])
+                # print("actions distribution", {a: RangeFloat(combinations_[i][j][a.value]) for a in Action})
+                strategies[j+1].actions = {a: RangeFloat(combinations_[i][j][a.value]) for a in Action}
+
+            # print(strategies)
+            # compute the utility of the strategies
+            u, _ = self.utility(strategies, assignments)
+            U[i] = 1/u if u > 0 else 0
+        
+        if write_to_file:
+            with open(DIR_PATH + 'points.txt', 'w') as f:
+                for i in range(len(combinations_)):
+                    f.write(f'{combinations_[i]} {U[i]}\n')
+        
+        return combinations_, U
+        
+            
+    
     def solve(self) -> set[Edge]:
         infinite_budget_optimal_solution, minimal_budget_optimal_solution = None, None
         
@@ -227,8 +291,8 @@ class POMDP:
                     if i >= len(nodes):
                         assignments = {n: n.strategy_id for n in nodes if n != self.target}
                         u, parsed_pomdp = self.utility(id_strategy_combination, assignments)
-                        print(id_strategy_combination)
-                        print(u, parsed_pomdp)
+                        # print(id_strategy_combination)
+                        # print(u, parsed_pomdp)
                         return [{
                             'utility': u,
                             'assignments': assignments,
@@ -294,8 +358,98 @@ class Agent:
         return max(expectedMoveValue, key = lambda k: expectedMoveValue[k]), max_keys
         
 
+def plot_actions_3D(combinations_, u, actions : list[Action]):
+    mask = np.empty((0, len(Action)))
+    for a in actions:
+        m = np.zeros(len(Action))
+        m[a.value] = 1
+        mask = np.vstack((mask, m))
+    
+    # print(points.shape)
+    # print(mask.shape)
+    
+    # reduce dimension since B=1 then only one strategy is available
+    # only works for B=1
+    points = np.empty((combinations_.shape[0], len(Action)))
+    for i in range(combinations_.shape[0]):
+        points[i] = combinations_[i][0]
+
+    # apply mask to the points to reduce dimension
+    points = points @ mask.T
+
+    x, y = points[:, 0], points[:, 1]
+    z = u
+    
+    fig = go.Figure(data=[go.Scatter3d(
+        x=x,
+        y=y,
+        z=z,
+        mode='markers',
+        marker=dict(
+            size=8,
+            color='blue',  # Marker color
+            opacity=0.8,
+            line=dict(color='black', width=1)  # Marker edge color
+        ),
+        template="plotly_dark"  # Dark mode
+    )])
+
+    fig.update_layout(
+        scene=dict(
+            yaxis_title=str(actions[1]),
+            xaxis_title=str(actions[0]),
+            zaxis_title='Utility',
+        )
+    )
+
+    fig.update_layout(title='3D Scatter Plot')
+
+    fig.show()
+
+def plot_actions_4D(combinations_, u, actions : list[Action]):
+    # Generate sample data
+    np.random.seed(0)
+    num_points = 100
+    x = np.random.rand(num_points)
+    y = np.random.rand(num_points)
+    z = np.random.rand(num_points)
+    w = np.random.rand(num_points)  # Fourth dimension
+
+    # Scale the fourth dimension values to adjust marker sizes
+    max_w = max(w)
+    min_w = min(w)
+    scaled_sizes = [(val - min_w) / (max_w - min_w) * 50 + 5 for val in w]  # Scale sizes to be between 5 and 55
+
+    # Create the scatter plot
+    fig = go.Figure(data=go.Scatter3d(
+        x=x,
+        y=y,
+        z=z,
+        marker=dict(
+            size=scaled_sizes,  # Use the scaled fourth dimension for marker size
+            color='blue',  # You can set a fixed color if you like
+            opacity=0.7
+        ),
+        mode='markers',
+        template='plotly_dark'  # Dark mode
+    ))
+
+    # Customize layout
+    fig.update_layout(scene=dict(
+                        xaxis_title='X',
+                        yaxis_title='Y',
+                        zaxis_title='Z'
+                    ))
+
+    # Show the plot
+    fig.show()
+
 
 if __name__ == '__main__':
+    pass
+    
+    # clearDirectory = lambda path: [os.remove(path + f) for f in os.listdir(path)]
+    # clearDirectory(DIR_PATH)
     
     # rf = RangeFloat(0.5)  # Initialize with a value
     # print(rf.value)  # Output: 0.5
@@ -308,7 +462,68 @@ if __name__ == '__main__':
 
     
     # pomdp = POMDP(gridSize=(2, 2), target=Node(1, 1), model='grid', budget=1)
-    pomdp = POMDP(gridSize=(3, 3), target=Node(2,1), model='grid', budget=2)
-    infinite_budget_optimal_solution, minimal_budget_optimal_solution = pomdp.solve()
-    print(minimal_budget_optimal_solution)
+    # pomdp = POMDP(gridSize=(3, 3), target=Node(2,1), model='grid', budget=2)
+    # infinite_budget_optimal_solution, minimal_budget_optimal_solution = pomdp.solve()
+    # print(minimal_budget_optimal_solution)
+    
+    
+    # [BUDGET = 1]
+    # --------------------------------------------------------------------------------------------------------------
+    
+    # budget = 1
+    # gridSize = (10, 10)
+    # target = Node(9, 9)
+    # # strategies = list([ 
+    # #     Strategy({ Action.DOWN: RangeFloat(.5), Action.RIGHT: RangeFloat(.5) }) 
+    # # ])
+    # strategies = list([ 
+    #     Strategy({ Action.DOWN: RangeFloat(0.23232323232323232), Action.RIGHT: RangeFloat(0.7676767676767676) }) 
+    # ])
+    # enumerated_strategies = dict(enumerate(strategies, start=1))
+    
+    # pomdp = POMDP(gridSize=gridSize, target=target, model='grid', budget=budget)
+    
+    # # Assign strategies to the nodes
+    # for node in pomdp.nodes: node.assign_strategy(enumerated_strategies[1], 1)
+    # assignments =  {n: n.strategy_id for n in pomdp.nodes if n != target}
+    
+    # combinations_, U = pomdp.generate_points(enumerated_strategies, assignments, samples=10, write_to_file=True)
+    # plot_actions_3D(combinations_, U, actions = [Action.DOWN, Action.RIGHT])
 
+    # get one specific utility value
+    # print(pomdp.utility(enumerated_strategies, assignments)[0])
+    
+    # --------------------------------------
+    
+    
+    
+    
+    
+    
+    
+    # --------------------------------------------------------------------------------------------------------------
+    
+    
+    
+    
+    
+    # [BUDGET = 2]
+    # --------------------------------------------------------------------------------------------------------------
+    # budget = 2
+    # gridSize = (10, 10)
+    # target = Node(9, 1)
+    # strategies = list([ Strategy({ Action.RIGHT: RangeFloat(1)}), Strategy({ Action.DOWN: RangeFloat(.5), Action.LEFT: RangeFloat(.5) }) ])
+    # enumerated_strategies = dict(enumerate(strategies, start=1))
+    # pomdp = POMDP(gridSize=gridSize, target=target, model='grid', budget=budget)
+    
+    # for node in pomdp.nodes:
+    #     # Boundary conditions to assign strategy
+    #     if node.j < 1:
+    #         node.assign_strategy(strategies[0], 1)
+    #     else:
+    #         node.assign_strategy(strategies[1], 2)
+    
+    # assignments =  {n: n.strategy_id for n in pomdp.nodes if n != target}
+    # print(pomdp.generate_points(enumerated_strategies, assignments, samples=5))
+    
+    # --------------------------------------------------------------------------------------------------------------
