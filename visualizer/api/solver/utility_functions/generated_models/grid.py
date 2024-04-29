@@ -329,9 +329,9 @@ xo1d>= 0,
 xo1d<= 1,
 # Assigning the action probability distribution from the strategies
 xo1u== Q(0, 1),
-xo1r== Q(1, 3),
-xo1d== Q(1, 3),
-xo1l== Q(1, 3),
+xo1r== Q(26, 99),
+xo1d== Q(16, 33),
+xo1l== Q(25, 99),
 xo1u + xo1r + xo1d + xo1l == 1,
 # Assigned observables
 ys40_1 == 1,

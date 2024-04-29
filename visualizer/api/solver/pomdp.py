@@ -136,9 +136,9 @@ class POMDP:
         else:
             raise NotImplementedError("Utility function not implemented for this model")
     
-    def generate_points(self, strategies : dict[int, Strategy], assignments : dict[Node, int], samples = 5, write_to_file = False) -> set[ArrayLike]:
+    def generate_points(self, strategies : dict[int, Strategy], assignments : dict[Node, int], sections = 5, write_to_file = False) -> set[ArrayLike]:
         # generate all possible combinations of action probabilities depending on the sample step size
-        probabilities = [frac(i, (samples - 1)) for i in range(samples)]
+        probabilities = [frac(i, (sections - 1)) for i in range(sections)]
         
         strategy_points = []
         
@@ -338,7 +338,7 @@ class POMDP:
             
         return infinite_budget_optimal_solution, minimal_budget_optimal_solution
 
-        
+
 class Agent:
     def __init__(self, pos : Node) -> None:
         self.pos = pos # intial state
@@ -415,13 +415,12 @@ def plot_actions_4D(combinations_, u, actions : list[Action]) -> None:
     
     x, y, z = points[:, 0], points[:, 1], points[:, 2]
     z = u
-    
-    print(u)
 
     # Scale the fourth dimension values to adjust marker sizes
     max_u = max(u)
     min_u = min(u)
-    scaled_sizes = [(val - min_u) / (max_u - min_u) * 50 + 5 for val in u]  # Scale sizes to be between 5 and 55
+    mini, maxi = 1, 20
+    scaled_sizes = [(val - min_u) / (max_u - min_u) * (maxi-mini) + mini for val in u]  # Scale sizes to be between 5 and 55
     
     print()
     
@@ -454,83 +453,25 @@ def plot_actions_4D(combinations_, u, actions : list[Action]) -> None:
 
 if __name__ == '__main__':
     pass
-    
-    # clearDirectory = lambda path: [os.remove(path + f) for f in os.listdir(path)]
-    # clearDirectory(DIR_PATH)
-    
-    # rf = RangeFloat(0.5)  # Initialize with a value
-    # print(rf.value)  # Output: 0.5
 
-    # rf.value = 0.7  # Set a new value
-    # print(rf.value)  # Output: 0.7
+    budget = 1
+    gridSize = (10, 10)
+    target = Node(9, 5)
+    strategies = list([ 
+        Strategy({ Action.DOWN: frac(1, 3), Action.RIGHT: frac(1, 3), Action.LEFT: frac(1, 3) }) 
+    ])
+    enumerated_strategies = dict(enumerate(strategies, start=1))
 
-    # rf.value = 1.5  # Trying to set an invalid value
-    # # Output: ValueError: Value must be between 0 and 1
+    pomdp = POMDP(gridSize=gridSize, target=target, model='grid', budget=budget)
 
-    
-    # pomdp = POMDP(gridSize=(2, 2), target=Node(1, 1), model='grid', budget=1)
-    # pomdp = POMDP(gridSize=(3, 3), target=Node(2,1), model='grid', budget=2)
-    # infinite_budget_optimal_solution, minimal_budget_optimal_solution = pomdp.solve()
-    # print(minimal_budget_optimal_solution)
-    
-    
-    # [BUDGET = 1]
-    # --------------------------------------------------------------------------------------------------------------
-    
-    # budget = 1
-    # gridSize = (10, 10)
-    # target = Node(9, 9)
-    # # strategies = list([ 
-    # #     Strategy({ Action.DOWN: RangeFloat(.5), Action.RIGHT: RangeFloat(.5) }) 
-    # # ])
-    # strategies = list([ 
-    #     Strategy({ Action.DOWN: RangeFloat(0.23232323232323232), Action.RIGHT: RangeFloat(0.7676767676767676) }) 
-    # ])
-    # enumerated_strategies = dict(enumerate(strategies, start=1))
-    
-    # pomdp = POMDP(gridSize=gridSize, target=target, model='grid', budget=budget)
-    
-    # # Assign strategies to the nodes
-    # for node in pomdp.nodes: node.assign_strategy(enumerated_strategies[1], 1)
-    # assignments =  {n: n.strategy_id for n in pomdp.nodes if n != target}
-    
-    # combinations_, U = pomdp.generate_points(enumerated_strategies, assignments, samples=10, write_to_file=True)
-    # plot_actions_3D(combinations_, U, actions = [Action.DOWN, Action.RIGHT])
+    # Assign strategies to the nodes
+    for node in pomdp.nodes: node.assign_strategy(enumerated_strategies[1], 1)
+    assignments =  {n: n.strategy_id for n in pomdp.nodes if n != target}
 
+    # ---------------------------------------------------------
     # get one specific utility value
     # print(pomdp.utility(enumerated_strategies, assignments)[0])
-    
-    # --------------------------------------
-    
-    
-    
-    
-    
-    
-    
-    # --------------------------------------------------------------------------------------------------------------
-    
-    
-    
-    
-    
-    # [BUDGET = 2]
-    # --------------------------------------------------------------------------------------------------------------
-    # budget = 2
-    # gridSize = (10, 10)
-    # target = Node(9, 1)
-    # strategies = list([ Strategy({ Action.RIGHT: RangeFloat(1)}), Strategy({ Action.DOWN: RangeFloat(.5), Action.LEFT: RangeFloat(.5) }) ])
-    # enumerated_strategies = dict(enumerate(strategies, start=1))
-    # pomdp = POMDP(gridSize=gridSize, target=target, model='grid', budget=budget)
-    
-    # for node in pomdp.nodes:
-    #     # Boundary conditions to assign strategy
-    #     if node.j < 1:
-    #         node.assign_strategy(strategies[0], 1)
-    #     else:
-    #         node.assign_strategy(strategies[1], 2)
-    
-    # assignments =  {n: n.strategy_id for n in pomdp.nodes if n != target}
-    # print(pomdp.generate_points(enumerated_strategies, assignments, samples=5))
-    
-    # --------------------------------------------------------------------------------------------------------------
+    # ---------------------------------------------------------
+
+    combinations_, U = pomdp.generate_points(enumerated_strategies, assignments, sections=100, write_to_file=True)
+    plot_actions_4D(combinations_, U, actions = [Action.DOWN, Action.RIGHT, Action.LEFT])
