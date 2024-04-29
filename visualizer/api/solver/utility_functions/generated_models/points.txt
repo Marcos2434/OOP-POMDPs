@@ -1,10 +1,55 @@
-[[0. 1. 0. 0.]] 0.0
-[[0.         0.88888889 0.11111111 0.        ]] 0.0
-[[0.         0.77777778 0.22222222 0.        ]] 0.04618716058069773
-[[0.         0.66666667 0.33333333 0.        ]] 0.0
-[[0.         0.55555556 0.44444444 0.        ]] 0.07480985633519664
-[[0.         0.44444444 0.55555556 0.        ]] 0.07480985633519664
-[[0.         0.33333333 0.66666667 0.        ]] 0.0
-[[0.         0.22222222 0.77777778 0.        ]] 0.04618716058069773
-[[0.         0.11111111 0.88888889 0.        ]] 0.0
-[[0. 0. 1. 0.]] 0.0
+[[Fraction(0, 1) Fraction(0, 1) Fraction(0, 1) Fraction(1, 1)]] 0.0
+[[Fraction(0, 1) Fraction(1, 9) Fraction(0, 1) Fraction(8, 9)]] 0.0
+[[Fraction(0, 1) Fraction(2, 9) Fraction(0, 1) Fraction(7, 9)]] 0.0
+[[Fraction(0, 1) Fraction(1, 3) Fraction(0, 1) Fraction(2, 3)]] 0.0
+[[Fraction(0, 1) Fraction(4, 9) Fraction(0, 1) Fraction(5, 9)]] 0.0
+[[Fraction(0, 1) Fraction(5, 9) Fraction(0, 1) Fraction(4, 9)]] 0.0
+[[Fraction(0, 1) Fraction(2, 3) Fraction(0, 1) Fraction(1, 3)]] 0.0
+[[Fraction(0, 1) Fraction(7, 9) Fraction(0, 1) Fraction(2, 9)]] 0.0
+[[Fraction(0, 1) Fraction(8, 9) Fraction(0, 1) Fraction(1, 9)]] 0.0
+[[Fraction(0, 1) Fraction(1, 1) Fraction(0, 1) Fraction(0, 1)]] 0.0
+[[Fraction(0, 1) Fraction(0, 1) Fraction(1, 9) Fraction(8, 9)]] 0.0
+[[Fraction(0, 1) Fraction(1, 9) Fraction(1, 9) Fraction(7, 9)]] 3.6542213195903263e-05
+[[Fraction(0, 1) Fraction(2, 9) Fraction(1, 9) Fraction(2, 3)]] 0.0013129594013151153
+[[Fraction(0, 1) Fraction(1, 3) Fraction(1, 9) Fraction(5, 9)]] 0.008034933245949056
+[[Fraction(0, 1) Fraction(4, 9) Fraction(1, 9) Fraction(4, 9)]] 0.01660377358490566
+[[Fraction(0, 1) Fraction(5, 9) Fraction(1, 9) Fraction(1, 3)]] 0.012293145953804117
+[[Fraction(0, 1) Fraction(2, 3) Fraction(1, 9) Fraction(2, 9)]] 0.0037761467657470064
+[[Fraction(0, 1) Fraction(7, 9) Fraction(1, 9) Fraction(1, 9)]] 0.00025985373712055095
+[[Fraction(0, 1) Fraction(8, 9) Fraction(1, 9) Fraction(0, 1)]] 0.0
+[[Fraction(0, 1) Fraction(0, 1) Fraction(2, 9) Fraction(7, 9)]] 0.0
+[[Fraction(0, 1) Fraction(1, 9) Fraction(2, 9) Fraction(2, 3)]] 6.702366250199247e-05
+[[Fraction(0, 1) Fraction(2, 9) Fraction(2, 9) Fraction(5, 9)]] 0.0025277309356580954
+[[Fraction(0, 1) Fraction(1, 3) Fraction(2, 9) Fraction(4, 9)]] 0.01612485188463538
+[[Fraction(0, 1) Fraction(4, 9) Fraction(2, 9) Fraction(1, 3)]] 0.0220161959318936
+[[Fraction(0, 1) Fraction(5, 9) Fraction(2, 9) Fraction(2, 9)]] 0.006528487356592048
+[[Fraction(0, 1) Fraction(2, 3) Fraction(2, 9) Fraction(1, 9)]] 0.00041753589646175614
+[[Fraction(0, 1) Fraction(7, 9) Fraction(2, 9) Fraction(0, 1)]] 0.0
+[[Fraction(0, 1) Fraction(0, 1) Fraction(1, 3) Fraction(2, 3)]] 0.0
+[[Fraction(0, 1) Fraction(1, 9) Fraction(1, 3) Fraction(5, 9)]] 0.00013786353267466285
+[[Fraction(0, 1) Fraction(2, 9) Fraction(1, 3) Fraction(4, 9)]] 0.005411327618008941
+[[Fraction(0, 1) Fraction(1, 3) Fraction(1, 3) Fraction(1, 3)]] 0.025384615384615387
+[[Fraction(0, 1) Fraction(4, 9) Fraction(1, 3) Fraction(2, 9)]] 0.011842554686137315
+[[Fraction(0, 1) Fraction(5, 9) Fraction(1, 3) Fraction(1, 9)]] 0.0007379580510073457
+[[Fraction(0, 1) Fraction(2, 3) Fraction(1, 3) Fraction(0, 1)]] 0.0
+[[Fraction(0, 1) Fraction(0, 1) Fraction(4, 9) Fraction(5, 9)]] 0.0
+[[Fraction(0, 1) Fraction(1, 9) Fraction(4, 9) Fraction(4, 9)]] 0.00033210362448612155
+[[Fraction(0, 1) Fraction(2, 9) Fraction(4, 9) Fraction(1, 3)]] 0.012189498471067997
+[[Fraction(0, 1) Fraction(1, 3) Fraction(4, 9) Fraction(2, 9)]] 0.020352331153703565
+[[Fraction(0, 1) Fraction(4, 9) Fraction(4, 9) Fraction(1, 9)]] 0.0014828250439626453
+[[Fraction(0, 1) Fraction(5, 9) Fraction(4, 9) Fraction(0, 1)]] 0.0
+[[Fraction(0, 1) Fraction(0, 1) Fraction(5, 9) Fraction(4, 9)]] 0.0
+[[Fraction(0, 1) Fraction(1, 9) Fraction(5, 9) Fraction(1, 3)]] 0.0009822276712534174
+[[Fraction(0, 1) Fraction(2, 9) Fraction(5, 9) Fraction(2, 9)]] 0.021359223300970873
+[[Fraction(0, 1) Fraction(1, 3) Fraction(5, 9) Fraction(1, 9)]] 0.0034399806475428106
+[[Fraction(0, 1) Fraction(4, 9) Fraction(5, 9) Fraction(0, 1)]] 0.0
+[[Fraction(0, 1) Fraction(0, 1) Fraction(2, 3) Fraction(1, 3)]] 0.0
+[[Fraction(0, 1) Fraction(1, 9) Fraction(2, 3) Fraction(2, 9)]] 0.003682110897937857
+[[Fraction(0, 1) Fraction(2, 9) Fraction(2, 3) Fraction(1, 9)]] 0.008792843067569011
+[[Fraction(0, 1) Fraction(1, 3) Fraction(2, 3) Fraction(0, 1)]] 0.0
+[[Fraction(0, 1) Fraction(0, 1) Fraction(7, 9) Fraction(2, 9)]] 0.0
+[[Fraction(0, 1) Fraction(1, 9) Fraction(7, 9) Fraction(1, 9)]] 0.01203125
+[[Fraction(0, 1) Fraction(2, 9) Fraction(7, 9) Fraction(0, 1)]] 0.0
+[[Fraction(0, 1) Fraction(0, 1) Fraction(8, 9) Fraction(1, 9)]] 0.0
+[[Fraction(0, 1) Fraction(1, 9) Fraction(8, 9) Fraction(0, 1)]] 0.0
+[[Fraction(0, 1) Fraction(0, 1) Fraction(1, 1) Fraction(0, 1)]] 0.0

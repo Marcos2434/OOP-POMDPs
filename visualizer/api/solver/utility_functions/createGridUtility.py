@@ -54,8 +54,6 @@ def grid_utility(budget, target, size, strategies : dict[int, Strategy], assignm
     # file_path = DIR_PATH + filename
     # file = open(file_path, 'w')
     
-
-
     filename = "grid.py"
     file_path = DIR_PATH + filename
     file = open(file_path, 'w')
@@ -83,8 +81,8 @@ def grid_utility(budget, target, size, strategies : dict[int, Strategy], assignm
 
     file.write('\n# Choice of observations (e.g. ys01 = 1 means that in state 0, observable 1 is observed)\n')
     for i in range(0, size):
-        if i == target:
-            continue
+        # if i == target:
+        #     continue
         for j in range(1, budget + 1):
             file.write('ys' + str(i) + "_" + str(j) + ' = Real(\'ys' + str(i) + "_" + str(j) + '\')\n')
 
@@ -183,10 +181,12 @@ def grid_utility(budget, target, size, strategies : dict[int, Strategy], assignm
             file.write('xo' + str(i) + a + '<= 1,\n')
     
     # [MODIFIED]
-    file.write('# Randomised strategies (proper probability distributions)\n')
+    file.write('# Assigning the action probability distribution from the strategies\n')
     for id, s in strategies.items():
         for a in Action:
-            file.write(f'xo{id}{a}== {str(s[a])},\n')    
+            z3rational = 'Q(' + str(s[a].numerator) + ', ' + str(s[a].denominator) + ')'
+            file.write(f'xo{id}{a}== {z3rational},\n')
+            
     # for i, s in strategies:
     #     i += 1 # 1-indexed strategies
     #     for a in Action:
@@ -218,12 +218,10 @@ def grid_utility(budget, target, size, strategies : dict[int, Strategy], assignm
     #         file.write('Or(ys' + str(i) + "_" + str(j) +  '== 0 , ys' + str(i) + "_" + str(j) + '== 1),\n')
 
     
-    # We know the the observables assigned to each state from the assignments parameter, 
-    # so we can write them directly to the file
+    # We know the the observables assigned to each state 
+    # from the assignments parameter, so we can write 
+    # them directly to the file
     file.write("# Assigned observables\n")
-    # print()
-    # print(sorted([n.id for n, s_id in assignments.items()]))
-    # print()
     for n, s_id in assignments.items():
         file.write(f'ys{n.id}_{s_id} == 1,\n')
         for i in range(1, budget + 1):
@@ -253,9 +251,6 @@ def grid_utility(budget, target, size, strategies : dict[int, Strategy], assignm
             else:
                 file.write(',\n')
     
-
-
-    
     # [MODIFIED] 
     # file.write('if solver.check() == sat:\n\t')
     # file.write('m = solver.model()\n\t')
@@ -280,8 +275,6 @@ def grid_utility(budget, target, size, strategies : dict[int, Strategy], assignm
 
     if model == "No Solution" or model is None: return 0, None
     model = Z3Serializer(model)
-    
-    
     return float(model['exp']), model
 
     # return module.sol()

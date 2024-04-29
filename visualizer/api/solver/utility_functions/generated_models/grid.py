@@ -203,6 +203,7 @@ ys95_1 = Real('ys95_1')
 ys96_1 = Real('ys96_1')
 ys97_1 = Real('ys97_1')
 ys98_1 = Real('ys98_1')
+ys99_1 = Real('ys99_1')
 
 # Rates of randomized strategies
 xo1l = Real('xo1l')
@@ -214,7 +215,7 @@ solver = Solver()
 
 solver.add(
 #We cannot do better than the fully observable case
-pi0>=18, pi1>=17, pi2>=16, pi3>=15, pi4>=14, pi5>=13, pi6>=12, pi7>=11, pi8>=10, pi9>=9, pi10>=17, pi11>=16, pi12>=15, pi13>=14, pi14>=13, pi15>=12, pi16>=11, pi17>=10, pi18>=9, pi19>=8, pi20>=16, pi21>=15, pi22>=14, pi23>=13, pi24>=12, pi25>=11, pi26>=10, pi27>=9, pi28>=8, pi29>=7, pi30>=15, pi31>=14, pi32>=13, pi33>=12, pi34>=11, pi35>=10, pi36>=9, pi37>=8, pi38>=7, pi39>=6, pi40>=14, pi41>=13, pi42>=12, pi43>=11, pi44>=10, pi45>=9, pi46>=8, pi47>=7, pi48>=6, pi49>=5, pi50>=13, pi51>=12, pi52>=11, pi53>=10, pi54>=9, pi55>=8, pi56>=7, pi57>=6, pi58>=5, pi59>=4, pi60>=12, pi61>=11, pi62>=10, pi63>=9, pi64>=8, pi65>=7, pi66>=6, pi67>=5, pi68>=4, pi69>=3, pi70>=11, pi71>=10, pi72>=9, pi73>=8, pi74>=7, pi75>=6, pi76>=5, pi77>=4, pi78>=3, pi79>=2, pi80>=10, pi81>=9, pi82>=8, pi83>=7, pi84>=6, pi85>=5, pi86>=4, pi87>=3, pi88>=2, pi89>=1, pi90>=9, pi91>=8, pi92>=7, pi93>=6, pi94>=5, pi95>=4, pi96>=3, pi97>=2, pi98>=1, pi99>=0, 
+pi0>=14, pi1>=13, pi2>=12, pi3>=11, pi4>=10, pi5>=9, pi6>=9, pi7>=10, pi8>=11, pi9>=12, pi10>=13, pi11>=12, pi12>=11, pi13>=10, pi14>=9, pi15>=8, pi16>=8, pi17>=9, pi18>=10, pi19>=11, pi20>=12, pi21>=11, pi22>=10, pi23>=9, pi24>=8, pi25>=7, pi26>=7, pi27>=8, pi28>=9, pi29>=10, pi30>=11, pi31>=10, pi32>=9, pi33>=8, pi34>=7, pi35>=6, pi36>=6, pi37>=7, pi38>=8, pi39>=9, pi40>=10, pi41>=9, pi42>=8, pi43>=7, pi44>=6, pi45>=5, pi46>=5, pi47>=6, pi48>=7, pi49>=8, pi50>=9, pi51>=8, pi52>=7, pi53>=6, pi54>=5, pi55>=4, pi56>=4, pi57>=5, pi58>=6, pi59>=7, pi60>=8, pi61>=7, pi62>=6, pi63>=5, pi64>=4, pi65>=3, pi66>=3, pi67>=4, pi68>=5, pi69>=6, pi70>=7, pi71>=6, pi72>=5, pi73>=4, pi74>=3, pi75>=2, pi76>=2, pi77>=3, pi78>=4, pi79>=5, pi80>=6, pi81>=5, pi82>=4, pi83>=3, pi84>=2, pi85>=1, pi86>=1, pi87>=2, pi88>=3, pi89>=4, pi90>=5, pi91>=4, pi92>=3, pi93>=2, pi94>=1, pi95>=0, pi96>=1, pi97>=2, pi98>=3, pi99>=4, 
 # Expected cost/reard equations
 pi0 == (ys0_1*xo1l) * (1 + pi0) + (ys0_1*xo1r) * (1 + pi1) + (ys0_1*xo1u) * (1 + pi0) + (ys0_1*xo1d) * (1 + pi10),
 pi1 == (ys1_1*xo1l) * (1 + pi0) + (ys1_1*xo1r) * (1 + pi2) + (ys1_1*xo1u) * (1 + pi1) + (ys1_1*xo1d) * (1 + pi11),
@@ -311,12 +312,12 @@ pi91 == (ys91_1*xo1l) * (1 + pi90) + (ys91_1*xo1r) * (1 + pi92) + (ys91_1*xo1u) 
 pi92 == (ys92_1*xo1l) * (1 + pi91) + (ys92_1*xo1r) * (1 + pi93) + (ys92_1*xo1u) * (1 + pi82) + (ys92_1*xo1d) * (1 + pi92),
 pi93 == (ys93_1*xo1l) * (1 + pi92) + (ys93_1*xo1r) * (1 + pi94) + (ys93_1*xo1u) * (1 + pi83) + (ys93_1*xo1d) * (1 + pi93),
 pi94 == (ys94_1*xo1l) * (1 + pi93) + (ys94_1*xo1r) * (1 + pi95) + (ys94_1*xo1u) * (1 + pi84) + (ys94_1*xo1d) * (1 + pi94),
-pi95 == (ys95_1*xo1l) * (1 + pi94) + (ys95_1*xo1r) * (1 + pi96) + (ys95_1*xo1u) * (1 + pi85) + (ys95_1*xo1d) * (1 + pi95),
+pi95 == 0, 
 pi96 == (ys96_1*xo1l) * (1 + pi95) + (ys96_1*xo1r) * (1 + pi97) + (ys96_1*xo1u) * (1 + pi86) + (ys96_1*xo1d) * (1 + pi96),
 pi97 == (ys97_1*xo1l) * (1 + pi96) + (ys97_1*xo1r) * (1 + pi98) + (ys97_1*xo1u) * (1 + pi87) + (ys97_1*xo1d) * (1 + pi97),
 pi98 == (ys98_1*xo1l) * (1 + pi97) + (ys98_1*xo1r) * (1 + pi99) + (ys98_1*xo1u) * (1 + pi88) + (ys98_1*xo1d) * (1 + pi98),
-pi99 == 0, 
-exp==((pi0+pi1+pi2+pi3+pi4+pi5+pi6+pi7+pi8+pi9+pi10+pi11+pi12+pi13+pi14+pi15+pi16+pi17+pi18+pi19+pi20+pi21+pi22+pi23+pi24+pi25+pi26+pi27+pi28+pi29+pi30+pi31+pi32+pi33+pi34+pi35+pi36+pi37+pi38+pi39+pi40+pi41+pi42+pi43+pi44+pi45+pi46+pi47+pi48+pi49+pi50+pi51+pi52+pi53+pi54+pi55+pi56+pi57+pi58+pi59+pi60+pi61+pi62+pi63+pi64+pi65+pi66+pi67+pi68+pi69+pi70+pi71+pi72+pi73+pi74+pi75+pi76+pi77+pi78+pi79+pi80+pi81+pi82+pi83+pi84+pi85+pi86+pi87+pi88+pi89+pi90+pi91+pi92+pi93+pi94+pi95+pi96+pi97+pi98)) * Q(1,99),
+pi99 == (ys99_1*xo1l) * (1 + pi98) + (ys99_1*xo1r) * (1 + pi99) + (ys99_1*xo1u) * (1 + pi89) + (ys99_1*xo1d) * (1 + pi99),
+exp==((pi0+pi1+pi2+pi3+pi4+pi5+pi6+pi7+pi8+pi9+pi10+pi11+pi12+pi13+pi14+pi15+pi16+pi17+pi18+pi19+pi20+pi21+pi22+pi23+pi24+pi25+pi26+pi27+pi28+pi29+pi30+pi31+pi32+pi33+pi34+pi35+pi36+pi37+pi38+pi39+pi40+pi41+pi42+pi43+pi44+pi45+pi46+pi47+pi48+pi49+pi50+pi51+pi52+pi53+pi54+pi55+pi56+pi57+pi58+pi59+pi60+pi61+pi62+pi63+pi64+pi65+pi66+pi67+pi68+pi69+pi70+pi71+pi72+pi73+pi74+pi75+pi76+pi77+pi78+pi79+pi80+pi81+pi82+pi83+pi84+pi85+pi86+pi87+pi88+pi89+pi90+pi91+pi92+pi93+pi94+pi96+pi97+pi98+pi99)) * Q(1,99),
 # Randomised strategies (proper probability distributions)
 xo1l>= 0,
 xo1l<= 1,
@@ -326,11 +327,11 @@ xo1u>= 0,
 xo1u<= 1,
 xo1d>= 0,
 xo1d<= 1,
-# Randomised strategies (proper probability distributions)
-xo1u== 0.0,
-xo1r== 0.0,
-xo1d== 1.0,
-xo1l== 0.0,
+# Assigning the action probability distribution from the strategies
+xo1u== Q(0, 1),
+xo1r== Q(1, 3),
+xo1d== Q(1, 3),
+xo1l== Q(1, 3),
 xo1u + xo1r + xo1d + xo1l == 1,
 # Assigned observables
 ys40_1 == 1,
@@ -363,7 +364,6 @@ ys66_1 == 1,
 ys75_1 == 1,
 ys31_1 == 1,
 ys57_1 == 1,
-ys95_1 == 1,
 ys2_1 == 1,
 ys13_1 == 1,
 ys77_1 == 1,
@@ -379,6 +379,7 @@ ys35_1 == 1,
 ys52_1 == 1,
 ys44_1 == 1,
 ys90_1 == 1,
+ys99_1 == 1,
 ys17_1 == 1,
 ys26_1 == 1,
 ys72_1 == 1,
@@ -528,10 +529,10 @@ ys91_1 == 1,
 ys92_1 == 1,
 ys93_1 == 1,
 ys94_1 == 1,
-ys95_1 == 1,
 ys96_1 == 1,
 ys97_1 == 1,
-ys98_1 == 1
+ys98_1 == 1,
+ys99_1 == 1
 )
 
 

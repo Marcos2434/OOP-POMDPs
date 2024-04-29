@@ -27,15 +27,15 @@ class POMDP:
             model : str = None,
             budget : int = None,
         ) -> None:
-        self.gridSize = gridSize
-        self.target = target
+        self.gridSize : tuple[int, int] = gridSize
+        self.target : Node = target
         
-        self.nodes = nodes
-        self.edges = edges
+        self.nodes : set[Node] = nodes
+        self.edges : set[Edge] = edges
         self.strat_edges : set[Edge] = set()
         
-        self.model = model
-        self.budget = budget
+        self.model : str = model
+        self.budget : int = budget
         
         # self.strategies : set[Strategy] = set()
         
@@ -137,11 +137,8 @@ class POMDP:
             raise NotImplementedError("Utility function not implemented for this model")
     
     def generate_points(self, strategies : dict[int, Strategy], assignments : dict[Node, int], samples = 5, write_to_file = False) -> set[ArrayLike]:
-
-        
         # generate all possible combinations of action probabilities depending on the sample step size
-        probabilities = [i / (samples - 1) for i in range(samples)]
-
+        probabilities = [frac(i, (samples - 1)) for i in range(samples)]
         
         strategy_points = []
         
@@ -150,30 +147,27 @@ class POMDP:
             
             # get all proper uniformly distibuted combinations of action probabilities
             combinations_ = np.array([ comb for comb in product(probabilities, repeat=len(actions)) if sum(comb) == 1 ])
-            points = np.zeros((len(combinations_), len(Action)))
+            points = np.full((len(combinations_), len(Action)), frac(0))
             for j in range(points.shape[0]):
                 for k, a in enumerate(actions):
                     points[j][a.value] = combinations_[j][k]
             strategy_points.append(points)
         
         # combinations of all properly distributed probabilities of each strategy
-        combinations_ = np.array(list(product(*strategy_points)))
-    
+        combinations_ = np.array(list(product(*strategy_points)))        
+        
         U = np.empty(len(combinations_))
         for i in range(len(U)):
-            # print(combinations_[i])
             # update each strategy with the action probabilities
             
             for j in range(len(strategies)):
-                # print(strategies[j+1])
-                # print(combinations_[i][j])
-                # print("actions distribution", {a: RangeFloat(combinations_[i][j][a.value]) for a in Action})
-                strategies[j+1].actions = {a: RangeFloat(combinations_[i][j][a.value]) for a in Action}
+                strategies[j+1].actions = {a: combinations_[i][j][a.value] for a in Action}
 
-            # print(strategies)
             # compute the utility of the strategies
             u, _ = self.utility(strategies, assignments)
-            U[i] = 1/u if u > 0 else 0
+            
+            # U[i] = inverse_fraction(u) # take the inverse of the utility as a fraction
+            U[i] = 1/u if u != 0 else 0 # take the inverse of the utility
         
         if write_to_file:
             with open(DIR_PATH + 'points.txt', 'w') as f:
@@ -270,7 +264,7 @@ class POMDP:
             strategies : set[Action] = set()
             for i in range(len(used_actions)):
                 for comb in set(combinations(used_actions, i+1)):
-                    strategies.add(Strategy(actions = {action: RangeFloat(1 / (i+1)) for action in comb}))
+                    strategies.add(Strategy(actions = {action: frac(1, (i+1)) for action in comb}))
                 
             strategy_combinations = set()
             for i in range(self.budget):
@@ -358,15 +352,12 @@ class Agent:
         return max(expectedMoveValue, key = lambda k: expectedMoveValue[k]), max_keys
         
 
-def plot_actions_3D(combinations_, u, actions : list[Action]):
+def plot_actions_3D(combinations_, u, actions : list[Action]) -> None:
     mask = np.empty((0, len(Action)))
     for a in actions:
         m = np.zeros(len(Action))
         m[a.value] = 1
         mask = np.vstack((mask, m))
-    
-    # print(points.shape)
-    # print(mask.shape)
     
     # reduce dimension since B=1 then only one strategy is available
     # only works for B=1
@@ -391,13 +382,13 @@ def plot_actions_3D(combinations_, u, actions : list[Action]):
             opacity=0.8,
             line=dict(color='black', width=1)  # Marker edge color
         ),
-        template="plotly_dark"  # Dark mode
     )])
 
     fig.update_layout(
+        template='plotly_dark', # Dark mode
         scene=dict(
-            yaxis_title=str(actions[1]),
             xaxis_title=str(actions[0]),
+            yaxis_title=str(actions[1]),
             zaxis_title='Utility',
         )
     )
@@ -406,20 +397,34 @@ def plot_actions_3D(combinations_, u, actions : list[Action]):
 
     fig.show()
 
-def plot_actions_4D(combinations_, u, actions : list[Action]):
-    # Generate sample data
-    np.random.seed(0)
-    num_points = 100
-    x = np.random.rand(num_points)
-    y = np.random.rand(num_points)
-    z = np.random.rand(num_points)
-    w = np.random.rand(num_points)  # Fourth dimension
+def plot_actions_4D(combinations_, u, actions : list[Action]) -> None:
+    mask = np.empty((0, len(Action)))
+    for a in actions:
+        m = np.zeros(len(Action))
+        m[a.value] = 1
+        mask = np.vstack((mask, m))
+    
+    # reduce dimension since B=1 then only one strategy is available
+    # only works for B=1
+    points = np.empty((combinations_.shape[0], len(Action)))
+    for i in range(combinations_.shape[0]):
+        points[i] = combinations_[i][0]
+        
+    # apply mask to the points to reduce dimension
+    points = points @ mask.T
+    
+    x, y, z = points[:, 0], points[:, 1], points[:, 2]
+    z = u
+    
+    print(u)
 
     # Scale the fourth dimension values to adjust marker sizes
-    max_w = max(w)
-    min_w = min(w)
-    scaled_sizes = [(val - min_w) / (max_w - min_w) * 50 + 5 for val in w]  # Scale sizes to be between 5 and 55
-
+    max_u = max(u)
+    min_u = min(u)
+    scaled_sizes = [(val - min_u) / (max_u - min_u) * 50 + 5 for val in u]  # Scale sizes to be between 5 and 55
+    
+    print()
+    
     # Create the scatter plot
     fig = go.Figure(data=go.Scatter3d(
         x=x,
@@ -431,18 +436,20 @@ def plot_actions_4D(combinations_, u, actions : list[Action]):
             opacity=0.7
         ),
         mode='markers',
-        template='plotly_dark'  # Dark mode
     ))
 
     # Customize layout
-    fig.update_layout(scene=dict(
-                        xaxis_title='X',
-                        yaxis_title='Y',
-                        zaxis_title='Z'
-                    ))
+    fig.update_layout(
+        template='plotly_dark', # Dark mode
+        scene=dict(
+            xaxis_title=str(actions[0]),
+            yaxis_title=str(actions[1]),
+            zaxis_title=str(actions[2]),
+        ))
 
     # Show the plot
     fig.show()
+
 
 
 if __name__ == '__main__':

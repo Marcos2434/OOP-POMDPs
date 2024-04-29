@@ -1,5 +1,6 @@
 from enum import Enum
 from copy import deepcopy
+from fractions import Fraction as frac
 
 import numpy as np
 
@@ -29,47 +30,47 @@ class Action(Enum):
         return hash(self.name)
     
 
-class RangeFloat:
-    """
-    A float that is within the range [0, 1]
-    """
-    def __init__(self, value=0.0):
-        self._value = value
-        self.value = value  # utilize setter to ensure value is within range
+# class RangeFloat:
+#     """
+#     A float that is within the range [0, 1]
+#     """
+#     def __init__(self, value=0.0):
+#         self._value = value
+#         self.value = value  # utilize setter to ensure value is within range
     
-    @property
-    def value(self) -> float:
-        # when one accesses the value attribute, this function is called
-        return self._value
+#     @property
+#     def value(self) -> float:
+#         # when one accesses the value attribute, this function is called
+#         return self._value
     
-    @value.setter
-    def value(self, new_value) -> None:
-        # when one sets the value attribute, this function is called
-        if 0.0 <= float(new_value) <= 1.0: self._value = float(new_value)
-        else: raise ValueError("Value must be between 0 and 1")
+#     @value.setter
+#     def value(self, new_value) -> None:
+#         # when one sets the value attribute, this function is called
+#         if 0.0 <= float(new_value) <= 1.0: self._value = float(new_value)
+#         else: raise ValueError("Value must be between 0 and 1")
     
-    def __eq__(self, other) -> bool:
-        return isinstance(other, RangeFloat) and self._value == other._value
+#     def __eq__(self, other) -> bool:
+#         return isinstance(other, RangeFloat) and self._value == other._value
     
-    def __hash__(self) -> int:
-        return hash(self._value)
+#     def __hash__(self) -> int:
+#         return hash(self._value)
     
-    def __str__(self) -> str:
-        return str(self._value)
+#     def __str__(self) -> str:
+#         return str(self._value)
 
-    def __repr__(self) -> str:
-        return str(self._value)
+#     def __repr__(self) -> str:
+#         return str(self._value)
 
 class Strategy:
     """
     A strategy is a mapping from actions to probabilities.
     """
     
-    def __init__(self, actions : dict[Action, RangeFloat] = None) -> None:
+    def __init__(self, actions : dict[Action, frac] = None) -> None:
         self.id = id(self) # unique id
-        self.actions : dict[Action, RangeFloat] = actions
+        self.actions : dict[Action, frac] = actions
     
-    def add_action(self, action : Action, p : RangeFloat):
+    def add_action(self, action : Action, p : frac):
         self.actions[action] = p
         
     def __str__(self) -> str:
@@ -85,15 +86,14 @@ class Strategy:
         return isinstance(other, Strategy) and self.actions == other.actions
     
     # if strategy is subscriptable, return the probability of the action
-    def __getitem__(self, action : Action) -> RangeFloat:
+    def __getitem__(self, action : Action) -> frac:
         try:
             return self.actions[action]
         except KeyError:
             # if actions is not defined within actions
             # then the startegy does not have will never
             # peform that action
-            return RangeFloat(0.0)
-
+            return frac(0)
 
 
 class Node:
@@ -190,11 +190,15 @@ def Z3Serializer(m : Model) -> dict:
         if m[decl].sort().kind() == Z3_INT_SORT:
             values[str(decl)] = m[decl].as_long()
         elif m[decl].sort().kind() == Z3_REAL_SORT:
-            values[str(decl)] = z3_rational_to_float(m[decl])
+            values[str(decl)] = m[decl].as_fraction()
+            # values[str(decl)] = z3_rational_to_float(m[decl])
+            # values[str(decl)] = float(m[decl].as_decimal(prec=10))
         else:
             values[str(decl)] = str(m[decl])
     
     return values
+
+inverse_fraction = lambda f : frac(f.denominator, f.numerator) if f.numerator != 0 else 0 
 
 # def z3_model_to_dict(model):
 #     """
@@ -206,5 +210,11 @@ def Z3Serializer(m : Model) -> dict:
 #         result[str(var)] = model[var]
 #     return result
 
-def z3_rational_to_float(rational):
-    return float(rational.numerator_as_long()) / float(rational.denominator_as_long())
+def z3_rational_to_float(x):
+    x = x.as_fraction()
+    return float(x.numerator) / float(x.denominator)
+
+    # try:
+    #     return float(rational.numerator_as_long()) / float(rational.denominator_as_long())
+    # except OverflowError:
+    #     return float(rational.as_decimal(prec=10))
