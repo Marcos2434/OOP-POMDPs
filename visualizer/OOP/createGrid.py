@@ -23,6 +23,9 @@ def create_grid_constrained(budget, target, size, threshold, det):
 	var = {}
 
 	actions = ['l', 'r', 'u', 'd']
+ 
+ 	# # Optimization to disregard solutions with too high budget
+	# if budget > len(actions): budget = len(actions)
 
 	column = target % size
 

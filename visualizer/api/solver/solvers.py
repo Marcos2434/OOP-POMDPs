@@ -17,8 +17,8 @@ from OOP.createMazeFixed import create_maze_pre
 import importlib.util
 
 # AI Helpers
-from .pomdp import POMDP
-from .helpers import Node
+# from .pomdp import POMDP
+# from .helpers import Node
 
 def Z3_Solver(data) -> Response:
     if data['model'] == "Line":
@@ -123,43 +123,44 @@ def Z3_Solver(data) -> Response:
     return Response(content, status=status.HTTP_200_OK)
 
 def AI_Solver(data) -> Response:
-    if data['model'] == "Grid":
-        gridSize = (int(data['size']), int(data['size']))
+    pass
+    # if data['model'] == "Grid":
+    #     gridSize = (int(data['size']), int(data['size']))
         
-        # translation layer
-        def translate_grid_id_to_grid_coords(gridSize : tuple[int, int], id : int) -> Node:
-            return Node(id // gridSize[0], id % gridSize[0])
+    #     # translation layer
+    #     def translate_grid_id_to_grid_coords(gridSize : tuple[int, int], id : int) -> Node:
+    #         return Node(id // gridSize[0], id % gridSize[0])
         
-        pomdp = POMDP(
-            gridSize=gridSize, 
-            model='grid', 
-            budget=int(data['budget']),
-            target= translate_grid_id_to_grid_coords(gridSize, int(data['target'])),
-        )
+    #     pomdp = POMDP(
+    #         gridSize=gridSize, 
+    #         model='grid', 
+    #         budget=int(data['budget']),
+    #         target= translate_grid_id_to_grid_coords(gridSize, int(data['target'])),
+    #     )
         
-        infinite_budget_optimal_solution, minimal_budget_optimal_solution = pomdp.solve()
+    #     infinite_budget_optimal_solution, minimal_budget_optimal_solution = pomdp.solve()
         
         
-        content = {
-            'budget' : data['budget'],
-            'target' : data['target'],
-            'size' : data['size'],
-            'threshold' : data['threshold'],
-            'deterministic' : True if data['deterministic'] else False,
-            'sensor_selection' : True if 'sensor_selection' in data else False,
-            'solution': None,
-        }
+    #     content = {
+    #         'budget' : data['budget'],
+    #         'target' : data['target'],
+    #         'size' : data['size'],
+    #         'threshold' : data['threshold'],
+    #         'deterministic' : True if data['deterministic'] else False,
+    #         'sensor_selection' : True if 'sensor_selection' in data else False,
+    #         'solution': None,
+    #     }
         
-        if minimal_budget_optimal_solution is None:
-            if infinite_budget_optimal_solution is None:
-                return Response({ 'solution' : 'No solution' }, status=status.HTTP_200_OK)
-            else:
-                content['solution'] = infinite_budget_optimal_solution
-                return Response(content, status=status.HTTP_200_OK)
-        else:
-            content['solution'] = minimal_budget_optimal_solution['parsed_pomdp']
-            return Response(content, status=status.HTTP_200_OK)
+    #     if minimal_budget_optimal_solution is None:
+    #         if infinite_budget_optimal_solution is None:
+    #             return Response({ 'solution' : 'No solution' }, status=status.HTTP_200_OK)
+    #         else:
+    #             content['solution'] = infinite_budget_optimal_solution
+    #             return Response(content, status=status.HTTP_200_OK)
+    #     else:
+    #         content['solution'] = minimal_budget_optimal_solution['parsed_pomdp']
+    #         return Response(content, status=status.HTTP_200_OK)
     
-    # Model not implemented
-    return Response(status=status.HTTP_501_NOT_IMPLEMENTED)    
+    # # Model not implemented
+    # return Response(status=status.HTTP_501_NOT_IMPLEMENTED)    
     

@@ -142,9 +142,8 @@ const serializeForm = form => {
     // Serialize form data into JSON object
     const formData = new FormData(form)
     const data = {}
-    for (const [key, value] of formData.entries()) {
+    for (const [key, value] of formData.entries())
         data[key] = value
-    }
     return data
 }
 

@@ -43,8 +43,8 @@ pi6 == (ys6_1*xo1l) * (1 + pi6) + (ys6_1*xo1r) * (1 + pi7) + (ys6_1*xo1u) * (1 +
 pi7 == (ys7_1*xo1l) * (1 + pi6) + (ys7_1*xo1r) * (1 + pi8) + (ys7_1*xo1u) * (1 + pi4) + (ys7_1*xo1d) * (1 + pi7),
 pi8 == 0, 
 # We are dropped uniformly in the grid
-# We want to check if the minimal expected cost is below some threshold <= 3.8
-(pi0+pi1+pi2+pi3+pi4+pi5+pi6+pi7) * Q(1,8) <= 3.8,
+# We want to check if the minimal expected cost is below some threshold <= 10
+(pi0+pi1+pi2+pi3+pi4+pi5+pi6+pi7) * Q(1,8) <= 10,
 # Randomised strategies (proper probability distributions)
 xo1l>= 0,
 xo1l<= 1,

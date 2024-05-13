@@ -23,7 +23,7 @@ class NetworkData {
                 node_highlight_border: "rgb(0, 0, 0)",
                 node_font_color: "rgb(0, 0, 0)",
                 edge_color: "rgb(0, 0, 0)",
-                nodeBorderSize: 2,
+                nodeBorderSize: 3,
             },
             transparent: {
                 canvas_bg: "rgb(47, 46, 51)",
@@ -33,11 +33,11 @@ class NetworkData {
                 node_highlight_border: "rgb(255, 255, 255)",
                 node_font_color: "rgb(255, 255, 255)",
                 edge_color: "rgb(255, 255, 255)",
-                nodeBorderSize: 2,
+                nodeBorderSize: 3,
             },
         }
 
-        this.config = this.configs.transparent
+        this.config = this.configs.white
 
         const options = {
             autoResize: true,
@@ -70,7 +70,7 @@ class NetworkData {
                     size: 20,
                     face: 'Tahoma',
                     color: this.config.node_font_color,
-                }
+                },
             },        // defined in the nodes module.
             // groups: {},       // defined in the groups module.
             // layout: {},       // defined in the layout module.
@@ -84,11 +84,55 @@ class NetworkData {
                     springLength: 100, // Set your desired default edge length
                     springConstant: 0.04 // Tweak other physics parameters if needed
                 }
+
+                // enabled: true,
+                // barnesHut: {
+                //     gravitationalConstant: -2000,
+                //     centralGravity: 0.3,
+                //     springLength: 100, // Adjust this value to control the length between nodes
+                //     springConstant: 0.05,
+                //     damping: 0.09,
+                //     avoidOverlap: 0
+                // },
+                // forceAtlas2Based: {
+                //     gravitationalConstant: -50,
+                //     centralGravity: 0.01,
+                //     springLength: 100,
+                //     springConstant: 0.08,
+                //     damping: 0.4,
+                //     avoidOverlap: 0
+                // },
+                // repulsion: {
+                //     centralGravity: 0.2,
+                //     springLength: 200,
+                //     springConstant: 0.05,
+                //     nodeDistance: 100,
+                //     damping: 0.09
+                // },
+                // hierarchicalRepulsion: {
+                //     centralGravity: 0.0,
+                //     springLength: 100,
+                //     springConstant: 0.01,
+                //     nodeDistance: 120,
+                //     damping: 0.09
+                // },
+                // maxVelocity: 50,
+                // minVelocity: 0.1,
+                // solver: 'barnesHut',
+                // stabilization: {
+                //     enabled: true,
+                //     iterations: 1000,
+                //     updateInterval: 100,
+                //     onlyDynamicEdges: false,
+                //     fit: true
+                // },
+                // timestep: 0.5,
+                // adaptiveTimestep: true,
             }, // defined in the physics module.
         }
         
         this.container = document.querySelector("#network")
-        this.setBgColor("transparent")
+        this.setBgColor("white")
 
         this.createModel()
         this.styleGraph()
@@ -117,10 +161,10 @@ class NetworkData {
         for (let node of this.nodes.get()) {
             if (node.id == this.target) {
                 node.color = {
-                    border: "green",
+                    border: "hsl(160, 97%, 42%)",
                     background: this.config.node_bg,
                     highlight: {  // Colors when the node is selected
-                        border: "green",
+                        border: "hsl(160, 97%, 42%)",
                         background: this.config.node_highlight_bg,
                     }
                 }
@@ -150,6 +194,21 @@ class NetworkData {
             }
             this.edges.update(edge)
         }
+
+        // Color nodes arbitrarily
+        // for (let node of this.nodes.get()) {
+        //     if (node.id == this.target) continue
+        //     node.color = {
+        //         border: "hsl(200, 97%, 42%)",
+        //         background: this.config.node_bg,
+        //         highlight: {
+        //             border: "hsl(200, 97%, 42%)",
+        //             background: this.config.node_highlight_bg,
+        //         }
+        //     }
+        // }
+        
+
     }
 
     createModel = () => {
@@ -387,6 +446,20 @@ class NetworkData {
                 }
             }
         }
+    }
+
+    // arbitrary node coloration
+    colorNode = (nodeId, color) => {
+        let node = this.nodes.get(nodeId)
+        node.color = {
+            border: color,
+            background: this.config.node_bg,
+            highlight: {
+                border: color,
+                background: this.config.node_highlight_bg,
+            }
+        }
+        this.nodes.update(node)
     }
 
     updateNetwork = ({ model, target, size, rows, columns, sensor_selection }) => {

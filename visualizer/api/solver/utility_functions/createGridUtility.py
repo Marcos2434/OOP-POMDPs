@@ -41,7 +41,7 @@ def generate_next_filename(directory, base_filename):
     next_index = latest_index + 1
     return f"{base_filename}[{next_index}].py"
 
-def grid_utility(budget, target, size, strategies : dict[int, Strategy], assignments : dict[Node, int], det = 0):
+def grid_utility(budget, target, size, strategies : dict[int, Strategy], observations : dict[Node, int], det = 0):
 
     # import os
     # print(os.getcwd())
@@ -222,7 +222,7 @@ def grid_utility(budget, target, size, strategies : dict[int, Strategy], assignm
     # from the assignments parameter, so we can write 
     # them directly to the file
     file.write("# Assigned observables\n")
-    for n, s_id in assignments.items():
+    for n, s_id in observations.items():
         file.write(f'ys{n.id}_{s_id} == 1,\n')
         for i in range(1, budget + 1):
             if i != s_id:

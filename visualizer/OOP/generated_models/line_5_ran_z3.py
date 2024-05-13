@@ -7,6 +7,9 @@ pi2 = Real('pi2')
 pi3 = Real('pi3')
 pi4 = Real('pi4')
 
+exp = Real('exp')
+
+
 # Choice of observations (e.g. ys01 = 1 means that in state 0, observable 1 is observed)
 ys0_1 = Real('ys0_1')
 ys1_1 = Real('ys1_1')
@@ -31,12 +34,23 @@ pi4 == (ys4_1*xo1l)*(1 + pi3) + (ys4_1*xo1r)*(1 + pi4),
 # We are dropped uniformly in the line
 # We want to check if the minimal expected cost is below some threshold <= 10
 (pi0+pi1+pi3+pi4) * Q(1,4) <= 10,
+
+exp == (pi0+pi1+pi3+pi4) * Q(1,4),
+
 # Randomised strategies (proper probability distributions)
 xo1l>= 0,
 xo1l<= 1,
 xo1r>= 0,
 xo1r<= 1,
 xo1l + xo1r == 1,
+
+
+xo1l== Q(1, 2),
+xo1l== Q(1, 2),
+xo1r== Q(1, 2),
+xo1r== Q(1, 2),
+
+
 # ysNM is a function that should map every state N to some observable class M
 Or(ys0_1== 0 , ys0_1== 1),
 Or(ys1_1== 0 , ys1_1== 1),
