@@ -58,14 +58,13 @@ class POMDP:
     
     def generate_model(self):
         if self.model == 'grid':
-            size = self.gridSize[0]
-            for i in range(size):
-                for j in range(size):
+            for i in range(self.gridSize[0]):
+                for j in range(self.gridSize[1]):
                     self.nodes.add(Node(i, j))
-            for i in range(size):
-                for j in range(size):
-                    if i < size - 1: self.edges.add(Edge((Node(i, j), Node(i+1, j))))
-                    if j < size - 1: self.edges.add(Edge((Node(i, j), Node(i,j+ 1))))
+            for i in range(self.gridSize[0]):
+                for j in range(self.gridSize[1]):
+                    if i < self.gridSize[0] - 1: self.edges.add(Edge((Node(i, j), Node(i+1, j))))
+                    if j < self.gridSize[1] - 1: self.edges.add(Edge((Node(i, j), Node(i,j+ 1))))
         self.graph = Graph(self.nodes, self.edges)
         
     def add_strat_edge(self, edge : Edge):
