@@ -70,17 +70,17 @@ html {
 html, body, div section {
   margin: 0;
   padding: 0;
-  background-color: rgb(47, 46, 51);
-  line-height: 36px;
+  background-color: rgb(255, 255, 255);
+  line-height: 28px;
 }
 html *, body *, div section * {
   font-family: "system-ui", "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
-  line-height: 36px;
+  line-height: 28px;
   font-weight: 600;
 }
 
 p, h1, h2, h3, h4, h5, h6 {
-  color: white;
+  color: black;
 }
 
 body {
@@ -95,11 +95,16 @@ body {
   width: auto;
   flex-wrap: wrap;
   gap: 20px;
+  line-height: 1px !important;
+}
+#main-wrapper h1 {
+  font-size: 1.5rem;
 }
 #main-wrapper > div {
   flex: 1 0 200px; /* Flex-grow, flex-shrink, flex-basis */
-  border: 1px solid white;
+  border: 1px solid rgb(226, 226, 226);
   border-radius: 5px;
+  background-color: rgb(255, 255, 255);
 }
 #main-wrapper > div:not(.middle) {
   padding: 10px 15px;
@@ -114,7 +119,7 @@ body {
   --height: 1;
   aspect-ratio: var(--width)/var(--height);
   overflow: hidden;
-  border: 1px solid white;
+  border: 1px solid rgb(226, 226, 226);
   border-radius: 5px;
 }
 
@@ -133,13 +138,14 @@ hr {
 nav {
   margin: 0;
   border-radius: 5px;
+  border: 1px solid rgb(226, 226, 226);
   border-bottom: rgb(221, 92, 0) 2px solid;
   padding: 5px 2%;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   z-index: 1;
-  background-color: rgb(75, 74, 77);
+  background-color: rgb(255, 255, 255);
 }
 
 nav .logo {
@@ -191,7 +197,7 @@ nav ul li a:hover {
 .hamburger .line {
   width: 25px;
   height: 1px;
-  background-color: white;
+  background-color: black;
   display: block;
   margin: 7px auto;
   transition: all 0.3s ease-in-out;
@@ -230,7 +236,7 @@ nav ul li a:hover {
   width: 60%;
   height: 100vh;
   padding: 20% 0;
-  background: rgb(75, 74, 77);
+  background: rgb(226, 226, 226);
   transition: all 0.5s ease-in;
   z-index: 2;
 }
@@ -251,7 +257,7 @@ nav ul li a:hover {
 
 .menubar ul li a {
   text-decoration: none;
-  color: white;
+  color: black;
   font-size: 95%;
   font-weight: 400;
   padding: 5px 10px;
@@ -259,7 +265,7 @@ nav ul li a:hover {
 }
 
 .menubar ul li a:hover {
-  background-color: rgb(47, 46, 51);
+  background-color: rgb(255, 255, 255);
 }
 
 @media screen and (max-width: 790px) {
@@ -272,7 +278,7 @@ nav ul li a:hover {
 }
 /* Chrome, Safari, Edge, Opera */
 #oop_form {
-  color: white;
+  color: black;
 }
 
 input:focus,
@@ -298,14 +304,14 @@ button:focus {
   padding: 5px 10px;
   border-radius: 5px;
   border: none;
-  background-color: rgb(75, 74, 77);
-  color: white;
+  background-color: rgb(226, 226, 226);
+  color: black;
 }
 .form-field > input[type=number]:focus, .form-field > input[type=text]:focus, .form-field > select:focus {
   box-shadow: none;
 }
 .form-field > input[type=checkbox] {
-  width: 36px;
+  width: 20px;
   height: 100%;
   margin: 0;
 }
@@ -320,21 +326,22 @@ input[type=submit] {
   font-size: 1rem;
   border-radius: 5px;
   border: none;
-  background-color: rgb(75, 74, 77);
-  color: white;
+  background-color: rgb(226, 226, 226);
+  border: 2px solid rgb(255, 255, 255);
+  color: black;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
-  margin: 20px 0;
+  margin: 6px 0;
 }
 input[type=submit]:hover {
-  background-color: rgb(47, 46, 51);
-  transform: scale(1.1);
+  background-color: rgb(255, 255, 255);
+  border: 2px dashed rgb(226, 226, 226);
 }
 input[type=submit]:active {
   transform: scale(1);
 }
 input[type=submit]:disabled {
-  background-color: #323133;
+  background-color: #c9c9c9;
   cursor: not-allowed;
 }
 
@@ -345,21 +352,21 @@ input[type=submit]:disabled {
 }
 .nice-table th, .nice-table td {
   padding: 10px;
-  border: 1px solid white;
+  border: 1px solid black;
   text-align: center;
 }
 .nice-table th {
-  background-color: rgb(0, 0, 0);
-  color: white;
+  background-color: rgb(201, 201, 201);
+  color: black;
 }
 .nice-table tr {
-  color: white;
+  color: black;
 }
 .nice-table tr:nth-child(even) {
-  background-color: black;
+  background-color: rgb(201, 201, 201);
 }
 .nice-table tr:nth-child(odd) {
-  background-color: rgb(75, 74, 77);
+  background-color: rgb(226, 226, 226);
 }
 
 .disappear {
@@ -407,15 +414,16 @@ input[type=submit]:disabled {
   font-size: 1rem;
   border-radius: 5px;
   border: none;
-  background-color: rgb(75, 74, 77);
-  color: white;
+  background-color: rgb(226, 226, 226);
+  color: black;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
-  border: 2px solid rgb(75, 74, 77);
-  margin: 20px 0;
+  border: 2px solid rgb(226, 226, 226);
+  margin: 6px 0;
 }
 .btn:hover {
-  border: 2px solid rgb(75, 74, 77);
+  background-color: rgb(255, 255, 255);
+  border: 2px dashed rgb(226, 226, 226);
 }
 .btn:active {
   transform: scale(0.9);
@@ -425,36 +433,37 @@ input[type=submit]:disabled {
   display: flex;
   -moz-column-gap: 15px;
        column-gap: 15px;
-  color: white;
+  color: black;
   align-items: center;
   justify-content: center;
-  background-color: rgb(75, 74, 77);
+  background-color: rgb(226, 226, 226);
   border-radius: 5px 0 0 5px;
 }
 
 .card {
   border-radius: 5px;
-  background-color: black;
+  background-color: rgb(226, 226, 226);
   width: 100%;
   max-width: 400px;
   min-width: 200px;
   display: flex;
+  align-items: center;
 }
 .card button {
   padding: 7px 15px;
   font-size: 1rem;
   border-radius: 5px;
   border: none;
-  background-color: rgb(75, 74, 77);
-  color: white;
+  background-color: rgb(226, 226, 226);
+  color: black;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
-  border: 2px solid rgb(75, 74, 77);
+  border: 2px solid rgb(226, 226, 226);
   margin: 20px 0;
 }
 .card button:hover {
-  background-color: rgb(47, 46, 51);
-  border: 2px solid rgb(75, 74, 77);
+  background-color: rgb(255, 255, 255);
+  border: 2px solid rgb(226, 226, 226);
   transform: scale(1.1);
 }
 .card button:active {
@@ -466,6 +475,7 @@ input[type=submit]:disabled {
   grid-template-columns: 40px 1fr;
   -moz-column-gap: 10px;
        column-gap: 10px;
+  align-items: center;
 }
 #loader-container > div {
   padding: 4px;

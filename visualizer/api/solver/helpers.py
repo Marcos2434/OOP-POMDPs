@@ -3,6 +3,7 @@ from copy import deepcopy
 from fractions import Fraction as frac
 
 import numpy as np
+import random
 
 class Action(Enum):
     """
@@ -14,18 +15,14 @@ class Action(Enum):
     RIGHT = 1
     DOWN = 2
     LEFT = 3
-    
     def __str__(self):
         # capitalize the first letter of the action while the rest is lowercase
         # return self.name[0] + self.name[1:].lower()
         return self.name[0].lower()
-    
     def __repr__(self):
         return self.name[0].lower()
-
     def __eq__(self, value: object) -> bool:
         return super().__eq__(value)
-    
     def __hash__(self) -> int:
         return hash(self.name)
     
@@ -218,3 +215,18 @@ def z3_rational_to_float(x):
     #     return float(rational.numerator_as_long()) / float(rational.denominator_as_long())
     # except OverflowError:
     #     return float(rational.as_decimal(prec=10))
+    
+
+# def zero_sum_distribution(size, neighborhood_scale):
+#     values = [random.randint(-100, 100) for _ in range(size)]
+#     values[-1] = -sum(values[:-1]) # ensure the sum of values is 0 by setting the last value to the negative sum of the rest
+#     fractions = [frac(value, 100) for value in values]  # scale to ensure precision
+#     return fractions
+
+def zero_sum_distribution(size, neighborhood_scale=0.1):
+    values = [random.uniform(-neighborhood_scale, neighborhood_scale) for _ in range(size)]
+    values[-1] = -sum(values[:-1]) # ensure the sum of values is 0 by setting the last value to the negative sum of the rest
+    neighborhood_scale = frac(neighborhood_scale)
+    values = list(map(frac, values))
+    fractions = [frac(value, neighborhood_scale) for value in values]  # scale to ensure precision
+    return values

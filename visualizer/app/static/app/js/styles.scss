@@ -50,14 +50,29 @@ table {
 }
 
 
-// Color Varibales
-$color-1: rgb(47, 46, 51);
-$color-2: rgb(75, 74, 77);
+// Color Variables
+// Dark Theme
+// $color-1: rgb(47, 46, 51);
+// $color-2: rgb(75, 74, 77);
+// $color-3: #19376D;
+// $color-4: #576CBC;
+// $color-5: #A5D7E8;
+// $color-6: #9EC8B9;
+// $accent-color: rgb(221, 92, 0);
+// $text-color: white;
+
+// Light Theme
+$color-1: rgb(255, 255, 255);
+$color-2: rgb(226, 226, 226);
 $color-3: #19376D;
 $color-4: #576CBC;
 $color-5: #A5D7E8;
 $color-6: #9EC8B9;
 $accent-color: rgb(221, 92, 0);
+$text-color: black;
+
+$border: 1px solid $color-2;
+
 
 // Font
 $font-1: "system-ui", "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";;
@@ -87,23 +102,23 @@ html, body, div section {
     margin: 0;
     padding: 0;
     background-color: $color-1;
-    line-height: 36px;
+    line-height: 28px;
     * {
         font-family: $font-1;
-        line-height: 36px;
+        line-height: 28px;
         font-weight: 600;
     }
 }
 
 p, h1, h2, h3, h4, h5, h6 {
-    color: white;
+    color: $text-color;
 }
 
 body {
     padding: 15px;
 }
 
-$border: 1px solid white;
+
 
 #main-wrapper {
     display: flex;
@@ -116,12 +131,17 @@ $border: 1px solid white;
     // padding: 10px;
     // border: #19376D 10px solid;
     // min-height: 500px;
+    h1 {
+        font-size: 1.5rem;
+    }
+    line-height: 1px !important;
     > div {
         // min-width: 225px;
         flex: 1 0 200px; /* Flex-grow, flex-shrink, flex-basis */
         // height: 100%;
         border: $border;
         border-radius: $border-radius;
+        background-color: $color-1;
 
         &:not(.middle) {
             padding: 10px 15px;
@@ -167,14 +187,15 @@ nav {
     //     rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
 
     // box-shadow: 0px 0 2px 0 $accent-color;
+    border: $border;
     border-bottom: $accent-color 2px solid;
 
     padding: 5px 2%;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     z-index: 1;
-    background-color: $color-2;
+    background-color: $color-1;
 }
 nav .logo {
     display: flex;
@@ -221,7 +242,7 @@ nav ul li a:hover {
 .hamburger .line {
     width: 25px;
     height: 1px;
-    background-color: white;
+    background-color: $text-color;
     display: block;
     margin: 7px auto;
     transition: all 0.3s ease-in-out;
@@ -278,7 +299,7 @@ nav ul li a:hover {
 
 .menubar ul li a {
     text-decoration: none;
-    color: white;
+    color: $text-color;
     font-size: 95%;
     font-weight: 400;
     padding: 5px 10px;
@@ -312,7 +333,7 @@ nav ul li a:hover {
 
 
 #oop_form {
-    color: white;
+    color: $text-color;
     // padding: 10px;
 }
 
@@ -342,14 +363,14 @@ button:focus {
         border-radius: $border-radius;
         border: none;
         background-color: $color-2;
-        color: white;
+        color: $text-color;
         &:focus {
             box-shadow: none;
         }
     }
 
     > input[type="checkbox"] {
-        width: 36px;
+        width: 20px;
         height: 100%;
         margin: 0;
     }
@@ -366,15 +387,17 @@ input[type="submit"] {
     border-radius: $border-radius;
     border: none;
     background-color: $color-2;
-    color: white;
+    border: 2px solid $color-1;
+    color: $text-color;
     cursor: pointer;
     transition: all 0.3s ease-in-out;
     // border: 2px solid $color-2;
-    margin: 20px 0;
+    margin: 6px 0;
     &:hover {
         background-color: $color-1;
+        border: 2px dashed $color-2;
         // border: 2px solid $color-2;
-        transform: scale(1.10);
+        // transform: scale(1.10);
     }
     &:active {
         transform: scale(1);
@@ -393,18 +416,18 @@ input[type="submit"] {
     margin: 20px 0;
     th, td {
         padding: 10px;
-        border: 1px solid white;
+        border: 1px solid $text-color;
         text-align: center;
     }
     th {
-        background-color: rgb(0, 0, 0);
-        color: white;
+        background-color: rgb(201, 201, 201);
+        color: $text-color;
     }
     tr {
-        color: white;
+        color: $text-color;
     }
     tr:nth-child(even) {
-        background-color: black;
+        background-color: rgb(201, 201, 201);
     }
     tr:nth-child(odd) {
         background-color: $color-2;
@@ -462,14 +485,20 @@ input[type="submit"] {
     border-radius: $border-radius;
     border: none;
     background-color: $color-2;
-    color: white;
+    color: $text-color;
     cursor: pointer;
     transition: all 0.3s ease-in-out;
     border: 2px solid $color-2;
-    margin: 20px 0;
+    margin: 6px 0;
+    // &:hover {
+    //     // background-color: $color-1;
+    //     border: 2px solid $color-2;
+    // }
     &:hover {
-        // background-color: $color-1;
-        border: 2px solid $color-2;
+        background-color: $color-1;
+        border: 2px dashed $color-2;
+        // border: 2px solid $color-2;
+        // transform: scale(1.10);
     }
     &:active {
         transform: scale(.9);
@@ -481,7 +510,7 @@ input[type="submit"] {
 #loader-flex-container {
     display: flex;
     column-gap: 15px;
-    color: white;
+    color: $text-color;
     align-items: center;
     justify-content: center;
 
@@ -494,12 +523,12 @@ input[type="submit"] {
     // border: 1px solid white;
     border-radius: $border-radius;
     // background-color: $color-2;
-    background-color: black;
+    background-color: $color-2;
     width: 100%;
     max-width: 400px;
     min-width: 200px;
     display: flex;
-    // align-items: center;
+    align-items: center;
     // justify-content: start;
     // text-align: center;
 
@@ -509,7 +538,7 @@ input[type="submit"] {
         border-radius: $border-radius;
         border: none;
         background-color: $color-2;
-        color: white;
+        color: $text-color;
         cursor: pointer;
         transition: all 0.3s ease-in-out;
         border: 2px solid $color-2;
@@ -529,6 +558,7 @@ input[type="submit"] {
     display: grid;
     grid-template-columns: 40px 1fr;
     column-gap: 10px;
+    align-items: center;
     > div {
         padding: 4px;
     }

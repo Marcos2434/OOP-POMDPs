@@ -1,8 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
 
     // Responsive menu bar
-    const mobileNav = document.querySelector(".hamburger")
-    mobileNav.addEventListener("click", toggleNav)
+    // const mobileNav = document.querySelector(".hamburger")
+    // mobileNav.addEventListener("click", toggleNav)
 
     // Handle form inputs and outputs to update graph
     modelFormHandler()

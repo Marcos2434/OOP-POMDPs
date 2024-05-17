@@ -22,56 +22,31 @@
               {% comment %} <img src="assets/Logo64x64.png" alt="logo" /> {% endcomment %}
               <h1>OOP Visualizer</h1>
             </div>
-            <ul>
+            {% comment %} <ul>
               <li>
                 <a href="{% url "index" %}">Home</a>
               </li>
-              {% comment %} <li>
-                <a href="#">Services</a>
-              </li>
-              <li>
-                <a href="#">Blog</a>
-              </li>
-              <li>
-                <a href="#">Contact Us</a>
-              </li> {% endcomment %}
-            </ul>
-            <div class="hamburger">
+            </ul> {% endcomment %}
+            {% comment %} <div class="hamburger">
               <span class="line"></span>
               <span class="line"></span>
               <span class="line"></span>
-            </div>
+            </div> {% endcomment %}
           </nav>
-          <div class="menubar">
+          {% comment %} <div class="menubar">
             <ul>
                 <li>
                     <a href="{% url "index" %}">Home</a>
                 </li>
-              {% comment %} <li>
-                <a href="#">Services</a>
-              </li>
-              <li>
-                <a href="#">Blog</a>
-              </li>
-              <li>
-                <a href="#">Contact Us</a>
-              </li> {% endcomment %}
             </ul>
-          </div>
-          
-          {% comment %} <hr /> {% endcomment %}
+          </div> {% endcomment %}
+         
           <br>
-
           
           <div id="main-wrapper">
               <div class="left">
-                  <h1>Welcome to the OOP Visualizer!!</h1>
-                  <p>Enter your OOP code below to visualize it</p>
-
-                  <p>
-                    Created backend server with Django <br>
-                    Used the vis network library to visualize the OOP code
-                  </p>
+                  <h1>The Optimal Observability Problem <br> <span class="center">A Visualizer</span></h1>
+                  <p>Enter the specifications of the OOP instance and visualize it.</p>
 
                   <form id="oop_form" action="{% url "create-model" %}" method="post">                      
                       {% csrf_token %}
@@ -85,7 +60,7 @@
                       
                       {% comment %} <p style="font-style: italic;">Note that the fields "Rows" and "Columns" only apply to Maze models</p> {% endcomment %}
 
-                      <div class="center"> 
+                      <div class=""> 
                         <input id="submit_model" type="submit" value="Submit Model">
                       </div>
                   </form>
@@ -105,6 +80,7 @@
             <div class="right">
 
                 <h1>Model Solution Status</h1>
+                <br>
 
                 <div class="card">
                   <div id="loader-container">
@@ -121,7 +97,6 @@
                 </div>
 
 
-                <br/>
                 <br/>
 
                 <h1>Strategic Probabilities</h1>

@@ -1,6 +1,7 @@
 from itertools import combinations, product
 import plotly.graph_objects as go
 import os
+import random
 
 FILE_PATH_FLAG = True
 
@@ -178,6 +179,97 @@ class POMDP:
         
         return combinations_, U
     
+    def generate_initial_solution(self, strategies):
+        strategy_points = []
+        for _, s in strategies.items():
+            actions = list(s.actions.keys())
+            distribution = list(map(lambda x : frac(x).limit_denominator(), np.random.dirichlet(np.ones(len(actions)))))
+            point = [frac(0)] * len(Action)
+            for a in Action:
+                if a in actions:
+                    point[a.value] = distribution.pop()
+            strategy_points.append(point)
+        return strategy_points
+        
+        
+        # return [[frac(0), frac(1, 2), frac(1, 2), frac(0)]]
+    
+    def neighbor(self, strategies, solution, neighborhood_scale):
+        new_solution = solution.copy()
+        for strategy_idx in range(len(solution)):
+            actions = strategies[strategy_idx+1].actions.keys()
+            
+            # [OLD] Perturb the probabilities of actions in each strategy according to a normal distribution centered at 0
+            # perturbation = np.random.normal(0, scale=neighborhood_scale, size=len(actions))
+            # Normalize the perturbation to ensure the probabilities sum up to 0
+            # perturbation -= np.mean(perturbation)
+            
+            # Perturb the probabilities of actions in each strategy according to a zero-sum distribution
+            # print(len(actions)) # for some reason this doesn't work once helpers.py is updated, rerun jupyter file
+            perturbation = zero_sum_distribution(size=len(actions), neighborhood_scale=neighborhood_scale)
+            # print(np.around(list(map(float, perturbation)), 2))  
+            new_probabilities = [frac(0)] * len(Action)
+            i = 0
+            for a in Action:
+                if a in actions: 
+                    new_probabilities[a.value] = new_solution[strategy_idx][a.value] + perturbation[i]
+                    i += 1
+            
+            new_probabilities = np.clip(new_probabilities, 0, 1) # ensure that the probabilities sum up to 1
+            total_prob = frac(sum(new_probabilities))
+            # new_solution[strategy_idx] = new_probabilities
+            new_solution[strategy_idx] = [frac(frac(p), total_prob) for p in new_probabilities]
+            
+            
+            
+            # update each strategy with the action probabilities 
+            strategies = self.assign_point_to_strategies(strategies, new_solution)
+        return new_solution, strategies
+
+    def acceptance_probability(self, old_utility, new_utility, temperature):
+        # Calculate acceptance probability based on temperature and cost difference
+        if new_utility > old_utility: return 1 # accept if the new solution is better
+        elif temperature == 0: return 0 
+        else: return np.exp((new_utility - old_utility) / temperature) # accept with a probability proportional to the temperature and the difference in cost
+    
+    def assign_point_to_strategies(self, strategies, point):
+        for i in range(len(strategies)):
+            strategies[i+1].actions = {a: point[i][a.value] for a in Action if a in strategies[i+1].actions.keys()}
+        return strategies
+    
+    def simulated_annealing(self, strategies, observations, initial_temperature=1.0, cooling_rate=0.1, max_iterations=100, neighborhood_scale=0.1):
+        current_solution = self.generate_initial_solution(strategies) # a solution refers to a point, the intial solution is a random point
+        strategies = self.assign_point_to_strategies(strategies, current_solution) # assign the initial solution to the strategies
+        current_utility, _ = self.utility(strategies, observations)  # Compute cost of initial solution
+        
+        best_solution = current_solution
+        best_utility = current_utility
+        temperature = initial_temperature
+
+        points = []
+        utilities = []
+
+        for _ in range(max_iterations):
+            new_solution, strategies = self.neighbor(strategies, current_solution, neighborhood_scale) # Generate a new solution, i.e. perturb the current solution
+            new_utility, _ = self.utility(strategies, observations)  # Compute cost of new solution
+
+            # print(new_utility)
+            
+            points.append(new_solution)
+            utilities.append(new_utility)
+            
+            # print(f"new solution: {np.around(list(map(float, new_solution[0])), 2)}, new utility: {new_utility}, acceptance probability: {self.acceptance_probability(current_utility, new_utility, temperature)}")
+            
+            if self.acceptance_probability(current_utility, new_utility, temperature) > random.random():
+                current_solution = new_solution
+                current_utility = new_utility
+                if new_utility > best_utility:
+                    best_solution = new_solution
+                    best_utility = new_utility
+            temperature *= cooling_rate
+
+        return best_solution, best_utility, points, utilities
+    
     def solve(self) -> set[Edge]:
         infinite_budget_optimal_solution, minimal_budget_optimal_solution = None, None
         
@@ -271,11 +363,7 @@ class POMDP:
             strategy_combinations = set()
             for i in range(self.budget):
                 strategy_combinations |= set(combinations(strategies, i+1))
-            
-            
-            # print(len(strategy_combinations))
-            # return
-            
+
             def get_best_strategy_assignment(strategy_combination : set[Strategy], nodes : list[Node]):
                 # 1-indexed startegy id numbering
                 # id_strategy_combination = dict(map(lambda kv : (kv[0] + 1, kv[1]), id_strategy_combination.items()))
@@ -395,10 +483,18 @@ def plot_actions_3D(combinations_, u, actions : list[Action]) -> None:
         # template='plotly_dark', # Dark mode
         template='plotly_white',
         scene=dict(
-            xaxis_title=str(actions[0]),
-            yaxis_title=str(actions[1]),
-            zaxis_title='Utility',
-        )
+                xaxis=dict(
+                    title=str(actions[0]),
+                    range=[0, 1]
+                ),
+                yaxis=dict(
+                    title=str(actions[1]),
+                    range=[0, 1]
+                ),
+                zaxis=dict(
+                    title='Utility'
+                )
+            )
     )
 
     fig.update_layout(title='3D Scatter Plot')
@@ -469,11 +565,6 @@ def plot_actions_4D(combinations_, u, actions : list[Action]) -> None:
 if __name__ == '__main__':
     pass
 
-    
-    # pomdp = POMDP(gridSize=(3, 3), model='grid', budget=1, target=Node(2, 2))
-    # pomdp.solve()
-    
-    
     budget = 1
     gridSize = (10, 10)
     target = Node(9, 9)
@@ -492,15 +583,67 @@ if __name__ == '__main__':
     # get one specific utility value
     # print(pomdp.utility(enumerated_strategies, assignments)[0])
     # ---------------------------------------------------------
+    # print(len(pomdp.ordered_nodes))
+    # print(len(observations))
 
-    combinations_, U = pomdp.generate_points(enumerated_strategies, observations, sections=75, write_to_file=True)
-    plot_actions_3D(combinations_, U, actions = [Action.DOWN, Action.RIGHT])
+    initial_temperature = 10.0  # High initial temperature to encourage exploration
+    cooling_rate = 0.99  # Low cooling rate to increase exploitation
+    max_iterations = 200  # Sufficient iterations to explore the search space
+    neighborhood_scale = 0.1  # Small perturbations for neighborhood exploration around (0.5, 0.5)
 
-    # get the probability distribution of the actions that maximizes the utility
-    max_index = np.argmax(U)
-    approx = np.around(list(map(float, combinations_[max_index][0])), 2)
 
-    print('Max utility value: ')
-    print(combinations_[max_index][0])
-    print(approx)
-    print(U[max_index]) # 0.07480985633519664
+    best_solution, best_U, points, utilities = pomdp.simulated_annealing(
+        enumerated_strategies, 
+        observations, 
+        initial_temperature, 
+        cooling_rate, 
+        max_iterations, 
+        neighborhood_scale, 
+    )
+
+    plot_actions_3D(np.array(points), utilities, actions = [Action.DOWN, Action.RIGHT])
+
+    approximated_solution = np.around(list(map(float, best_solution[0])), 2)
+
+    print('Best solution: ', approximated_solution)
+    print('Best utility: ', best_U)
+
+    # budget = 1
+    # gridSize = (10, 10)
+    # target = Node(9, 9)
+    # strategies = list([  
+    #     Strategy({ Action.DOWN: frac(1, 2), Action.RIGHT: frac(1, 2) }) 
+    # ])
+    # enumerated_strategies = dict(enumerate(strategies, start=1))
+
+    # pomdp = POMDP(gridSize=gridSize, target=target, model='grid', budget=budget)
+
+    # # Assign strategies to the nodes
+    # for node in pomdp.nodes: node.assign_strategy(enumerated_strategies[1], 1)
+    # observations =  {n: n.strategy_id for n in pomdp.nodes if n != target}
+
+    # # ---------------------------------------------------------
+    # # get one specific utility value
+    # # print(pomdp.utility(enumerated_strategies, assignments)[0])
+    # # ---------------------------------------------------------
+    # # print(len(pomdp.ordered_nodes))
+    # # print(len(observations))
+
+    # initial_temperature = 10.0  # High initial temperature to encourage exploration
+    # cooling_rate = 0.01  # Gradual cooling rate to balance exploration and exploitation
+    # max_iterations = 50  # Sufficient iterations to explore the search space
+    # neighborhood_scale = 0.1  # Small perturbations for neighborhood exploration
+
+    # best_solution, best_U = pomdp.simulated_annealing(
+    #     enumerated_strategies, 
+    #     observations, 
+    #     initial_temperature, 
+    #     cooling_rate, 
+    #     max_iterations, 
+    #     neighborhood_scale, 
+    # )
+
+    # approximated_solution = np.around(list(map(float, best_solution[0])), 2)
+
+    # print('Best solution: ', approximated_solution)
+    # print('Best utility: ', best_U)
