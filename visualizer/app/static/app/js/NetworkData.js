@@ -198,17 +198,30 @@ class NetworkData {
         // Color nodes arbitrarily
         // for (let node of this.nodes.get()) {
         //     if (node.id == this.target) continue
-        //     node.color = {
-        //         border: "hsl(200, 97%, 42%)",
-        //         background: this.config.node_bg,
-        //         highlight: {
+            
+        //     // if (node.id % 5 == 0 || [1, 6, 11, 16].includes(node.id)) {
+        //     if ([20, 22, 23, 24].includes(node.id)) {
+        //         // console.log(node.id)
+        //         node.color = {
         //             border: "hsl(200, 97%, 42%)",
-        //             background: this.config.node_highlight_bg,
+        //             background: this.config.node_bg,
+        //             highlight: {
+        //                 border: "hsl(200, 97%, 42%)",
+        //                 background: this.config.node_highlight_bg,
+        //             }
+        //         }
+        //     } else {
+        //         node.color = {
+        //             border: "hsla(328, 64%, 53%, 1)",
+        //             background: this.config.node_bg,
+        //             highlight: {
+        //                 border: "hsla(328, 64%, 53%, 1)",
+        //                 background: this.config.node_highlight_bg,
+        //             }
         //         }
         //     }
+        //     this.nodes.update(node)
         // }
-        
-
     }
 
     createModel = () => {

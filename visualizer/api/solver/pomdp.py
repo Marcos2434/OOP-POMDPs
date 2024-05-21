@@ -565,11 +565,12 @@ def plot_actions_4D(combinations_, u, actions : list[Action]) -> None:
 if __name__ == '__main__':
     pass
 
+
     budget = 1
-    gridSize = (10, 10)
-    target = Node(9, 9)
-    strategies = list([  
-        Strategy({ Action.DOWN: frac(1, 2), Action.RIGHT: frac(1, 2) }) 
+    gridSize = (25, 25)
+    target = Node(24, 1)
+    strategies = list([ 
+        Strategy({ Action.DOWN: frac(1, 3), Action.RIGHT: frac(1, 3), Action.LEFT: frac(1, 3) }) 
     ])
     enumerated_strategies = dict(enumerate(strategies, start=1))
 
@@ -583,30 +584,63 @@ if __name__ == '__main__':
     # get one specific utility value
     # print(pomdp.utility(enumerated_strategies, assignments)[0])
     # ---------------------------------------------------------
-    # print(len(pomdp.ordered_nodes))
-    # print(len(observations))
 
-    initial_temperature = 10.0  # High initial temperature to encourage exploration
-    cooling_rate = 0.99  # Low cooling rate to increase exploitation
-    max_iterations = 200  # Sufficient iterations to explore the search space
-    neighborhood_scale = 0.1  # Small perturbations for neighborhood exploration around (0.5, 0.5)
+    combinations_, U = pomdp.generate_points(enumerated_strategies, observations, sections=25, write_to_file=True)
+    plot_actions_4D(combinations_, U, actions = [Action.DOWN, Action.RIGHT, Action.LEFT])
+
+    # get the probability distribution of the actions that maximizes the utility
+    max_index = np.argmax(U)
+    approx = np.around(list(map(float, combinations_[max_index][0])), 2)
+
+    print('Max utility value: ')
+    print(combinations_[max_index][0])
+    print(approx)
+    print(U[max_index])
 
 
-    best_solution, best_U, points, utilities = pomdp.simulated_annealing(
-        enumerated_strategies, 
-        observations, 
-        initial_temperature, 
-        cooling_rate, 
-        max_iterations, 
-        neighborhood_scale, 
-    )
 
-    plot_actions_3D(np.array(points), utilities, actions = [Action.DOWN, Action.RIGHT])
+    # budget = 1
+    # gridSize = (10, 10)
+    # target = Node(9, 9)
+    # strategies = list([  
+    #     Strategy({ Action.DOWN: frac(1, 2), Action.RIGHT: frac(1, 2) }) 
+    # ])
+    # enumerated_strategies = dict(enumerate(strategies, start=1))
 
-    approximated_solution = np.around(list(map(float, best_solution[0])), 2)
+    # pomdp = POMDP(gridSize=gridSize, target=target, model='grid', budget=budget)
 
-    print('Best solution: ', approximated_solution)
-    print('Best utility: ', best_U)
+    # # Assign strategies to the nodes
+    # for node in pomdp.nodes: node.assign_strategy(enumerated_strategies[1], 1)
+    # observations =  {n: n.strategy_id for n in pomdp.nodes if n != target}
+
+    # # ---------------------------------------------------------
+    # # get one specific utility value
+    # # print(pomdp.utility(enumerated_strategies, assignments)[0])
+    # # ---------------------------------------------------------
+    # # print(len(pomdp.ordered_nodes))
+    # # print(len(observations))
+
+    # initial_temperature = 10.0  # High initial temperature to encourage exploration
+    # cooling_rate = 0.99  # Low cooling rate to increase exploitation
+    # max_iterations = 200  # Sufficient iterations to explore the search space
+    # neighborhood_scale = 0.1  # Small perturbations for neighborhood exploration around (0.5, 0.5)
+
+
+    # best_solution, best_U, points, utilities = pomdp.simulated_annealing(
+    #     enumerated_strategies, 
+    #     observations, 
+    #     initial_temperature, 
+    #     cooling_rate, 
+    #     max_iterations, 
+    #     neighborhood_scale, 
+    # )
+
+    # plot_actions_3D(np.array(points), utilities, actions = [Action.DOWN, Action.RIGHT])
+
+    # approximated_solution = np.around(list(map(float, best_solution[0])), 2)
+
+    # print('Best solution: ', approximated_solution)
+    # print('Best utility: ', best_U)
 
     # budget = 1
     # gridSize = (10, 10)
