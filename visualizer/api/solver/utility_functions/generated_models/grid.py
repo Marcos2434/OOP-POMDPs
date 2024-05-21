@@ -27,6 +27,81 @@ pi21 = Real('pi21')
 pi22 = Real('pi22')
 pi23 = Real('pi23')
 pi24 = Real('pi24')
+pi25 = Real('pi25')
+pi26 = Real('pi26')
+pi27 = Real('pi27')
+pi28 = Real('pi28')
+pi29 = Real('pi29')
+pi30 = Real('pi30')
+pi31 = Real('pi31')
+pi32 = Real('pi32')
+pi33 = Real('pi33')
+pi34 = Real('pi34')
+pi35 = Real('pi35')
+pi36 = Real('pi36')
+pi37 = Real('pi37')
+pi38 = Real('pi38')
+pi39 = Real('pi39')
+pi40 = Real('pi40')
+pi41 = Real('pi41')
+pi42 = Real('pi42')
+pi43 = Real('pi43')
+pi44 = Real('pi44')
+pi45 = Real('pi45')
+pi46 = Real('pi46')
+pi47 = Real('pi47')
+pi48 = Real('pi48')
+pi49 = Real('pi49')
+pi50 = Real('pi50')
+pi51 = Real('pi51')
+pi52 = Real('pi52')
+pi53 = Real('pi53')
+pi54 = Real('pi54')
+pi55 = Real('pi55')
+pi56 = Real('pi56')
+pi57 = Real('pi57')
+pi58 = Real('pi58')
+pi59 = Real('pi59')
+pi60 = Real('pi60')
+pi61 = Real('pi61')
+pi62 = Real('pi62')
+pi63 = Real('pi63')
+pi64 = Real('pi64')
+pi65 = Real('pi65')
+pi66 = Real('pi66')
+pi67 = Real('pi67')
+pi68 = Real('pi68')
+pi69 = Real('pi69')
+pi70 = Real('pi70')
+pi71 = Real('pi71')
+pi72 = Real('pi72')
+pi73 = Real('pi73')
+pi74 = Real('pi74')
+pi75 = Real('pi75')
+pi76 = Real('pi76')
+pi77 = Real('pi77')
+pi78 = Real('pi78')
+pi79 = Real('pi79')
+pi80 = Real('pi80')
+pi81 = Real('pi81')
+pi82 = Real('pi82')
+pi83 = Real('pi83')
+pi84 = Real('pi84')
+pi85 = Real('pi85')
+pi86 = Real('pi86')
+pi87 = Real('pi87')
+pi88 = Real('pi88')
+pi89 = Real('pi89')
+pi90 = Real('pi90')
+pi91 = Real('pi91')
+pi92 = Real('pi92')
+pi93 = Real('pi93')
+pi94 = Real('pi94')
+pi95 = Real('pi95')
+pi96 = Real('pi96')
+pi97 = Real('pi97')
+pi98 = Real('pi98')
+pi99 = Real('pi99')
 
 # Choice of observations (e.g. ys01 = 1 means that in state 0, observable 1 is observed)
 ys0_1 = Real('ys0_1')
@@ -54,6 +129,81 @@ ys21_1 = Real('ys21_1')
 ys22_1 = Real('ys22_1')
 ys23_1 = Real('ys23_1')
 ys24_1 = Real('ys24_1')
+ys25_1 = Real('ys25_1')
+ys26_1 = Real('ys26_1')
+ys27_1 = Real('ys27_1')
+ys28_1 = Real('ys28_1')
+ys29_1 = Real('ys29_1')
+ys30_1 = Real('ys30_1')
+ys31_1 = Real('ys31_1')
+ys32_1 = Real('ys32_1')
+ys33_1 = Real('ys33_1')
+ys34_1 = Real('ys34_1')
+ys35_1 = Real('ys35_1')
+ys36_1 = Real('ys36_1')
+ys37_1 = Real('ys37_1')
+ys38_1 = Real('ys38_1')
+ys39_1 = Real('ys39_1')
+ys40_1 = Real('ys40_1')
+ys41_1 = Real('ys41_1')
+ys42_1 = Real('ys42_1')
+ys43_1 = Real('ys43_1')
+ys44_1 = Real('ys44_1')
+ys45_1 = Real('ys45_1')
+ys46_1 = Real('ys46_1')
+ys47_1 = Real('ys47_1')
+ys48_1 = Real('ys48_1')
+ys49_1 = Real('ys49_1')
+ys50_1 = Real('ys50_1')
+ys51_1 = Real('ys51_1')
+ys52_1 = Real('ys52_1')
+ys53_1 = Real('ys53_1')
+ys54_1 = Real('ys54_1')
+ys55_1 = Real('ys55_1')
+ys56_1 = Real('ys56_1')
+ys57_1 = Real('ys57_1')
+ys58_1 = Real('ys58_1')
+ys59_1 = Real('ys59_1')
+ys60_1 = Real('ys60_1')
+ys61_1 = Real('ys61_1')
+ys62_1 = Real('ys62_1')
+ys63_1 = Real('ys63_1')
+ys64_1 = Real('ys64_1')
+ys65_1 = Real('ys65_1')
+ys66_1 = Real('ys66_1')
+ys67_1 = Real('ys67_1')
+ys68_1 = Real('ys68_1')
+ys69_1 = Real('ys69_1')
+ys70_1 = Real('ys70_1')
+ys71_1 = Real('ys71_1')
+ys72_1 = Real('ys72_1')
+ys73_1 = Real('ys73_1')
+ys74_1 = Real('ys74_1')
+ys75_1 = Real('ys75_1')
+ys76_1 = Real('ys76_1')
+ys77_1 = Real('ys77_1')
+ys78_1 = Real('ys78_1')
+ys79_1 = Real('ys79_1')
+ys80_1 = Real('ys80_1')
+ys81_1 = Real('ys81_1')
+ys82_1 = Real('ys82_1')
+ys83_1 = Real('ys83_1')
+ys84_1 = Real('ys84_1')
+ys85_1 = Real('ys85_1')
+ys86_1 = Real('ys86_1')
+ys87_1 = Real('ys87_1')
+ys88_1 = Real('ys88_1')
+ys89_1 = Real('ys89_1')
+ys90_1 = Real('ys90_1')
+ys91_1 = Real('ys91_1')
+ys92_1 = Real('ys92_1')
+ys93_1 = Real('ys93_1')
+ys94_1 = Real('ys94_1')
+ys95_1 = Real('ys95_1')
+ys96_1 = Real('ys96_1')
+ys97_1 = Real('ys97_1')
+ys98_1 = Real('ys98_1')
+ys99_1 = Real('ys99_1')
 
 # Rates of randomized strategies
 xo1l = Real('xo1l')
@@ -65,34 +215,109 @@ solver = Solver()
 
 solver.add(
 #We cannot do better than the fully observable case
-pi0>=5, pi1>=4, pi2>=4, pi3>=5, pi4>=6, pi5>=4, pi6>=3, pi7>=3, pi8>=4, pi9>=5, pi10>=3, pi11>=2, pi12>=2, pi13>=3, pi14>=4, pi15>=2, pi16>=1, pi17>=1, pi18>=2, pi19>=3, pi20>=1, pi21>=0, pi22>=0, pi23>=2, pi24>=3, 
+pi0>=10, pi1>=9, pi2>=9, pi3>=10, pi4>=11, pi5>=12, pi6>=13, pi7>=14, pi8>=15, pi9>=16, pi10>=9, pi11>=8, pi12>=8, pi13>=9, pi14>=10, pi15>=11, pi16>=12, pi17>=13, pi18>=14, pi19>=15, pi20>=8, pi21>=7, pi22>=7, pi23>=8, pi24>=9, pi25>=10, pi26>=11, pi27>=12, pi28>=13, pi29>=14, pi30>=7, pi31>=6, pi32>=6, pi33>=7, pi34>=8, pi35>=9, pi36>=10, pi37>=11, pi38>=12, pi39>=13, pi40>=6, pi41>=5, pi42>=5, pi43>=6, pi44>=7, pi45>=8, pi46>=9, pi47>=10, pi48>=11, pi49>=12, pi50>=5, pi51>=4, pi52>=4, pi53>=5, pi54>=6, pi55>=7, pi56>=8, pi57>=9, pi58>=10, pi59>=11, pi60>=4, pi61>=3, pi62>=3, pi63>=4, pi64>=5, pi65>=6, pi66>=7, pi67>=8, pi68>=9, pi69>=10, pi70>=3, pi71>=2, pi72>=2, pi73>=3, pi74>=4, pi75>=5, pi76>=6, pi77>=7, pi78>=8, pi79>=9, pi80>=2, pi81>=1, pi82>=1, pi83>=2, pi84>=3, pi85>=4, pi86>=5, pi87>=6, pi88>=7, pi89>=8, pi90>=1, pi91>=0, pi92>=0, pi93>=2, pi94>=3, pi95>=4, pi96>=5, pi97>=6, pi98>=7, pi99>=8, 
 # Expected cost/reard equations
-pi0 == (ys0_1*xo1l) * (1 + pi0) + (ys0_1*xo1r) * (1 + pi1) + (ys0_1*xo1u) * (1 + pi0) + (ys0_1*xo1d) * (1 + pi5),
-pi1 == (ys1_1*xo1l) * (1 + pi0) + (ys1_1*xo1r) * (1 + pi2) + (ys1_1*xo1u) * (1 + pi1) + (ys1_1*xo1d) * (1 + pi6),
-pi2 == (ys2_1*xo1l) * (1 + pi1) + (ys2_1*xo1r) * (1 + pi3) + (ys2_1*xo1u) * (1 + pi2) + (ys2_1*xo1d) * (1 + pi7),
-pi3 == (ys3_1*xo1l) * (1 + pi2) + (ys3_1*xo1r) * (1 + pi4) + (ys3_1*xo1u) * (1 + pi3) + (ys3_1*xo1d) * (1 + pi8),
-pi4 == (ys4_1*xo1l) * (1 + pi3) + (ys4_1*xo1r) * (1 + pi4) + (ys4_1*xo1u) * (1 + pi4) + (ys4_1*xo1d) * (1 + pi9),
-pi5 == (ys5_1*xo1l) * (1 + pi5) + (ys5_1*xo1r) * (1 + pi6) + (ys5_1*xo1u) * (1 + pi0) + (ys5_1*xo1d) * (1 + pi10),
-pi6 == (ys6_1*xo1l) * (1 + pi5) + (ys6_1*xo1r) * (1 + pi7) + (ys6_1*xo1u) * (1 + pi1) + (ys6_1*xo1d) * (1 + pi11),
-pi7 == (ys7_1*xo1l) * (1 + pi6) + (ys7_1*xo1r) * (1 + pi8) + (ys7_1*xo1u) * (1 + pi2) + (ys7_1*xo1d) * (1 + pi12),
-pi8 == (ys8_1*xo1l) * (1 + pi7) + (ys8_1*xo1r) * (1 + pi9) + (ys8_1*xo1u) * (1 + pi3) + (ys8_1*xo1d) * (1 + pi13),
-pi9 == (ys9_1*xo1l) * (1 + pi8) + (ys9_1*xo1r) * (1 + pi9) + (ys9_1*xo1u) * (1 + pi4) + (ys9_1*xo1d) * (1 + pi14),
-pi10 == (ys10_1*xo1l) * (1 + pi10) + (ys10_1*xo1r) * (1 + pi11) + (ys10_1*xo1u) * (1 + pi5) + (ys10_1*xo1d) * (1 + pi15),
-pi11 == (ys11_1*xo1l) * (1 + pi10) + (ys11_1*xo1r) * (1 + pi12) + (ys11_1*xo1u) * (1 + pi6) + (ys11_1*xo1d) * (1 + pi16),
-pi12 == (ys12_1*xo1l) * (1 + pi11) + (ys12_1*xo1r) * (1 + pi13) + (ys12_1*xo1u) * (1 + pi7) + (ys12_1*xo1d) * (1 + pi17),
-pi13 == (ys13_1*xo1l) * (1 + pi12) + (ys13_1*xo1r) * (1 + pi14) + (ys13_1*xo1u) * (1 + pi8) + (ys13_1*xo1d) * (1 + pi18),
-pi14 == (ys14_1*xo1l) * (1 + pi13) + (ys14_1*xo1r) * (1 + pi14) + (ys14_1*xo1u) * (1 + pi9) + (ys14_1*xo1d) * (1 + pi19),
-pi15 == (ys15_1*xo1l) * (1 + pi15) + (ys15_1*xo1r) * (1 + pi16) + (ys15_1*xo1u) * (1 + pi10) + (ys15_1*xo1d) * (1 + pi20),
-pi16 == (ys16_1*xo1l) * (1 + pi15) + (ys16_1*xo1r) * (1 + pi17) + (ys16_1*xo1u) * (1 + pi11) + (ys16_1*xo1d) * (1 + pi21),
-pi17 == (ys17_1*xo1l) * (1 + pi16) + (ys17_1*xo1r) * (1 + pi18) + (ys17_1*xo1u) * (1 + pi12) + (ys17_1*xo1d) * (1 + pi22),
-pi18 == (ys18_1*xo1l) * (1 + pi17) + (ys18_1*xo1r) * (1 + pi19) + (ys18_1*xo1u) * (1 + pi13) + (ys18_1*xo1d) * (1 + pi23),
-pi19 == (ys19_1*xo1l) * (1 + pi18) + (ys19_1*xo1r) * (1 + pi19) + (ys19_1*xo1u) * (1 + pi14) + (ys19_1*xo1d) * (1 + pi24),
-pi20 == (ys20_1*xo1l) * (1 + pi20) + (ys20_1*xo1r) * (1 + pi21) + (ys20_1*xo1u) * (1 + pi15) + (ys20_1*xo1d) * (1 + pi20),
-pi21 == 0, 
-pi22 == (ys22_1*xo1l) * (1 + pi21) + (ys22_1*xo1r) * (1 + pi23) + (ys22_1*xo1u) * (1 + pi17) + (ys22_1*xo1d) * (1 + pi22),
-pi23 == (ys23_1*xo1l) * (1 + pi22) + (ys23_1*xo1r) * (1 + pi24) + (ys23_1*xo1u) * (1 + pi18) + (ys23_1*xo1d) * (1 + pi23),
-pi24 == (ys24_1*xo1l) * (1 + pi23) + (ys24_1*xo1r) * (1 + pi24) + (ys24_1*xo1u) * (1 + pi19) + (ys24_1*xo1d) * (1 + pi24),
-exp==((pi0+pi1+pi2+pi3+pi4+pi5+pi6+pi7+pi8+pi9+pi10+pi11+pi12+pi13+pi14+pi15+pi16+pi17+pi18+pi19+pi20+pi22+pi23+pi24)) * Q(1,24),
+pi0 == (ys0_1*xo1l) * (1 + pi0) + (ys0_1*xo1r) * (1 + pi1) + (ys0_1*xo1u) * (1 + pi0) + (ys0_1*xo1d) * (1 + pi10),
+pi1 == (ys1_1*xo1l) * (1 + pi0) + (ys1_1*xo1r) * (1 + pi2) + (ys1_1*xo1u) * (1 + pi1) + (ys1_1*xo1d) * (1 + pi11),
+pi2 == (ys2_1*xo1l) * (1 + pi1) + (ys2_1*xo1r) * (1 + pi3) + (ys2_1*xo1u) * (1 + pi2) + (ys2_1*xo1d) * (1 + pi12),
+pi3 == (ys3_1*xo1l) * (1 + pi2) + (ys3_1*xo1r) * (1 + pi4) + (ys3_1*xo1u) * (1 + pi3) + (ys3_1*xo1d) * (1 + pi13),
+pi4 == (ys4_1*xo1l) * (1 + pi3) + (ys4_1*xo1r) * (1 + pi5) + (ys4_1*xo1u) * (1 + pi4) + (ys4_1*xo1d) * (1 + pi14),
+pi5 == (ys5_1*xo1l) * (1 + pi4) + (ys5_1*xo1r) * (1 + pi6) + (ys5_1*xo1u) * (1 + pi5) + (ys5_1*xo1d) * (1 + pi15),
+pi6 == (ys6_1*xo1l) * (1 + pi5) + (ys6_1*xo1r) * (1 + pi7) + (ys6_1*xo1u) * (1 + pi6) + (ys6_1*xo1d) * (1 + pi16),
+pi7 == (ys7_1*xo1l) * (1 + pi6) + (ys7_1*xo1r) * (1 + pi8) + (ys7_1*xo1u) * (1 + pi7) + (ys7_1*xo1d) * (1 + pi17),
+pi8 == (ys8_1*xo1l) * (1 + pi7) + (ys8_1*xo1r) * (1 + pi9) + (ys8_1*xo1u) * (1 + pi8) + (ys8_1*xo1d) * (1 + pi18),
+pi9 == (ys9_1*xo1l) * (1 + pi8) + (ys9_1*xo1r) * (1 + pi9) + (ys9_1*xo1u) * (1 + pi9) + (ys9_1*xo1d) * (1 + pi19),
+pi10 == (ys10_1*xo1l) * (1 + pi10) + (ys10_1*xo1r) * (1 + pi11) + (ys10_1*xo1u) * (1 + pi0) + (ys10_1*xo1d) * (1 + pi20),
+pi11 == (ys11_1*xo1l) * (1 + pi10) + (ys11_1*xo1r) * (1 + pi12) + (ys11_1*xo1u) * (1 + pi1) + (ys11_1*xo1d) * (1 + pi21),
+pi12 == (ys12_1*xo1l) * (1 + pi11) + (ys12_1*xo1r) * (1 + pi13) + (ys12_1*xo1u) * (1 + pi2) + (ys12_1*xo1d) * (1 + pi22),
+pi13 == (ys13_1*xo1l) * (1 + pi12) + (ys13_1*xo1r) * (1 + pi14) + (ys13_1*xo1u) * (1 + pi3) + (ys13_1*xo1d) * (1 + pi23),
+pi14 == (ys14_1*xo1l) * (1 + pi13) + (ys14_1*xo1r) * (1 + pi15) + (ys14_1*xo1u) * (1 + pi4) + (ys14_1*xo1d) * (1 + pi24),
+pi15 == (ys15_1*xo1l) * (1 + pi14) + (ys15_1*xo1r) * (1 + pi16) + (ys15_1*xo1u) * (1 + pi5) + (ys15_1*xo1d) * (1 + pi25),
+pi16 == (ys16_1*xo1l) * (1 + pi15) + (ys16_1*xo1r) * (1 + pi17) + (ys16_1*xo1u) * (1 + pi6) + (ys16_1*xo1d) * (1 + pi26),
+pi17 == (ys17_1*xo1l) * (1 + pi16) + (ys17_1*xo1r) * (1 + pi18) + (ys17_1*xo1u) * (1 + pi7) + (ys17_1*xo1d) * (1 + pi27),
+pi18 == (ys18_1*xo1l) * (1 + pi17) + (ys18_1*xo1r) * (1 + pi19) + (ys18_1*xo1u) * (1 + pi8) + (ys18_1*xo1d) * (1 + pi28),
+pi19 == (ys19_1*xo1l) * (1 + pi18) + (ys19_1*xo1r) * (1 + pi19) + (ys19_1*xo1u) * (1 + pi9) + (ys19_1*xo1d) * (1 + pi29),
+pi20 == (ys20_1*xo1l) * (1 + pi20) + (ys20_1*xo1r) * (1 + pi21) + (ys20_1*xo1u) * (1 + pi10) + (ys20_1*xo1d) * (1 + pi30),
+pi21 == (ys21_1*xo1l) * (1 + pi20) + (ys21_1*xo1r) * (1 + pi22) + (ys21_1*xo1u) * (1 + pi11) + (ys21_1*xo1d) * (1 + pi31),
+pi22 == (ys22_1*xo1l) * (1 + pi21) + (ys22_1*xo1r) * (1 + pi23) + (ys22_1*xo1u) * (1 + pi12) + (ys22_1*xo1d) * (1 + pi32),
+pi23 == (ys23_1*xo1l) * (1 + pi22) + (ys23_1*xo1r) * (1 + pi24) + (ys23_1*xo1u) * (1 + pi13) + (ys23_1*xo1d) * (1 + pi33),
+pi24 == (ys24_1*xo1l) * (1 + pi23) + (ys24_1*xo1r) * (1 + pi25) + (ys24_1*xo1u) * (1 + pi14) + (ys24_1*xo1d) * (1 + pi34),
+pi25 == (ys25_1*xo1l) * (1 + pi24) + (ys25_1*xo1r) * (1 + pi26) + (ys25_1*xo1u) * (1 + pi15) + (ys25_1*xo1d) * (1 + pi35),
+pi26 == (ys26_1*xo1l) * (1 + pi25) + (ys26_1*xo1r) * (1 + pi27) + (ys26_1*xo1u) * (1 + pi16) + (ys26_1*xo1d) * (1 + pi36),
+pi27 == (ys27_1*xo1l) * (1 + pi26) + (ys27_1*xo1r) * (1 + pi28) + (ys27_1*xo1u) * (1 + pi17) + (ys27_1*xo1d) * (1 + pi37),
+pi28 == (ys28_1*xo1l) * (1 + pi27) + (ys28_1*xo1r) * (1 + pi29) + (ys28_1*xo1u) * (1 + pi18) + (ys28_1*xo1d) * (1 + pi38),
+pi29 == (ys29_1*xo1l) * (1 + pi28) + (ys29_1*xo1r) * (1 + pi29) + (ys29_1*xo1u) * (1 + pi19) + (ys29_1*xo1d) * (1 + pi39),
+pi30 == (ys30_1*xo1l) * (1 + pi30) + (ys30_1*xo1r) * (1 + pi31) + (ys30_1*xo1u) * (1 + pi20) + (ys30_1*xo1d) * (1 + pi40),
+pi31 == (ys31_1*xo1l) * (1 + pi30) + (ys31_1*xo1r) * (1 + pi32) + (ys31_1*xo1u) * (1 + pi21) + (ys31_1*xo1d) * (1 + pi41),
+pi32 == (ys32_1*xo1l) * (1 + pi31) + (ys32_1*xo1r) * (1 + pi33) + (ys32_1*xo1u) * (1 + pi22) + (ys32_1*xo1d) * (1 + pi42),
+pi33 == (ys33_1*xo1l) * (1 + pi32) + (ys33_1*xo1r) * (1 + pi34) + (ys33_1*xo1u) * (1 + pi23) + (ys33_1*xo1d) * (1 + pi43),
+pi34 == (ys34_1*xo1l) * (1 + pi33) + (ys34_1*xo1r) * (1 + pi35) + (ys34_1*xo1u) * (1 + pi24) + (ys34_1*xo1d) * (1 + pi44),
+pi35 == (ys35_1*xo1l) * (1 + pi34) + (ys35_1*xo1r) * (1 + pi36) + (ys35_1*xo1u) * (1 + pi25) + (ys35_1*xo1d) * (1 + pi45),
+pi36 == (ys36_1*xo1l) * (1 + pi35) + (ys36_1*xo1r) * (1 + pi37) + (ys36_1*xo1u) * (1 + pi26) + (ys36_1*xo1d) * (1 + pi46),
+pi37 == (ys37_1*xo1l) * (1 + pi36) + (ys37_1*xo1r) * (1 + pi38) + (ys37_1*xo1u) * (1 + pi27) + (ys37_1*xo1d) * (1 + pi47),
+pi38 == (ys38_1*xo1l) * (1 + pi37) + (ys38_1*xo1r) * (1 + pi39) + (ys38_1*xo1u) * (1 + pi28) + (ys38_1*xo1d) * (1 + pi48),
+pi39 == (ys39_1*xo1l) * (1 + pi38) + (ys39_1*xo1r) * (1 + pi39) + (ys39_1*xo1u) * (1 + pi29) + (ys39_1*xo1d) * (1 + pi49),
+pi40 == (ys40_1*xo1l) * (1 + pi40) + (ys40_1*xo1r) * (1 + pi41) + (ys40_1*xo1u) * (1 + pi30) + (ys40_1*xo1d) * (1 + pi50),
+pi41 == (ys41_1*xo1l) * (1 + pi40) + (ys41_1*xo1r) * (1 + pi42) + (ys41_1*xo1u) * (1 + pi31) + (ys41_1*xo1d) * (1 + pi51),
+pi42 == (ys42_1*xo1l) * (1 + pi41) + (ys42_1*xo1r) * (1 + pi43) + (ys42_1*xo1u) * (1 + pi32) + (ys42_1*xo1d) * (1 + pi52),
+pi43 == (ys43_1*xo1l) * (1 + pi42) + (ys43_1*xo1r) * (1 + pi44) + (ys43_1*xo1u) * (1 + pi33) + (ys43_1*xo1d) * (1 + pi53),
+pi44 == (ys44_1*xo1l) * (1 + pi43) + (ys44_1*xo1r) * (1 + pi45) + (ys44_1*xo1u) * (1 + pi34) + (ys44_1*xo1d) * (1 + pi54),
+pi45 == (ys45_1*xo1l) * (1 + pi44) + (ys45_1*xo1r) * (1 + pi46) + (ys45_1*xo1u) * (1 + pi35) + (ys45_1*xo1d) * (1 + pi55),
+pi46 == (ys46_1*xo1l) * (1 + pi45) + (ys46_1*xo1r) * (1 + pi47) + (ys46_1*xo1u) * (1 + pi36) + (ys46_1*xo1d) * (1 + pi56),
+pi47 == (ys47_1*xo1l) * (1 + pi46) + (ys47_1*xo1r) * (1 + pi48) + (ys47_1*xo1u) * (1 + pi37) + (ys47_1*xo1d) * (1 + pi57),
+pi48 == (ys48_1*xo1l) * (1 + pi47) + (ys48_1*xo1r) * (1 + pi49) + (ys48_1*xo1u) * (1 + pi38) + (ys48_1*xo1d) * (1 + pi58),
+pi49 == (ys49_1*xo1l) * (1 + pi48) + (ys49_1*xo1r) * (1 + pi49) + (ys49_1*xo1u) * (1 + pi39) + (ys49_1*xo1d) * (1 + pi59),
+pi50 == (ys50_1*xo1l) * (1 + pi50) + (ys50_1*xo1r) * (1 + pi51) + (ys50_1*xo1u) * (1 + pi40) + (ys50_1*xo1d) * (1 + pi60),
+pi51 == (ys51_1*xo1l) * (1 + pi50) + (ys51_1*xo1r) * (1 + pi52) + (ys51_1*xo1u) * (1 + pi41) + (ys51_1*xo1d) * (1 + pi61),
+pi52 == (ys52_1*xo1l) * (1 + pi51) + (ys52_1*xo1r) * (1 + pi53) + (ys52_1*xo1u) * (1 + pi42) + (ys52_1*xo1d) * (1 + pi62),
+pi53 == (ys53_1*xo1l) * (1 + pi52) + (ys53_1*xo1r) * (1 + pi54) + (ys53_1*xo1u) * (1 + pi43) + (ys53_1*xo1d) * (1 + pi63),
+pi54 == (ys54_1*xo1l) * (1 + pi53) + (ys54_1*xo1r) * (1 + pi55) + (ys54_1*xo1u) * (1 + pi44) + (ys54_1*xo1d) * (1 + pi64),
+pi55 == (ys55_1*xo1l) * (1 + pi54) + (ys55_1*xo1r) * (1 + pi56) + (ys55_1*xo1u) * (1 + pi45) + (ys55_1*xo1d) * (1 + pi65),
+pi56 == (ys56_1*xo1l) * (1 + pi55) + (ys56_1*xo1r) * (1 + pi57) + (ys56_1*xo1u) * (1 + pi46) + (ys56_1*xo1d) * (1 + pi66),
+pi57 == (ys57_1*xo1l) * (1 + pi56) + (ys57_1*xo1r) * (1 + pi58) + (ys57_1*xo1u) * (1 + pi47) + (ys57_1*xo1d) * (1 + pi67),
+pi58 == (ys58_1*xo1l) * (1 + pi57) + (ys58_1*xo1r) * (1 + pi59) + (ys58_1*xo1u) * (1 + pi48) + (ys58_1*xo1d) * (1 + pi68),
+pi59 == (ys59_1*xo1l) * (1 + pi58) + (ys59_1*xo1r) * (1 + pi59) + (ys59_1*xo1u) * (1 + pi49) + (ys59_1*xo1d) * (1 + pi69),
+pi60 == (ys60_1*xo1l) * (1 + pi60) + (ys60_1*xo1r) * (1 + pi61) + (ys60_1*xo1u) * (1 + pi50) + (ys60_1*xo1d) * (1 + pi70),
+pi61 == (ys61_1*xo1l) * (1 + pi60) + (ys61_1*xo1r) * (1 + pi62) + (ys61_1*xo1u) * (1 + pi51) + (ys61_1*xo1d) * (1 + pi71),
+pi62 == (ys62_1*xo1l) * (1 + pi61) + (ys62_1*xo1r) * (1 + pi63) + (ys62_1*xo1u) * (1 + pi52) + (ys62_1*xo1d) * (1 + pi72),
+pi63 == (ys63_1*xo1l) * (1 + pi62) + (ys63_1*xo1r) * (1 + pi64) + (ys63_1*xo1u) * (1 + pi53) + (ys63_1*xo1d) * (1 + pi73),
+pi64 == (ys64_1*xo1l) * (1 + pi63) + (ys64_1*xo1r) * (1 + pi65) + (ys64_1*xo1u) * (1 + pi54) + (ys64_1*xo1d) * (1 + pi74),
+pi65 == (ys65_1*xo1l) * (1 + pi64) + (ys65_1*xo1r) * (1 + pi66) + (ys65_1*xo1u) * (1 + pi55) + (ys65_1*xo1d) * (1 + pi75),
+pi66 == (ys66_1*xo1l) * (1 + pi65) + (ys66_1*xo1r) * (1 + pi67) + (ys66_1*xo1u) * (1 + pi56) + (ys66_1*xo1d) * (1 + pi76),
+pi67 == (ys67_1*xo1l) * (1 + pi66) + (ys67_1*xo1r) * (1 + pi68) + (ys67_1*xo1u) * (1 + pi57) + (ys67_1*xo1d) * (1 + pi77),
+pi68 == (ys68_1*xo1l) * (1 + pi67) + (ys68_1*xo1r) * (1 + pi69) + (ys68_1*xo1u) * (1 + pi58) + (ys68_1*xo1d) * (1 + pi78),
+pi69 == (ys69_1*xo1l) * (1 + pi68) + (ys69_1*xo1r) * (1 + pi69) + (ys69_1*xo1u) * (1 + pi59) + (ys69_1*xo1d) * (1 + pi79),
+pi70 == (ys70_1*xo1l) * (1 + pi70) + (ys70_1*xo1r) * (1 + pi71) + (ys70_1*xo1u) * (1 + pi60) + (ys70_1*xo1d) * (1 + pi80),
+pi71 == (ys71_1*xo1l) * (1 + pi70) + (ys71_1*xo1r) * (1 + pi72) + (ys71_1*xo1u) * (1 + pi61) + (ys71_1*xo1d) * (1 + pi81),
+pi72 == (ys72_1*xo1l) * (1 + pi71) + (ys72_1*xo1r) * (1 + pi73) + (ys72_1*xo1u) * (1 + pi62) + (ys72_1*xo1d) * (1 + pi82),
+pi73 == (ys73_1*xo1l) * (1 + pi72) + (ys73_1*xo1r) * (1 + pi74) + (ys73_1*xo1u) * (1 + pi63) + (ys73_1*xo1d) * (1 + pi83),
+pi74 == (ys74_1*xo1l) * (1 + pi73) + (ys74_1*xo1r) * (1 + pi75) + (ys74_1*xo1u) * (1 + pi64) + (ys74_1*xo1d) * (1 + pi84),
+pi75 == (ys75_1*xo1l) * (1 + pi74) + (ys75_1*xo1r) * (1 + pi76) + (ys75_1*xo1u) * (1 + pi65) + (ys75_1*xo1d) * (1 + pi85),
+pi76 == (ys76_1*xo1l) * (1 + pi75) + (ys76_1*xo1r) * (1 + pi77) + (ys76_1*xo1u) * (1 + pi66) + (ys76_1*xo1d) * (1 + pi86),
+pi77 == (ys77_1*xo1l) * (1 + pi76) + (ys77_1*xo1r) * (1 + pi78) + (ys77_1*xo1u) * (1 + pi67) + (ys77_1*xo1d) * (1 + pi87),
+pi78 == (ys78_1*xo1l) * (1 + pi77) + (ys78_1*xo1r) * (1 + pi79) + (ys78_1*xo1u) * (1 + pi68) + (ys78_1*xo1d) * (1 + pi88),
+pi79 == (ys79_1*xo1l) * (1 + pi78) + (ys79_1*xo1r) * (1 + pi79) + (ys79_1*xo1u) * (1 + pi69) + (ys79_1*xo1d) * (1 + pi89),
+pi80 == (ys80_1*xo1l) * (1 + pi80) + (ys80_1*xo1r) * (1 + pi81) + (ys80_1*xo1u) * (1 + pi70) + (ys80_1*xo1d) * (1 + pi90),
+pi81 == (ys81_1*xo1l) * (1 + pi80) + (ys81_1*xo1r) * (1 + pi82) + (ys81_1*xo1u) * (1 + pi71) + (ys81_1*xo1d) * (1 + pi91),
+pi82 == (ys82_1*xo1l) * (1 + pi81) + (ys82_1*xo1r) * (1 + pi83) + (ys82_1*xo1u) * (1 + pi72) + (ys82_1*xo1d) * (1 + pi92),
+pi83 == (ys83_1*xo1l) * (1 + pi82) + (ys83_1*xo1r) * (1 + pi84) + (ys83_1*xo1u) * (1 + pi73) + (ys83_1*xo1d) * (1 + pi93),
+pi84 == (ys84_1*xo1l) * (1 + pi83) + (ys84_1*xo1r) * (1 + pi85) + (ys84_1*xo1u) * (1 + pi74) + (ys84_1*xo1d) * (1 + pi94),
+pi85 == (ys85_1*xo1l) * (1 + pi84) + (ys85_1*xo1r) * (1 + pi86) + (ys85_1*xo1u) * (1 + pi75) + (ys85_1*xo1d) * (1 + pi95),
+pi86 == (ys86_1*xo1l) * (1 + pi85) + (ys86_1*xo1r) * (1 + pi87) + (ys86_1*xo1u) * (1 + pi76) + (ys86_1*xo1d) * (1 + pi96),
+pi87 == (ys87_1*xo1l) * (1 + pi86) + (ys87_1*xo1r) * (1 + pi88) + (ys87_1*xo1u) * (1 + pi77) + (ys87_1*xo1d) * (1 + pi97),
+pi88 == (ys88_1*xo1l) * (1 + pi87) + (ys88_1*xo1r) * (1 + pi89) + (ys88_1*xo1u) * (1 + pi78) + (ys88_1*xo1d) * (1 + pi98),
+pi89 == (ys89_1*xo1l) * (1 + pi88) + (ys89_1*xo1r) * (1 + pi89) + (ys89_1*xo1u) * (1 + pi79) + (ys89_1*xo1d) * (1 + pi99),
+pi90 == (ys90_1*xo1l) * (1 + pi90) + (ys90_1*xo1r) * (1 + pi91) + (ys90_1*xo1u) * (1 + pi80) + (ys90_1*xo1d) * (1 + pi90),
+pi91 == 0, 
+pi92 == (ys92_1*xo1l) * (1 + pi91) + (ys92_1*xo1r) * (1 + pi93) + (ys92_1*xo1u) * (1 + pi82) + (ys92_1*xo1d) * (1 + pi92),
+pi93 == (ys93_1*xo1l) * (1 + pi92) + (ys93_1*xo1r) * (1 + pi94) + (ys93_1*xo1u) * (1 + pi83) + (ys93_1*xo1d) * (1 + pi93),
+pi94 == (ys94_1*xo1l) * (1 + pi93) + (ys94_1*xo1r) * (1 + pi95) + (ys94_1*xo1u) * (1 + pi84) + (ys94_1*xo1d) * (1 + pi94),
+pi95 == (ys95_1*xo1l) * (1 + pi94) + (ys95_1*xo1r) * (1 + pi96) + (ys95_1*xo1u) * (1 + pi85) + (ys95_1*xo1d) * (1 + pi95),
+pi96 == (ys96_1*xo1l) * (1 + pi95) + (ys96_1*xo1r) * (1 + pi97) + (ys96_1*xo1u) * (1 + pi86) + (ys96_1*xo1d) * (1 + pi96),
+pi97 == (ys97_1*xo1l) * (1 + pi96) + (ys97_1*xo1r) * (1 + pi98) + (ys97_1*xo1u) * (1 + pi87) + (ys97_1*xo1d) * (1 + pi97),
+pi98 == (ys98_1*xo1l) * (1 + pi97) + (ys98_1*xo1r) * (1 + pi99) + (ys98_1*xo1u) * (1 + pi88) + (ys98_1*xo1d) * (1 + pi98),
+pi99 == (ys99_1*xo1l) * (1 + pi98) + (ys99_1*xo1r) * (1 + pi99) + (ys99_1*xo1u) * (1 + pi89) + (ys99_1*xo1d) * (1 + pi99),
+exp==((pi0+pi1+pi2+pi3+pi4+pi5+pi6+pi7+pi8+pi9+pi10+pi11+pi12+pi13+pi14+pi15+pi16+pi17+pi18+pi19+pi20+pi21+pi22+pi23+pi24+pi25+pi26+pi27+pi28+pi29+pi30+pi31+pi32+pi33+pi34+pi35+pi36+pi37+pi38+pi39+pi40+pi41+pi42+pi43+pi44+pi45+pi46+pi47+pi48+pi49+pi50+pi51+pi52+pi53+pi54+pi55+pi56+pi57+pi58+pi59+pi60+pi61+pi62+pi63+pi64+pi65+pi66+pi67+pi68+pi69+pi70+pi71+pi72+pi73+pi74+pi75+pi76+pi77+pi78+pi79+pi80+pi81+pi82+pi83+pi84+pi85+pi86+pi87+pi88+pi89+pi90+pi92+pi93+pi94+pi95+pi96+pi97+pi98+pi99)) * Q(1,99),
 # Randomised strategies (proper probability distributions)
 xo1l>= 0,
 xo1l<= 1,
@@ -104,35 +329,36 @@ xo1d>= 0,
 xo1d<= 1,
 # Assigning the action probability distribution from the strategies
 xo1u== Q(0, 1),
-xo1r== Q(0, 1),
-xo1d== Q(1, 1),
-xo1l== Q(0, 1),
+xo1r== Q(228110533648042129585833312152124560233230744565414839186185, 2450453154080331659926085280182475135800361819964324209229824),
+xo1d== Q(408409911449695, 36028797018963968),
+xo1l== Q(1097282567897843064152520387070302056242186992825494772061877, 1225226577040165829963042640091237567900180909982162104614912),
 xo1u + xo1r + xo1d + xo1l == 1,
 # Assigned observables
-ys20_1 == 1,
-ys19_1 == 1,
-ys23_1 == 1,
-ys16_1 == 1,
+ys40_1 == 1,
+ys34_1 == 1,
+ys43_1 == 1,
+ys31_1 == 1,
 ys2_1 == 1,
-ys12_1 == 1,
-ys5_1 == 1,
-ys8_1 == 1,
 ys22_1 == 1,
-ys15_1 == 1,
-ys18_1 == 1,
-ys1_1 == 1,
-ys14_1 == 1,
-ys7_1 == 1,
-ys4_1 == 1,
-ys11_1 == 1,
-ys17_1 == 1,
-ys24_1 == 1,
-ys0_1 == 1,
-ys6_1 == 1,
-ys3_1 == 1,
 ys10_1 == 1,
-ys9_1 == 1,
 ys13_1 == 1,
+ys42_1 == 1,
+ys30_1 == 1,
+ys33_1 == 1,
+ys1_1 == 1,
+ys24_1 == 1,
+ys12_1 == 1,
+ys4_1 == 1,
+ys21_1 == 1,
+ys32_1 == 1,
+ys41_1 == 1,
+ys44_1 == 1,
+ys0_1 == 1,
+ys11_1 == 1,
+ys3_1 == 1,
+ys20_1 == 1,
+ys14_1 == 1,
+ys23_1 == 1,
 # Every state should be mapped to exactly one equivalence class
 ys0_1 == 1,
 ys1_1 == 1,
@@ -155,9 +381,84 @@ ys17_1 == 1,
 ys18_1 == 1,
 ys19_1 == 1,
 ys20_1 == 1,
+ys21_1 == 1,
 ys22_1 == 1,
 ys23_1 == 1,
-ys24_1 == 1
+ys24_1 == 1,
+ys25_1 == 1,
+ys26_1 == 1,
+ys27_1 == 1,
+ys28_1 == 1,
+ys29_1 == 1,
+ys30_1 == 1,
+ys31_1 == 1,
+ys32_1 == 1,
+ys33_1 == 1,
+ys34_1 == 1,
+ys35_1 == 1,
+ys36_1 == 1,
+ys37_1 == 1,
+ys38_1 == 1,
+ys39_1 == 1,
+ys40_1 == 1,
+ys41_1 == 1,
+ys42_1 == 1,
+ys43_1 == 1,
+ys44_1 == 1,
+ys45_1 == 1,
+ys46_1 == 1,
+ys47_1 == 1,
+ys48_1 == 1,
+ys49_1 == 1,
+ys50_1 == 1,
+ys51_1 == 1,
+ys52_1 == 1,
+ys53_1 == 1,
+ys54_1 == 1,
+ys55_1 == 1,
+ys56_1 == 1,
+ys57_1 == 1,
+ys58_1 == 1,
+ys59_1 == 1,
+ys60_1 == 1,
+ys61_1 == 1,
+ys62_1 == 1,
+ys63_1 == 1,
+ys64_1 == 1,
+ys65_1 == 1,
+ys66_1 == 1,
+ys67_1 == 1,
+ys68_1 == 1,
+ys69_1 == 1,
+ys70_1 == 1,
+ys71_1 == 1,
+ys72_1 == 1,
+ys73_1 == 1,
+ys74_1 == 1,
+ys75_1 == 1,
+ys76_1 == 1,
+ys77_1 == 1,
+ys78_1 == 1,
+ys79_1 == 1,
+ys80_1 == 1,
+ys81_1 == 1,
+ys82_1 == 1,
+ys83_1 == 1,
+ys84_1 == 1,
+ys85_1 == 1,
+ys86_1 == 1,
+ys87_1 == 1,
+ys88_1 == 1,
+ys89_1 == 1,
+ys90_1 == 1,
+ys92_1 == 1,
+ys93_1 == 1,
+ys94_1 == 1,
+ys95_1 == 1,
+ys96_1 == 1,
+ys97_1 == 1,
+ys98_1 == 1,
+ys99_1 == 1
 )
 
 
