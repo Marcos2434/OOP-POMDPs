@@ -1,23 +1,14 @@
 from itertools import combinations, product
 import plotly.graph_objects as go
-import os
 import random
 
-FILE_PATH_FLAG = True
-
-if FILE_PATH_FLAG:
-    # Run directly
-    from helpers import *
-    from utility_functions.createGridUtility import grid_utility
-    DIR_PATH = '/Users/marcos/Documents/github_projects/POMDPs/visualizer/api/solver/utility_functions/generated_models/'
-else:
-    # Run through server (Django)
-    from .helpers import *
-    from .utility_functions.createGridUtility import grid_utility
-    DIR_PATH = os.getcwd() + '/api/solver/utility_functions/generated_models/'
+from solver.helpers import *
+from solver.utility_functions.createGridUtility import grid_utility
 
 from numpy.typing import *
 import numpy as np
+
+from solver.constants import *
 
 class POMDP:
     def __init__(self, 
@@ -173,7 +164,7 @@ class POMDP:
         # U = (U - U.min()) / (U.max() - U.min())
         
         if write_to_file:
-            with open(DIR_PATH + 'points.txt', 'w') as f:
+            with open(DIR_PATH / 'points.txt', 'w') as f:
                 for i in range(len(combinations_)):
                     f.write(f'{combinations_[i]} {U[i]}\n')
         

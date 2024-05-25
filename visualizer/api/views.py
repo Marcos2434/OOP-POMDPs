@@ -11,7 +11,8 @@ from rest_framework import status
 
 # Local
 from .forms import OOP_Form
-from .solver.solvers import Z3_Solver, Brute_Force_Solver
+# from .solver.solvers import Z3_Solver, Brute_Force_Solver
+from solver.solvers import Z3_Solver, Brute_Force_Solver
 
 @api_view(['GET'])
 @permission_classes(())

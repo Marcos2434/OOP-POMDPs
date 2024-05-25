@@ -14,16 +14,21 @@ import importlib.util
 import sys
 sys.dont_write_bytecode = True
 
-FILE_PATH_FLAG = True
+from solver.helpers import *
+from solver.constants import *
 
-if FILE_PATH_FLAG:
-    # Run directly
-    from helpers import *
-    DIR_PATH = '/Users/marcos/Documents/github_projects/POMDPs/visualizer/api/solver/utility_functions/generated_models/'
-else:
-    # Run through server (Django)
-    from ..helpers import *
-    DIR_PATH = os.getcwd() + '/api/solver/utility_functions/generated_models/'
+# DIR_PATH = os.getcwd() + '/api/solver/utility_functions/generated_models/'
+
+# FILE_PATH_FLAG = 
+
+# if FILE_PATH_FLAG:
+#     # Run directly
+#     from helpers import *
+#     DIR_PATH = '/Users/marcos/Documents/github_projects/POMDPs/visualizer/api/solver/utility_functions/generated_models/'
+# else:
+#     # Run through server (Django)
+#     from ..helpers import *
+#     DIR_PATH = os.getcwd() + '/api/solver/utility_functions/generated_models/'
 
 
 def find_latest_file(directory, base_filename):
@@ -44,7 +49,7 @@ def generate_next_filename(directory, base_filename):
 def grid_utility(budget, target, size, strategies : dict[int, Strategy], observations : dict[Node, int], det = 0):
     
     filename = "grid.py"
-    file_path = DIR_PATH + filename
+    file_path = DIR_PATH / filename
     file = open(file_path, 'w')
 
     file.write('from z3 import *\n\n')
