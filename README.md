@@ -1,6 +1,29 @@
+# Towards Optimal Sensor Placement for Travelling Agents in Two-Dimensional POMDPs
+## Bachelor Project
 
-# Finding the optimal solution to the Optimal Observability Problem
-# Run
+*Refer to the paper for detailed information on the project.*
+
+# OOP (Optimal Observability Problem)
+This work provides a method that given a POMDP how should one change the POMDP's observation capabilities within a fixed budget such that its (minimal) expected reward remains below a given threshold.
+
+# Motivation
+Partially Observable Markov Decision Processes find applications in many fields of engineering and real-life scenarios due to their inherent ability to model decision making under uncertainty when the state of a system is not fully observable. POMDPs are especially useful in healthcare, where they can be applied to personalized healthcare systems where patient states are partially observable. They can help in decision-making processes for treatments and interventions by considering uncertain patient states and outcomes. Other applications include finance risk assessments or trading strategies, natural language processing, and supply chain management. Upon the rising interest regarding work surrounding the connection of Artificial Intelligence to MDPs over the most recent century, the field of reinforcement learning has now newfound applications in robotics and automata. Alongside this, interesting theoretical thought problems have arisen, one such is the novel Optimal Observability Problem.
+
+The existing OOP solver developed in Alyzia et al., while optimal and deterministic, is very limited by the time complexity of the nature of the Optimal Observability Problem. Furthermore, it encounters restrictions when faced with some trivial solutions with low budgets, or non-evident and somewhat convoluted high budget solutions. The motivation behind this project is to determine if it is possible to analytically find ad-hoc solutions to specific configurations of the problem, determine if the solution is scalable, and contextualize the patterns that may arise. Another project goal is to reduce the time complexity and/or solve those problems for which the current Z3 solver is incapable of producing an output. Furthermore, a large part of the project time was dedicated to creating an interface to visualize and analyze the problem in a more effective way. One that hopefully can provide an incentive for future researchers to understand the problem in a more intuitive manner and provide a fast tool to explore problems and solutions.
+
+# The research problem
+Alyzia et al.'s Novel Optimal Observability Problem (OOP) and its variations are further developed in this work. Our objectives are to visualize the solver, improve its computational efficiency, and analyze emerging patterns. Additionally, we aim to scale the solution and formulate a conjecture based on our findings.
+
+# Contributions
+The project's contributions to the field are summarized as follows:
+
+- Development of a visualizer for the tool described in Alyzia et al. for the Optimal Observability Problem (OOP), including variations such as the Sensor Selection Problem and encompassing all three models present in the original tool.
+- Introduction of a heuristic approach to the OOP, aimed at improving the solver's running time complexity.
+- Presentation of a novel approach for defining a utility function for the OOP.
+- Exploration of pattern analysis on ad-hoc solutions to the OOP, to identify patterns between models, assess their scalability, and formulate a conjecture.
+- Proposal of an optimization technique for pattern analysis using simulated annealing, which is extendable to future problems.
+
+# Run the tool and server
 Grant execution permissions for the quick launch (Linux / Macos):
 
 ```
@@ -13,134 +36,19 @@ Then run,
 ./start.sh
 ```
 
+# Perform pattern analysis
+Run the notebook `Pattern Analysis.ipynb` to perform pattern analysis on the models.
 
-Changes to OOP
-
-- file creation directory
-- commented out the command line creation
-
-
-
-
-
-# OOP (Optimal Observability Problem)
-
-This work provides a method that given a POMDP how should one change the POMDP's observation capabilities within a fixed budget such that its (minimal) expected reward remains below a given threshold.
-
-# Features
-* Produce the code to calculate the desired POMDP for the line, grid, and maze POMDP benchmarks, based on the input size of the model, threshold, strategies (deterministic or randomized), and in some cases some fixed observations.
-* Produce a sequence of fixed observations that served as an input to the given model.
-* Includes the models used to fill out the tables of Section 4.
-
-# Implementation
-All the scripts are written in Python. The produced scripts are in Python and PRISM input code.
-
-# Usage / Example (Z3)
-The folders contain the models used for the experiments. The Python scripts contained in the folders deterministic_strategies and randomised_strategies can be run using the command: 
+To run the notebook, you need to have Jupyter installed. If you don't have it installed, you can install it using pip:
 
 ```
-python3 script.py
-
-```
-We used the following command for the time: 
-
-```
-time python3 script.py
-
-```
-We included only the scripts for the optimal threshold. The rest can be produced using the scripts: create*Model*.py and create*Model*Fixed.py
-or by changing the line of the code under the comment 
-
-### We want to check if the minimal expected cost is below some threshold <=threshold
-
-to the desired threshold.
-
-The script create*Model*.py produces the models of the POP and the script create*Model*Fixed.py produces the models of the SSP.
-
-The scripts can be run as follows:
-```
-python3 createLine.py 5 2 2 '<= 1.5' 0 
-
-```
-Where this input is (size, target, budget, threshold, det), if det=0 we produce the code for randomized strategies if det=1 for the deterministic ones. One can define fixed sensors as follows:
-
-```
-python3 createLineFixed.py 5 2 2 '<= 1.5' 0 ' 0 0 | 1 1 | 3 3 | 4 4' (size, target, budget, threshold, det, fixed sensors)
-
+pip3 install jupyter
 ```
 
-The first arguments are the same as before. The last one indicates the fixed sensors. In this case '0 0 | 1 1' means state 0 emits observation
-
-0 and state 1 emits observation 1 etc. To produce the input for the fixed sensors we include a python script predefined.py that can be run to produce the above sequence (1 unique observation
-
-pee state. This can be run as follows for the line and the grid: 
+Then run the notebook using the following command:
 
 ```
-python3 predefined.py 5
-
-```
-For the maze:
-
-```
-python3 predefined.py 3 5
-
+jupyter notebook
 ```
 
-The argument is the size of the corresponding model. The script produces a file with the desired sequence. Note that each model has a predefined file in the corresponding folder. Example Grid:
-
-```
-python3 createGrid.py 3 8 2 'Q(9,4)' 1 (size of one side, target, budget, threshold, det)
-
-```
-
-```
-python3 createGridFixed.py 3 8 2 '<= Q(9,4)' 1 ' 0 0 | 1 1 | 2 2 | 3 3 | 4 4 | 5 5 | 6 6 | 7 7' (size of one side, target, budget, threshold, det, fixedObservables)
-
-```
-Example Maze:
-
-```
-python3 createMaze.py 3 5 9 4 '<= Q(39,10)' 1 (size of the rows, size of the columns, target, budget, threshold, det)
-
-```
-
-```
-python3 createMazeFixed.py 3 5 9 6 '<= Q(39,10)' 0 ' 0 0 | 1 1 | 2 2 | 3 3 | 4 4 | 5 5 | 6 6 | 7 7 | 8 8 | 9 9 | 10 10' (size of the rows, size of the columns, target, budget, threshold, det, fixedObservables)
-
-```
-# Usage / Example (PRISM)
-
-The folder prism_deterministic_strategies contains the PRISM models used for the experiments. The models can be run as follows:
-
-```
-./prism -pf 'Rmin=? [F 'target']' model.sm -exact
-
-```
-We used the following command for the time: 
-
-```
-time ./prism -pf 'Rmin=? [F 'target']' model.sm -exact
-
-```
-Other models can be created using the scripts: create*Model*.py and create*Model*Fixed.py included in each folder -line, grid, maze. As before create*Model*.py creates models for POP, while create*Model*Fixed.py creates models for SSP. One can again use the predefined.py script to create the sequence of fixed sensors. Example of using the scripts:
-
-```
-python3 createLine.py 5 2 2 (size, target, budget)
-
-```
-
-```
-python3 createLineFixed.py 5 2 2 '0 0 | 1 1 | 3 3 | 4 4' (size, target, budget, fixed sensors)
-
-```
-For the grid, scripts have the same usage as the line. As before the size is given for one side (size = 3 means 9 states).
-
-Example Maze
-
-```
-python3 createMaze.py 3 5 9 4 (size of the rows, size of the columns, target, budget)
-
-```
-
-
-
+Then go to the browser and open the notebook under "visualizer/notebooks/Pattern Analysis.ipynb".
