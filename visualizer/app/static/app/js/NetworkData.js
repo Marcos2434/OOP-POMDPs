@@ -260,16 +260,6 @@ class NetworkData {
                             this.nodes.add({ id, label: id.toString() })
                             if (j != 0) this.edges.add({ from: id - 1, to: id })
                         } else if (j % 2 == 0) {
-                            // id = (i * this.columns) + Math.ceil(j / 2)
-                            // let nodeAbove = id - this.columns
-                            
-                            // id = (i * this.columns) + Math.ceil(j / 2) + ( (i - 1) * Math.ceil(this.columns / 2) - 1 )
-                            // let nodeAbove = id - Math.floor(this.columns / 2)
-
-
-                            // id = (i * this.columns) + Math.floor(j/2) - (i - 1) * (Math.floor(this.columns / 2)+1)
-                            // let nodeAbove = (i == 1) ? id - (this.columns - 1) + Math.floor(j/2) : id - Math.floor(this.columns / 2)
-
                             id = this.columns + (i - 1) * Math.ceil(this.columns / 2) + j / 2
                             let nodeAbove = (i == 1) ? id - this.columns + j / 2 : id - Math.ceil(this.columns / 2)
                         
@@ -336,21 +326,21 @@ class NetworkData {
                                     if (i > 0) {
                                         if (action == "up") {
                                             if (prob > 0) {
-                                                this.edges.add({ from: id, to: id - columns, arrows: "to", label: prob.toString(), color: iterable.color })
+                                                this.edges.add({ from: id, to: id - columns, arrows: "to", label: prob.toString(), color: iterable.color[1] })
                                             } else { this.edges.add({ from: id, to: id - columns, arrows: "to"}) }  
                                         } 
                                     }
                                     if (i < rows - 1) {
                                         if (action == "down") {
                                             if (prob > 0) {
-                                                this.edges.add({ from: id, to: id + columns, arrows: "to", label: prob.toString(), color: iterable.color })
+                                                this.edges.add({ from: id, to: id + columns, arrows: "to", label: prob.toString(), color: iterable.color[1] })
                                             } else { this.edges.add({ from: id, to: id + columns, arrows: "to"}) }
                                         }
                                     }
                                     if (j > 0) {
                                         if (action == "left") {
                                             if (prob > 0) {
-                                                this.edges.add({ from: id, to: id - 1, arrows: "to", label: prob.toString(), color: iterable.color })
+                                                this.edges.add({ from: id, to: id - 1, arrows: "to", label: prob.toString(), color: iterable.color[1] })
                                             } else { this.edges.add({ from: id, to: id - 1, arrows: "to"}) }
                                         }
                                     }
@@ -358,7 +348,7 @@ class NetworkData {
                                         if (action == "right") {
                                             // console.log(id, action, prob)
                                             if (prob > 0) {
-                                                this.edges.add({ from: id, to: id + 1, arrows: "to", label: prob.toString(), color: iterable.color })
+                                                this.edges.add({ from: id, to: id + 1, arrows: "to", label: prob.toString(), color: iterable.color[1] })
                                             } else { this.edges.add({ from: id, to: id + 1, arrows: "to"}) }
                                         }
                                     }
@@ -397,17 +387,17 @@ class NetworkData {
                                 switch(action) {
                                     case "right":
                                         if (j != this.columns - 1) {
-                                            if (prob > 0) this.edges.add({ from: id, to: id + 1, arrows: "to", label: prob.toString(), color: iterable.color })
+                                            if (prob > 0) this.edges.add({ from: id, to: id + 1, arrows: "to", label: prob.toString(), color: iterable.color[1] })
                                             else this.edges.add({ from: id, to: id + 1, arrows: "to" })
                                         }
                                     break
                                     case "left":
-                                        if (prob > 0) this.edges.add({ from: id, to: id - 1, arrows: "to", label: prob.toString(), color: iterable.color })
+                                        if (prob > 0) this.edges.add({ from: id, to: id - 1, arrows: "to", label: prob.toString(), color: iterable.color[1] })
                                         else this.edges.add({ from: id, to: id - 1, arrows: "to" })
                                         break
                                     case "down":
                                         let nodeBelow = id + this.columns - j/2
-                                        if (prob > 0) this.edges.add({ from: id, to: nodeBelow, arrows: "to", label: prob.toString(), color: iterable.color })
+                                        if (prob > 0) this.edges.add({ from: id, to: nodeBelow, arrows: "to", label: prob.toString(), color: iterable.color[1] })
                                         else this.edges.add({ from: id, to: nodeBelow, arrows: "to" })
                                         break
                                 }
@@ -425,11 +415,11 @@ class NetworkData {
                                 for (const [action, prob] of Object.entries(iterable.actionProbabilities)) {
                                     switch(action) {
                                         case "up":
-                                            if (prob > 0) this.edges.add({ from: id, to: nodeAbove, arrows: "to", label: prob.toString(), color: iterable.color })
+                                            if (prob > 0) this.edges.add({ from: id, to: nodeAbove, arrows: "to", label: prob.toString(), color: iterable.color[1] })
                                             else this.edges.add({ from: id, to: nodeAbove, arrows: "to" })
                                             break
                                         case "down":
-                                            if (prob > 0) this.edges.add({ from: id, to: nodeBelow, arrows: "to", label: prob.toString(), color: iterable.color })
+                                            if (prob > 0) this.edges.add({ from: id, to: nodeBelow, arrows: "to", label: prob.toString(), color: iterable.color[1] })
                                             else this.edges.add({ from: id, to: nodeBelow, arrows: "to" })
                                             break
                                     }
@@ -448,10 +438,10 @@ class NetworkData {
                 const strategy = this.satelliteNodeData[node.id].observable
                 if (this.stratInfo[strategy] != null) {
                     node.color = {
-                        border: this.stratInfo[strategy].color,
+                        border: this.stratInfo[strategy].color[1],
                         background: this.config.node_bg,
                         highlight: {
-                            border: this.stratInfo[strategy].color,
+                            border: this.stratInfo[strategy].color[1],
                             background: this.config.node_highlight_bg,
                         }
                     }
@@ -503,9 +493,30 @@ class NetworkData {
         // console.log("Solution:")
         // console.log(solution)
 
+        // let colors = [
+        //     "blue", "magenta", "lime", "olive", "purple", 
+        //     "yellow", "pink", "orange", "red", "cyan", 
+        // ]
+        
+        // let colors = [
+        //     "hsl(200, 97%, 42%)", "hsl(160, 97%, 42%)", "hsl(120, 97%, 42%)", "hsl(80, 97%, 42%)", "hsl(40, 97%, 42%)",
+        //     "hsl(0, 97%, 42%)", "hsl(240, 97%, 42%)", "hsl(280, 97%, 42%)", "hsl(320, 97%, 42%)", "hsl(360, 97%, 42%)",
+        // ]
+
+        // hsl(x, 100%, 73%)
+        let sat = "100%"
+        let light = "75%"
         let colors = [
-            "blue", "magenta", "lime", "olive", "purple", 
-            "yellow", "pink", "orange", "red", "cyan", 
+            [`yellow`, `hsla(50, ${sat}, ${light}, 1)`],
+            [`cyan`, `hsla(184, ${sat}, ${light}, 1)`],
+            [`magenta`, `hsla(284, ${sat}, ${light}, 1)`],
+            [`pink`, `hsla(313, ${sat}, ${light}, 1)`],
+            [`purple`, `hsla(256, ${sat}, ${light}, 1)`],
+            [`orange`, `hsla(14, ${sat}, ${light}, 1)`],
+            [`blue`, `hsla(212, ${sat}, ${light}, 1)`],
+            [`red`, `hsla(0, ${sat}, 61%, 1)`],
+            // [`lime`, `hsla(76, sat, ${light}, 1)`],
+            // [`olive`, `hsla(79, sat, ${light}, 1)`],
         ]
 
         // Give each observable a colour and update the nodes
@@ -639,7 +650,7 @@ class NetworkData {
             const cell5 = row.insertCell(4)
 
             cell1.innerHTML = "hi!"
-            cell1.innerHTML = "Strategy " + info.id + ": " + info.color
+            cell1.innerHTML = "Strategy " + info.id + ": " + info.color[0]
             
             for (const [action, prob] of Object.entries(info.actionProbabilities)) {
                 switch (action) {
@@ -659,10 +670,10 @@ class NetworkData {
             }
         }
 
-        console.log("Strat Info:")
-        console.log(this.stratInfo)
-        console.log("Satellite Node Data:")
-        console.log(this.satelliteNodeData)
+        // console.log("Strat Info:")
+        // console.log(this.stratInfo)
+        // console.log("Satellite Node Data:")
+        // console.log(this.satelliteNodeData)
 
         this.createDirectedModel()
     }

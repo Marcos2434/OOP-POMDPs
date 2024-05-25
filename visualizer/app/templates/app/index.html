@@ -45,9 +45,9 @@
           
           <div id="main-wrapper">
               <div class="left">
-                  <h1>The Optimal Observability Problem <br> <span class="center">A Visualizer</span></h1>
-                  <p>Enter the specifications of the OOP instance and visualize it.</p>
-
+                  <h1>The Optimal Observability Problem Visualizer </h1> <br>
+                  <p style="font-size: .7rem; line-height: 1;">NB: If the "Brute Force" solver is selected, please note that for non-deterministic strategies the solver will only find a solution to map out the strategies, these however will not necessarily constitute an optimal solution.</p>
+                  <br>
                   <form id="oop_form" action="{% url "create-model" %}" method="post">                      
                       {% csrf_token %}
 

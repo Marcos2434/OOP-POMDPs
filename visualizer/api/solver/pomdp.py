@@ -282,7 +282,7 @@ class POMDP:
             while agent.pos != self.target:
                 action, suitable_actions = agent.choose_action(self)
                 used_actions.add(action)
-                # agent.pos.strategy = Strategy({ action : 1.0 })
+                agent.pos.strategy = Strategy({ action : frac(1) })
                 # agent.pos.set_suitable_actions(suitable_actions) # add the possible actions to the node
                 prev_agent_pos = agent.pos
                 agent.pos = self.step(agent.pos, action) # advance the agent
@@ -420,15 +420,21 @@ class POMDP:
             # print(best_strategy_assignments)
             minimal_budget_optimal_solution = max(best_strategy_assignments, key = lambda x: x['utility'])
         else:
-            strategies = set(Strategy({ action : 1.0 }) for action in used_actions)
+            strategies = set(Strategy({ action : frac(1) }) for action in used_actions)
             id_strategy_combination = dict(enumerate(strategies, start=1))
             # assignments = {n: n.strategy_id for n in self.nodes if n != self.target}
             for n in self.nodes:
                 if n == self.target: continue
                 for s_id, s in id_strategy_combination.items():
                     if s == n.strategy: n.strategy_id = s_id
+            print(strategies)
             
-            _, infinite_budget_optimal_solution = self.utility(id_strategy_combination, {n: n.strategy_id for n in self.nodes if n != self.target})
+            _, resulting_pomdp = self.utility(id_strategy_combination, {n: n.strategy_id for n in self.nodes if n != self.target})
+            
+            # chnage fractions to approximations for visualizer
+            infinite_budget_optimal_solution = {}
+            for k, v in resulting_pomdp.items():
+                infinite_budget_optimal_solution[k] = float(v)
             
         return infinite_budget_optimal_solution, minimal_budget_optimal_solution
 
@@ -452,6 +458,8 @@ def plot_actions_3D(combinations_, u, actions : list[Action]) -> None:
         m = np.zeros(len(Action))
         m[a.value] = 1
         mask = np.vstack((mask, m))
+    
+    print(mask, mask.shape)
     
     # reduce dimension since B=1 then only one strategy is available
     # only works for B=1

@@ -197,15 +197,6 @@ def Z3Serializer(m : Model) -> dict:
 
 inverse_fraction = lambda f : frac(f.denominator, f.numerator) if f.numerator != 0 else 0 
 
-# def z3_model_to_dict(model):
-#     """
-#     Convert a Z3 model to a dictionary.
-#     """
-#     result = {}
-#     for declaration in model.decls():
-#         var = declaration()
-#         result[str(var)] = model[var]
-#     return result
 
 def z3_rational_to_float(x):
     x = x.as_fraction()
@@ -216,6 +207,15 @@ def z3_rational_to_float(x):
     # except OverflowError:
     #     return float(rational.as_decimal(prec=10))
     
+# def z3_model_to_dict(model):
+#     """
+#     Convert a Z3 model to a dictionary.
+#     """
+#     result = {}
+#     for declaration in model.decls():
+#         var = declaration()
+#         result[str(var)] = model[var]
+#     return result
 
 # def zero_sum_distribution(size, neighborhood_scale):
 #     values = [random.randint(-100, 100) for _ in range(size)]

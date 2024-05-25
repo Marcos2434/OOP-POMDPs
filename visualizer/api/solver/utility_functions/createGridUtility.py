@@ -42,17 +42,6 @@ def generate_next_filename(directory, base_filename):
     return f"{base_filename}[{next_index}].py"
 
 def grid_utility(budget, target, size, strategies : dict[int, Strategy], observations : dict[Node, int], det = 0):
-
-    # import os
-    # print(os.getcwd())
-    # print(os.path.exists(os.getcwd() + '/api/solver/utility_functions/generated_models/grid.py'))
-    
-    # remove file if it exists 
-    # if os.path.exists(FILE_PATH): os.remove(FILE_PATH)
-    
-    # filename = generate_next_filename(DIR_PATH, "grid")
-    # file_path = DIR_PATH + filename
-    # file = open(file_path, 'w')
     
     filename = "grid.py"
     file_path = DIR_PATH + filename

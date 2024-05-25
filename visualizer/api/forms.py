@@ -10,7 +10,7 @@ OOP_MODEL_CHOICES = (
 
 SOLVER_CHOICES = (
     ('Z3', 'Z3'), 
-    ('AI', 'AI')
+    ('Brute_Force', 'Brute Force')
 )
 
 def validate_odd(value): 
@@ -56,16 +56,17 @@ class OOP_Form(forms.Form):
         
         
         
-        # self.initial['model'] = initial_values.get('model', 'Line')
-        # self.initial['size'] = initial_values.get('size', 5)
-        # self.initial['target'] = initial_values.get('target', 2)
-        # self.initial['budget'] = initial_values.get('budget', 2)
-        # self.initial['threshold'] = initial_values.get('threshold', 1.5)
-        # self.initial['deterministic'] = initial_values.get('deterministic', True)
-        # self.initial['rows'] = initial_values.get('row', 5)
-        # self.initial['columns'] = initial_values.get('column', 5)
-        # self.initial['sensor_selection'] = initial_values.get('sensor_selection', False)
+        self.initial['model'] = initial_values.get('model', 'Line')
+        self.initial['size'] = initial_values.get('size', 5)
+        self.initial['target'] = initial_values.get('target', 2)
+        self.initial['budget'] = initial_values.get('budget', 2)
+        self.initial['threshold'] = initial_values.get('threshold', 1.5)
+        self.initial['deterministic'] = initial_values.get('deterministic', True)
+        self.initial['rows'] = initial_values.get('row', 5)
+        self.initial['columns'] = initial_values.get('column', 5)
+        self.initial['sensor_selection'] = initial_values.get('sensor_selection', False)
         
+        # w/sensor selection
         # self.initial['sensor_selection'] = initial_values.get('sensor_selection', True)
         # self.initial['observables'] = initial_values.get('observables', '0 0 | 1 1 | 3 3 | 4 4')
         
@@ -80,15 +81,15 @@ class OOP_Form(forms.Form):
         # self.initial['columns'] = initial_values.get('column', 5)
         # self.initial['sensor_selection'] = initial_values.get('sensor_selection', False)
         
-        self.initial['model'] = initial_values.get('model', 'Grid')
-        self.initial['size'] = initial_values.get('size', 3)
-        self.initial['target'] = initial_values.get('target', 8)
-        self.initial['budget'] = initial_values.get('budget', 2)
-        self.initial['threshold'] = initial_values.get('threshold', 2.25)
-        self.initial['deterministic'] = initial_values.get('deterministic', True)
-        self.initial['rows'] = initial_values.get('row', 5)
-        self.initial['columns'] = initial_values.get('column', 5)
-        self.initial['sensor_selection'] = initial_values.get('sensor_selection', False)
+        # self.initial['model'] = initial_values.get('model', 'Grid')
+        # self.initial['size'] = initial_values.get('size', 3)
+        # self.initial['target'] = initial_values.get('target', 8)
+        # self.initial['budget'] = initial_values.get('budget', 2)
+        # self.initial['threshold'] = initial_values.get('threshold', 2.25)
+        # self.initial['deterministic'] = initial_values.get('deterministic', True)
+        # self.initial['rows'] = initial_values.get('row', 5)
+        # self.initial['columns'] = initial_values.get('column', 5)
+        # self.initial['sensor_selection'] = initial_values.get('sensor_selection', False)
         
         # self.initial['model'] = initial_values.get('model', 'Grid')
         # self.initial['size'] = initial_values.get('size', 5)

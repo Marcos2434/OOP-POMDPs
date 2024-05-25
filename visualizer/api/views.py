@@ -11,7 +11,7 @@ from rest_framework import status
 
 # Local
 from .forms import OOP_Form
-from .solver.solvers import Z3_Solver, AI_Solver
+from .solver.solvers import Z3_Solver, Brute_Force_Solver
 
 @api_view(['GET'])
 @permission_classes(())
@@ -31,7 +31,7 @@ def createModel(request):
         request.data['deterministic'] = True if 'deterministic' in request.data else False
 
         if request.data['solver'] == 'Z3': return Z3_Solver(request.data)
-        elif request.data['solver'] == 'AI': return AI_Solver(request.data)
+        elif request.data['solver'] == 'Brute_Force': return Brute_Force_Solver(request.data)
         
         return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
     else:
