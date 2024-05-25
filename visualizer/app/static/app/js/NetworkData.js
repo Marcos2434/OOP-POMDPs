@@ -326,21 +326,22 @@ class NetworkData {
                                     if (i > 0) {
                                         if (action == "up") {
                                             if (prob > 0) {
-                                                this.edges.add({ from: id, to: id - columns, arrows: "to", label: prob.toString(), color: iterable.color[1] })
+                                                this.edges.add({ from: id, to: id - columns, arrows: "to", label: prob.toString() })
+                                                // this.edges.add({ from: id, to: id - columns, arrows: "to", label: prob.toString(), color: iterable.color[1] })
                                             } else { this.edges.add({ from: id, to: id - columns, arrows: "to"}) }  
                                         } 
                                     }
                                     if (i < rows - 1) {
                                         if (action == "down") {
                                             if (prob > 0) {
-                                                this.edges.add({ from: id, to: id + columns, arrows: "to", label: prob.toString(), color: iterable.color[1] })
+                                                this.edges.add({ from: id, to: id + columns, arrows: "to", label: prob.toString() })
                                             } else { this.edges.add({ from: id, to: id + columns, arrows: "to"}) }
                                         }
                                     }
                                     if (j > 0) {
                                         if (action == "left") {
                                             if (prob > 0) {
-                                                this.edges.add({ from: id, to: id - 1, arrows: "to", label: prob.toString(), color: iterable.color[1] })
+                                                this.edges.add({ from: id, to: id - 1, arrows: "to", label: prob.toString() })
                                             } else { this.edges.add({ from: id, to: id - 1, arrows: "to"}) }
                                         }
                                     }
@@ -348,7 +349,7 @@ class NetworkData {
                                         if (action == "right") {
                                             // console.log(id, action, prob)
                                             if (prob > 0) {
-                                                this.edges.add({ from: id, to: id + 1, arrows: "to", label: prob.toString(), color: iterable.color[1] })
+                                                this.edges.add({ from: id, to: id + 1, arrows: "to", label: prob.toString() })
                                             } else { this.edges.add({ from: id, to: id + 1, arrows: "to"}) }
                                         }
                                     }
@@ -387,17 +388,18 @@ class NetworkData {
                                 switch(action) {
                                     case "right":
                                         if (j != this.columns - 1) {
-                                            if (prob > 0) this.edges.add({ from: id, to: id + 1, arrows: "to", label: prob.toString(), color: iterable.color[1] })
+                                            // if (prob > 0) this.edges.add({ from: id, to: id + 1, arrows: "to", label: prob.toString(), color: iterable.color[1] })
+                                            if (prob > 0) this.edges.add({ from: id, to: id + 1, arrows: "to", label: prob.toString() })
                                             else this.edges.add({ from: id, to: id + 1, arrows: "to" })
                                         }
                                     break
                                     case "left":
-                                        if (prob > 0) this.edges.add({ from: id, to: id - 1, arrows: "to", label: prob.toString(), color: iterable.color[1] })
+                                        if (prob > 0) this.edges.add({ from: id, to: id - 1, arrows: "to", label: prob.toString() })
                                         else this.edges.add({ from: id, to: id - 1, arrows: "to" })
                                         break
                                     case "down":
                                         let nodeBelow = id + this.columns - j/2
-                                        if (prob > 0) this.edges.add({ from: id, to: nodeBelow, arrows: "to", label: prob.toString(), color: iterable.color[1] })
+                                        if (prob > 0) this.edges.add({ from: id, to: nodeBelow, arrows: "to", label: prob.toString() })
                                         else this.edges.add({ from: id, to: nodeBelow, arrows: "to" })
                                         break
                                 }
