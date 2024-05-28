@@ -66,7 +66,7 @@ class OOP_Form(forms.Form):
         # self.initial['columns'] = initial_values.get('column', 5)
         # self.initial['sensor_selection'] = initial_values.get('sensor_selection', False)
         
-        # w/sensor selection
+        # # w/sensor selection
         # self.initial['sensor_selection'] = initial_values.get('sensor_selection', True)
         # self.initial['observables'] = initial_values.get('observables', '0 0 | 1 1 | 3 3 | 4 4')
         

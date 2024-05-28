@@ -575,6 +575,21 @@ class NetworkData {
             }
         }
 
+        let general_strat
+        if (this.sensor_selection) {
+            general_strat = {
+                r: 0,
+                l: 0,
+                u: 0,
+                d: 0,
+            }
+            for (const [key, value] of Object.entries(solution)) {
+                if (key.substring(0, 2) == 'xo' && key.length == 3) {
+                    general_strat[key[2]] = value
+                }
+            }
+        }
+
         // Once each observable has been mapped to a colour, update the strategy table
         for (const [key, value] of Object.entries(solution)) {
             if (!this.sensor_selection) {
@@ -603,13 +618,12 @@ class NetworkData {
                 }
             } else {
                 if (key.substring(0, 2) == 'xo') {
-
                     // format : xo<observable><action>
                     // since action is always the last character, we can infer that the
                     // observable goes from the third character to the second to last character
                     const s = parseInt(key.substring(2, key.length - 1)) // o for observable
-                    const a = key[key.length - 1] // a for action
-
+                    let a = key[key.length - 1] // a for action
+                    
                     if (!this.satelliteNodeData[s]) this.satelliteNodeData[s] = {
                         active: false,
                         actionProbabilities: {
@@ -619,19 +633,26 @@ class NetworkData {
                             down: 0,
                         }
                     }
+                    
+                    let v = value;
+                    // if the sensor is not active on the state, we apply the general strategy
+                    if (!this.satelliteNodeData[s].active) {
+                        v = general_strat[a]
+                    } else v = value
+
 
                     switch (a) {
                         case 'l':
-                            this.satelliteNodeData[s].actionProbabilities.left = value
+                            this.satelliteNodeData[s].actionProbabilities.left = v
                             break
                         case 'r':
-                            this.satelliteNodeData[s].actionProbabilities.right = value
+                            this.satelliteNodeData[s].actionProbabilities.right = v
                             break
                         case 'u':
-                            this.satelliteNodeData[s].actionProbabilities.up = value
+                            this.satelliteNodeData[s].actionProbabilities.up = v
                             break
                         case 'd':
-                            this.satelliteNodeData[s].actionProbabilities.down = value
+                            this.satelliteNodeData[s].actionProbabilities.down = v
                             break
                     }
                 }
