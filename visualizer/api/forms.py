@@ -10,7 +10,7 @@ OOP_MODEL_CHOICES = (
 
 SOLVER_CHOICES = (
     ('Z3', 'Z3'), 
-    ('Brute_Force', 'Brute Force')
+    ('Brute_Force', 'Brute Force for grid (for analysis only)')
 )
 
 def validate_odd(value): 
@@ -24,10 +24,10 @@ class OOP_Form(forms.Form):
     budget = forms.IntegerField(min_value=1, step_size=1)
     threshold = forms.DecimalField(min_value=1, step_size=.05)
     deterministic = forms.BooleanField(required=False)
-    sensor_selection = forms.BooleanField(required=False)
     
     rows = forms.IntegerField(min_value=1, step_size=1)
     columns = forms.IntegerField(min_value=1, step_size=1, validators=[validate_odd])
+    sensor_selection = forms.BooleanField(required=False)
     observables = forms.CharField(label='Observables', required=False)
     # Another possibility:
     # observables = forms.CharField(label='Observables', required=False, widget=forms.Textarea(attrs={'rows': 5, 'cols': 40}))

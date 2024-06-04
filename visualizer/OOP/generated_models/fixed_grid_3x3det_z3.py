@@ -78,8 +78,8 @@ pi0== ((1 - y0)*xol + y0*xo0l) * (1 + pi0) + ((1 - y0)*xor + y0*xo0r) * (1 + pi1
 pi7== ((1 - y7)*xol + y7*xo7l) * (1 + pi6) + ((1 - y7)*xor + y7*xo7r) * (1 + pi8) + ((1 - y7)*xou + y7*xo7u) * (1 + pi4) + ((1 - y7)*xod + y7*xo7d) * (1 + pi7), 
 pi8 == 0, 
 # We are dropped uniformly in the line
-# We want to check if the minimal expected cost is below some threshold <= 2.25
-(pi0+pi1+pi2+pi3+pi4+pi5+pi6+pi7) * Q(1,8) <= 2.25,
+# We want to check if the minimal expected cost is below some threshold <= 100
+(pi0+pi1+pi2+pi3+pi4+pi5+pi6+pi7) * Q(1,8) <= 100,
 # Randomised strategies (proper probability distributions)
 xo0l <= 1,
 xo0l >= 0,

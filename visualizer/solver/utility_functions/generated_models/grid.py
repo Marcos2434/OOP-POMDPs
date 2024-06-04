@@ -65,7 +65,7 @@ solver = Solver()
 
 solver.add(
 #We cannot do better than the fully observable case
-pi0>=8, pi1>=7, pi2>=6, pi3>=5, pi4>=4, pi5>=7, pi6>=6, pi7>=5, pi8>=4, pi9>=3, pi10>=6, pi11>=5, pi12>=4, pi13>=3, pi14>=2, pi15>=5, pi16>=4, pi17>=3, pi18>=2, pi19>=1, pi20>=4, pi21>=3, pi22>=2, pi23>=1, pi24>=0, 
+pi0>=5, pi1>=4, pi2>=4, pi3>=5, pi4>=6, pi5>=4, pi6>=3, pi7>=3, pi8>=4, pi9>=5, pi10>=3, pi11>=2, pi12>=2, pi13>=3, pi14>=4, pi15>=2, pi16>=1, pi17>=1, pi18>=2, pi19>=3, pi20>=1, pi21>=0, pi22>=0, pi23>=2, pi24>=3, 
 # Expected cost/reard equations
 pi0 == (ys0_1*xo1l) * (1 + pi0) + (ys0_1*xo1r) * (1 + pi1) + (ys0_1*xo1u) * (1 + pi0) + (ys0_1*xo1d) * (1 + pi5),
 pi1 == (ys1_1*xo1l) * (1 + pi0) + (ys1_1*xo1r) * (1 + pi2) + (ys1_1*xo1u) * (1 + pi1) + (ys1_1*xo1d) * (1 + pi6),
@@ -88,11 +88,11 @@ pi17 == (ys17_1*xo1l) * (1 + pi16) + (ys17_1*xo1r) * (1 + pi18) + (ys17_1*xo1u) 
 pi18 == (ys18_1*xo1l) * (1 + pi17) + (ys18_1*xo1r) * (1 + pi19) + (ys18_1*xo1u) * (1 + pi13) + (ys18_1*xo1d) * (1 + pi23),
 pi19 == (ys19_1*xo1l) * (1 + pi18) + (ys19_1*xo1r) * (1 + pi19) + (ys19_1*xo1u) * (1 + pi14) + (ys19_1*xo1d) * (1 + pi24),
 pi20 == (ys20_1*xo1l) * (1 + pi20) + (ys20_1*xo1r) * (1 + pi21) + (ys20_1*xo1u) * (1 + pi15) + (ys20_1*xo1d) * (1 + pi20),
-pi21 == (ys21_1*xo1l) * (1 + pi20) + (ys21_1*xo1r) * (1 + pi22) + (ys21_1*xo1u) * (1 + pi16) + (ys21_1*xo1d) * (1 + pi21),
+pi21 == 0, 
 pi22 == (ys22_1*xo1l) * (1 + pi21) + (ys22_1*xo1r) * (1 + pi23) + (ys22_1*xo1u) * (1 + pi17) + (ys22_1*xo1d) * (1 + pi22),
 pi23 == (ys23_1*xo1l) * (1 + pi22) + (ys23_1*xo1r) * (1 + pi24) + (ys23_1*xo1u) * (1 + pi18) + (ys23_1*xo1d) * (1 + pi23),
-pi24 == 0, 
-exp==((pi0+pi1+pi2+pi3+pi4+pi5+pi6+pi7+pi8+pi9+pi10+pi11+pi12+pi13+pi14+pi15+pi16+pi17+pi18+pi19+pi20+pi21+pi22+pi23)) * Q(1,24),
+pi24 == (ys24_1*xo1l) * (1 + pi23) + (ys24_1*xo1r) * (1 + pi24) + (ys24_1*xo1u) * (1 + pi19) + (ys24_1*xo1d) * (1 + pi24),
+exp==((pi0+pi1+pi2+pi3+pi4+pi5+pi6+pi7+pi8+pi9+pi10+pi11+pi12+pi13+pi14+pi15+pi16+pi17+pi18+pi19+pi20+pi22+pi23+pi24)) * Q(1,24),
 # Randomised strategies (proper probability distributions)
 xo1l>= 0,
 xo1l<= 1,
@@ -126,7 +126,7 @@ ys7_1 == 1,
 ys4_1 == 1,
 ys11_1 == 1,
 ys17_1 == 1,
-ys21_1 == 1,
+ys24_1 == 1,
 ys0_1 == 1,
 ys6_1 == 1,
 ys3_1 == 1,
@@ -155,9 +155,9 @@ ys17_1 == 1,
 ys18_1 == 1,
 ys19_1 == 1,
 ys20_1 == 1,
-ys21_1 == 1,
 ys22_1 == 1,
-ys23_1 == 1
+ys23_1 == 1,
+ys24_1 == 1
 )
 
 
