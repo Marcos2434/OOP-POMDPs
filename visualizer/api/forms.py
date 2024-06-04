@@ -102,8 +102,8 @@ class OOP_Form(forms.Form):
         # self.initial['sensor_selection'] = initial_values.get('sensor_selection', False)
         
         
-        self.initial['sensor_selection'] = initial_values.get('sensor_selection', True)
-        self.initial['observables'] = initial_values.get('observables', '0 0 | 1 1 | 2 2 | 3 3 | 4 4 | 5 5 | 6 6 | 7 7 | 8 8')
+        # self.initial['sensor_selection'] = initial_values.get('sensor_selection', True)
+        # self.initial['observables'] = initial_values.get('observables', '0 0 | 1 1 | 2 2 | 3 3 | 4 4 | 5 5 | 6 6 | 7 7 | 8 8')
         
         
         # self.initial['model'] = initial_values.get('model', 'Grid')

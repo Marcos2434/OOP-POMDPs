@@ -115,14 +115,14 @@ class POMDP:
     def translate_grid_id_to_grid_coords(self, id : int) -> Node:
         return Node(id // self.gridSize[0], id % self.gridSize[0])
     
-    def utility(self, strategies : dict[int, Strategy], observations : dict[Node, int]) -> float:
+    def utility(self, strategies : dict[int, Strategy], observations : dict[Node, int], path = None) -> float:
         if (self.model == 'grid'):
             # translate layer
             # modify the node coordinates into grid ids for the OOP library
             target = self.translate_grid_coords_to_grid_id(pos = self.target)
             
             for n in self.nodes: n.id = self.translate_grid_coords_to_grid_id(n)
-            exp_min_rew, parsed_pomdp = grid_utility(self.budget, target, self.gridSize[0], strategies, observations)
+            exp_min_rew, parsed_pomdp = grid_utility(self.budget, target, self.gridSize[0], strategies, observations, path=path)
             u = 1/exp_min_rew if exp_min_rew != 0 else 0
             return u, parsed_pomdp
         else:
@@ -369,7 +369,7 @@ class POMDP:
                     
                     if i >= len(nodes):
                         assignments = {n: n.strategy_id for n in nodes if n != self.target}
-                        u, parsed_pomdp = self.utility(id_strategy_combination, assignments)
+                        u, parsed_pomdp = self.utility(id_strategy_combination, assignments, Path(os.getcwd()).parent / "visualizer" / 'solver' / 'utility_functions' / 'generated_models')
                         # print(id_strategy_combination)
                         # print(u, parsed_pomdp)
                         return [{
@@ -420,7 +420,7 @@ class POMDP:
                     if s == n.strategy: n.strategy_id = s_id
             print(strategies)
             
-            _, resulting_pomdp = self.utility(id_strategy_combination, {n: n.strategy_id for n in self.nodes if n != self.target})
+            _, resulting_pomdp = self.utility(id_strategy_combination, {n: n.strategy_id for n in self.nodes if n != self.target}, path = Path(os.getcwd()).parent / "visualizer" / 'solver' / 'utility_functions' / 'generated_models')
             
             # chnage fractions to approximations for visualizer
             infinite_budget_optimal_solution = {}
