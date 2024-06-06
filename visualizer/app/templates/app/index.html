@@ -46,7 +46,14 @@
           <div id="main-wrapper">
               <div class="left">
                   <h1>The Optimal Observability Problem Visualizer </h1> <br>
-                  <p style="font-size: .7rem; line-height: 1;">NB: If the "Brute Force" solver is selected, please note that for non-deterministic strategies the solver will only find a solution to map out the strategies, these however will not necessarily constitute an optimal solution.</p>
+                  <p style="font-size: .7rem; line-height: 1;">
+                    NB: If the "Heuristic" solver is selected for POP (non-deterministic) problems, please 
+                    note that the solver 
+                    will only find a solution to map out the strategies and give uniformly distriubuted action
+                    probabilities.
+
+                    Otherwise the heuristic solver will find the soluition to the problem.
+                  </p>
                   <br>
                   <form id="oop_form" action="{% url "create-model" %}" method="post">                      
                       {% csrf_token %}

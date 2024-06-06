@@ -10,7 +10,7 @@ OOP_MODEL_CHOICES = (
 
 SOLVER_CHOICES = (
     ('Z3', 'Z3'), 
-    ('Brute_Force', 'Brute Force for grid (for analysis only)')
+    ('Heuristic', 'Heuristic (for grid only)')
 )
 
 def validate_odd(value): 

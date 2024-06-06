@@ -123,7 +123,7 @@ def Z3_Solver(data) -> Response:
     
     return Response(content, status=status.HTTP_200_OK)
 
-def Brute_Force_Solver(data) -> Response:
+def Heuristic_Solver(data) -> Response:
 
     if data['model'] == "Grid":
         gridSize = (int(data['size']), int(data['size']))
